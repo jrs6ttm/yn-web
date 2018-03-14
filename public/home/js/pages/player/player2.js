@@ -256,7 +256,8 @@ var ProcessController = function (database,view) {
     this.view = view;
     this.isOrg = '';
     this.userOnlineInfo = '';
-    this.courseSocket = io.connect( processEnginePort);
+    //this.courseSocket = io.connect( processEnginePort);
+	this.courseSocket = null;
     this.processSocket = '';
     this.studySocketInited = false;
 
@@ -427,8 +428,13 @@ ProcessController.prototype = {
     },
     endCourse : function(){
         var me = this;
-        me.courseSocket.close();
-        me.processSocket.close();
+		me.closeCourseSocket(); 
+		if (me.processSocket) {   
+			me.processSocket.close();//调用后台afterConnectionClosed方法
+			me.processSocket = null; 
+		} 
+        //me.courseSocket.close();
+        //me.processSocket.close();
         me.database.saveOption({
             userId : userData.id,
             userName : userData.name,
@@ -502,7 +508,12 @@ ProcessController.prototype = {
                 output : outPut
             };
             $(me.view.eles.submitWork).unbind('click');
-            me.courseSocket.emit('study',sendData);
+			
+			if (me.courseSocket && me.courseSocket.readyState == 1) {   
+	            me.courseSocket.send(JSON.stringify(sendData));//调用后台handleTextMessage方法
+	        } else {  
+	            alert("你的课堂连接已断开!");  
+	        } 
         }
     },
     submitCurAction : function(){
@@ -561,6 +572,38 @@ ProcessController.prototype = {
         var socketRole;
         var socketGroup;
         this.database.getGroupData(function(){
+			me.courseSocket = new SockJS(processEnginePort);
+			me.courseSocket.onopen = function(evnt) {
+				console.log("服务器已连接!");
+				console.log(evnt);
+			};
+			me.courseSocket.onmessage = function(evnt) {
+				console.log("收到服务器的消息:" + evnt.data);
+				console.log(evnt);
+				alert("收到服务器的消息:" + evnt.data);
+				document.getElementById("acceptMessage").value = evnt.data;
+				//messageHandler("收到服务器的消息:" + evnt.data);
+			};
+			me.courseSocket.onerror = function(evnt) {
+				console.log("服务器连接出错!");
+				console.log(evnt);
+			};
+			me.courseSocket.onclose = function(evnt) {
+				alert(evnt.code + " : " + evnt.reason);
+				if(evnt.code == 1000){
+					console.log("你已主动退出连接服务器!");
+					console.log(evnt);
+				}
+				if(evnt.code == 1002){
+					console.log("无法连接到服务器!");
+					console.log(evnt);
+				}
+				if(evnt.code == 1006){
+					console.log("服务器连接中断!");
+					console.log(evnt);
+				}
+			}
+		
             socketUser = me.database.groupData.groupId + '@' + me.database.groupData.roleCid + '@' + userData.name;
             socketRole = me.database.groupData.groupId + '@' + me.database.groupData.roleCid;
             socketGroup = me.database.groupData.groupId;
@@ -676,64 +719,101 @@ ProcessController.prototype = {
     },
     initSoloSocket : function(next){
         var me = this;
-        me.courseSocket.on('notice_'+ me.database.courseId, function (data) {
-            switch (data.type){
-                case 'info':
-                    alert(data.msg);
-                    break;
-                case 'error':
-                    alert(data.msg);
-                    me.database.saveCurrData(function(){
-                        me.endCourse();
-                    });
-                    break;
-                case 'end':
-                    me.database.saveCurrData(function(){
-                        me.endCourse();
-                    });
-                    break;
-                default :
-                    alert(data.msg);
-            }
-        });
-        me.courseSocket.on('study_'+ me.database.courseId,function(actionData){
-            sendTag = false;
-            me.studySocketInit();
-            me.studySocketInited = true;
-            if(me.view.chatAble && !me.chatInited){
-                me.view.initChatRoom();
-            }
-            me.chatInited = true;
-            me.userOnlineInfo = {
-                progress: actionData.currTask.taskInfo.taskName,
-                courseName: me.database.courseData.courseName
-            };
-            me.processSocket.emit('studentProgress', me.userOnlineInfo);
-            me.database.saveOption({
-                userId : userData.id,
-                userName : userData.name,
-                optDes : '进入活动《'+ actionData.currTask.taskInfo.taskName + '》',
-                optResult : '-',
-                optType : '进入活动',
-                courseId : me.database.courseId.split('@')[0],
-                courseName : me.database.courseData.courseName,
-                instanceId : me.database.courseId.split('@')[1],
-                orgId : me.isOrg?me.database.courseData.lrnScnOrgId:'',
-                taskId : actionData.currSubTask?me.database.courseId.split('@')[0]+'_'+actionData.currTask.taskInfo.taskDefinKey:'',
-                taskName : actionData.currSubTask?actionData.currTask.taskInfo.taskName:'',
-                subtaskId : actionData.currSubTask?me.database.courseId.split('@')[0]+'_'+actionData.currSubTask.subId:me.database.courseId.split('@')[0]+'_'+actionData.currTask.taskInfo.taskDefinKey,
-                subtaskName : actionData.currSubTask?actionData.currSubTask.subName:actionData.currTask.taskInfo.taskName,
-                link : ''
-            });
-            me.database.saveCurrAction(actionData,function(){
-                me.database.dealActionData(actionData,function(){
-                    me.view.addSideBar();
-                });
-            });
-        });
-        me.submitCurAction();
-        next();
+		
+		me.courseSocket = new SockJS(processEnginePort + "?userId="+userData.id + "&userName="+userData.name);
+		me.courseSocket.onopen = function(evnt) {
+			console.log("你已进入课堂!");
+			//console.log(evnt);
+			
+			me.submitCurAction();
+            next();
+		};
+		me.courseSocket.onmessage = function(evnt) {
+			var actionData = JSON.parse(evnt.data);
+			//console.log("收到服务器的消息:" + actionData);
+			//console.log(evnt);
+			
+			if(actionData){
+				if(actionData.courseStatus == 'end'){
+					alert('恭喜，您的课程学习完了!');
+					me.database.saveCurrData(function(){
+						me.endCourse();
+					});
+				}else if(actionData.infoMsg){
+					alert(actionData.infoMsg);
+				}else if(actionData.errorMsg){
+					alert(actionData.errorMsg);
+					me.database.saveCurrData(function(){
+						me.endCourse();
+					});
+				}else{
+					sendTag = false;
+					/*
+					me.studySocketInit();
+					me.studySocketInited = true;
+					if(me.view.chatAble && !me.chatInited){
+						me.view.initChatRoom();
+					}
+					me.chatInited = true;
+					me.userOnlineInfo = {
+						progress: actionData.currTask.taskInfo.taskName,
+						courseName: me.database.courseData.courseName
+					};
+					me.processSocket.emit('studentProgress', me.userOnlineInfo);
+					*/
+					me.database.saveOption({
+						userId : userData.id,
+						userName : userData.name,
+						optDes : '进入活动《'+ actionData.currTask.taskInfo.taskName + '》',
+						optResult : '-',
+						optType : '进入活动',
+						courseId : me.database.courseId.split('@')[0],
+						courseName : me.database.courseData.courseName,
+						instanceId : me.database.courseId.split('@')[1],
+						orgId : me.isOrg?me.database.courseData.lrnScnOrgId:'',
+						taskId : actionData.currSubTask?me.database.courseId.split('@')[0]+'_'+actionData.currTask.taskInfo.taskDefinKey:'',
+						taskName : actionData.currSubTask?actionData.currTask.taskInfo.taskName:'',
+						subtaskId : actionData.currSubTask?me.database.courseId.split('@')[0]+'_'+actionData.currSubTask.subId:me.database.courseId.split('@')[0]+'_'+actionData.currTask.taskInfo.taskDefinKey,
+						subtaskName : actionData.currSubTask?actionData.currSubTask.subName:actionData.currTask.taskInfo.taskName,
+						link : ''
+					});
+					me.database.saveCurrAction(actionData,function(){
+						me.database.dealActionData(actionData,function(){
+							me.view.addSideBar();
+						});
+					});
+				}
+			}
+			
+		};
+		me.courseSocket.onerror = function(evnt) {
+			console.log("进入课堂出错!");
+			console.log(evnt);
+		};
+		me.courseSocket.onclose = function(evnt) {
+			//alert(evnt.code + " : " + evnt.reason);
+			if(evnt.code == 1000){
+				console.log("你已主动退出课堂!");
+				console.log(evnt);
+			}
+			if(evnt.code == 1002){
+				console.log("无法进入课堂!");
+				console.log(evnt);
+			}
+			if(evnt.code == 1006){
+				console.log("课堂服务器连接中断!");
+				console.log(evnt);
+			}
+		}
     },
+	closeCourseSocket : function(){
+		var me = this;
+		
+		if (me.courseSocket) {   
+			me.courseSocket.close();//调用后台afterConnectionClosed方法
+			me.courseSocket = null; 
+		}
+	},
     checkIfEnd : function(next){
         var me = this;
         if(me.database.courseData.statement == 'off'){
@@ -754,8 +834,7 @@ ProcessController.prototype = {
                         me.view.resetSelf(function(){
                             me.database.resetLastTasks(function(){
                                 me.view.initSideBar();
-                                me.initCoopSocket(function(){
-                                });
+                                me.initCoopSocket(function(){});
                             });
                         });
                         
@@ -763,8 +842,7 @@ ProcessController.prototype = {
                         me.view.resetSelf(function(){
                             me.database.resetLastTasks(function(){
                                 me.view.initSideBar();
-                                me.initSoloSocket(function(){
-                                });
+                                me.initSoloSocket(function(){});
                             });
                         });
                     }

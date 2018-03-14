@@ -27,7 +27,7 @@ Database.prototype = {
     selectCourse : function(instanceId,orgId,next){
         var me = this;
         if(orgId){
-            sendMessage('post',newProcessEnginePort,'/ec_engine/course/getUserGroupInfo',{userId:userData.id,courseOrgId:orgId},function(resData){
+            sendMessage('post',newProcessEnginePort,'course/getUserGroupInfo',{userId:userData.id,courseOrgId:orgId},function(resData){
                 if(!resData.processDefinitionId){
                     $.MsgBox.Alert('选课失败',resData.errorMsg,function(){
                         location.reload();
@@ -52,7 +52,7 @@ Database.prototype = {
                 }
             });
         }else{
-            sendMessage('post',newProcessEnginePort,'/ec_engine/course/deploy',{ecgeditorHost: ecgeditorPort.substring(7),courseInstanceId :me.courseId+'@'+instanceId,bpmnInstanceId :me.courseId,isCooperation:'0'},function(resData){
+            sendMessage('post',newProcessEnginePort,'course/deploy',{ecgeditorHost: ecgeditorPort.substring(7),courseInstanceId :me.courseId+'@'+instanceId,bpmnInstanceId :me.courseId,isCooperation:'0'},function(resData){
                 if(!resData.processDefinitionId){
                     $.MsgBox.Alert('选课失败',resData.errorMsg,function(){
                         location.reload();
