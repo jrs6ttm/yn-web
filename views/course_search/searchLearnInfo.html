@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/communication/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/communication/css/monitor/loading.css" rel="stylesheet">
+    <link href="/communication/css/monitor/searchLearnInfo.css" rel="stylesheet">
+    <style>
+        .loading {
+            background-color: #ffffff;
+            margin: 0;
+            top: 0;
+        }
+        select, option {
+            outline: none;
+        }
+        h1.tips {
+            padding-top: 90px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="loading">
+    <div class="spinner">
+        <div class="spinner-container container1">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+</div>
+<div class="_container _clear-float">
+    <div class="_w300 _left" id="record-tree">
+        <!--<ul class="_course">-->
+        <!--<li class="_open">-->
+        <!--<i class="_icon"></i>-->
+        <!--<span>SQL注入基础学习[2016-12-06]</span>-->
+        <!--<ul>-->
+        <!--<li class="_open">-->
+        <!--<i class="_icon"></i>-->
+        <!--<span>SQL基本语法</span>-->
+        <!--<ul>-->
+        <!--<li class="_open">-->
+        <!--<i class="_icon"></i>-->
+        <!--<span>SQL语法构成</span>-->
+        <!--<ul>-->
+        <!--<li><i></i><span>SQL语句基础知识</span></li>-->
+        <!--<li><i></i><span>SQL语句基础知识</span></li>-->
+        <!--<li><i></i><span>SQL语句基础知识</span></li>-->
+        <!--<li><i></i><span>SQL语句基础知识</span></li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--<li><i></i><span>SQL常用语法</span></li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<i class="_icon"></i>-->
+        <!--<span>SQL注入基础学习[2015-12-06]</span>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<i class="_icon"></i>-->
+        <!--<span>SQL注入基础学习[2015-07-06]</span>-->
+        <!--</li>-->
+        <!--</ul>-->
+    </div>
+    <div class="_record-content">
+        <div class="_clear-float _header">
+            <div>
+                <label>选择学生：</label>
+                <select id="select_student"></select>
+            </div>
+            <div>
+                <label>操作类型：</label>
+                <select id="select_type"></select>
+            </div>
+            <i id="search_course_info" class="_loading"></i>
+        </div>
+        <div class="_body">
+            <table class="table table-hover table-bordered"></table>
+        </div>
+        <div class="_footer">
+            <div id="paging_toolbar">
+                <div>
+                    <span>每页</span>
+                    <select id="count_of_page">
+                        <option>5</option>
+                        <option selected>10</option>
+                        <option>20</option>
+                    </select>
+                    <span>记录</span>
+                </div>
+                <div>
+                    <a id="first_page">首页</a>
+                    <a id="prev_page">上一页</a>
+                    <a id="current_page">1</a>
+                    <i>/</i>
+                    <a id="page_counts">0</a>
+                    <a id="next_page">下一页</a>
+                    <a id="last_page">尾页</a>
+                </div>
+                <div>
+                    <span>转到第</span>
+                    <input id="search" type="text" style="width : 50px; height: 20px">
+                    <span>页</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/communication/js/jquery/jquery-2.1.4.min.js"></script>
+<script src="/communication/js/bootstrap/bootstrap.min.js"></script>
+<!--<script src="/communication/js/tool/mock.js"></script>-->
+<!--<script src="/communication/js/mock/searchLearnInfo.js"></script>-->
+<script src="/communication/js/tool/common.js"></script>
+<script src="/communication/js/monitor/searchLearnInfo.js"></script>
+</body>
+</html>

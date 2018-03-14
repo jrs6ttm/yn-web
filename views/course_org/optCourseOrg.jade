@@ -1,0 +1,51 @@
+//
+   Created by Administrator on 2015/10/29.
+doctype html
+html
+   head
+      meta(http-equiv="Content-Type",content="text/html; charset=utf-8")
+      title 课程组织操作
+
+      link(rel="stylesheet", href="../../course_org/styles/bootstrap.min.css")
+      link(href="/pub/K/styles/kendo.common.min.css" rel="stylesheet")
+      link(href="/pub/K/styles/kendo.rtl.min.css" rel="stylesheet")
+      link(href="/pub/K/styles/kendo.default.min.css" rel="stylesheet")
+      link(href="/pub/K/styles/kendo.dataviz.min.css" rel="stylesheet")
+      link(href="/pub/K/styles/kendo.dataviz.default.min.css" rel="stylesheet")
+      script(type="text/javascript", src="../../course_org/ext_js/jquery.min.js")
+      script(type="text/javascript", src="../../course_org/ext_js/underscore.js")
+      script(type="text/javascript", src="../../course_org/ext_js/backbone.js")
+      script(type="text/javascript", src="../../course_org/ext_js/backbone.localStorage.js")
+      script(type="text/javascript", src="../../course_org/ext_js/bootstrap.min.js")
+      script(type="text/javascript", src="../../course_org/ext_js/My97DatePicker/WdatePicker.js")
+      script(type="text/javascript").
+          var ecgeditorHost = '#{ecgeditorHost}';
+          var engineHost = '#{engineHost}';
+          function getDateStrUUID(){
+              var date = new Date();
+              var month = (date.getMonth()+1)<10?'0'+(date.getMonth()+1):(date.getMonth()+1);
+              var day = date.getDate()<10 ? ('0'+date.getDate()) : date.getDate();
+              var hour = date.getHours()<10 ? ('0'+date.getHours()) : date.getHours();
+              var minutes = date.getMinutes()<10 ? ('0'+date.getMinutes()) : date.getMinutes();
+              var seconds = date.getSeconds()<10 ? ('0'+date.getSeconds()) : date.getSeconds();
+              var millSeconds = date.getMilliseconds();
+              if(millSeconds<100){
+                  if(millSeconds<10){
+                      millSeconds = '00'+millSeconds;
+                  }else {
+                      millSeconds = '0' + millSeconds;
+                  }
+              }
+
+              var dateStr = '' + date.getFullYear() +  month +  day +hour +  minutes +  seconds + millSeconds;
+
+              return dateStr;
+          }
+
+   body
+      .container(style="padding: 50px 10px 10px;")
+      script(src="/pub/K/js/kendo.all.min.js")
+      script(src="/pub/K/js/messages/kendo.messages.zh-CN.min.js")
+      script(type="text/javascript", src="../../course_org/js/courseOrgModel.js")
+      //script(type="text/javascript", src="../../course_org/js/pageView.js")
+      script(type="text/javascript", src="../../course_org/js/optCourseOrg.js")

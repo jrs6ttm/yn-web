@@ -1,0 +1,242 @@
+doctype html
+html
+    head
+        link(rel='stylesheet', href='/communication/css/bootstrap/bootstrap.min.css')
+        link(rel='stylesheet', href='/communication/css/monitor/loading.css')
+        link(rel='stylesheet', href='/communication/css/audio/audio.css')
+        link(rel='stylesheet', href='/communication/css/emoji/emoji.css')
+        link(rel='stylesheet', href='/communication/css/picbox/picbox.css')
+        link(rel='stylesheet', href='/communication/css/monitor/monitor.css')
+        link(rel='stylesheet', href='/communication/css/font_awesome/font-awesome.min.css')
+        meta(name='viewport', content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no', charset='utf-8')
+        script.
+            var userId = '#{userId}';
+            var userName = '#{userName}';
+            var ecgeditor = '#{ecgeditor}';
+            var socketPort = '#{socketPort}';
+            var exports = {};
+            var courseInstanceInfo = '#{courseInstanceInfo}';
+    body
+        .loading
+            .spinner
+                .spinner-container.container1
+                    .circle1
+                    .circle2
+                    .circle3
+                    .circle4
+                .spinner-container.container2
+                    .circle1
+                    .circle2
+                    .circle3
+                    .circle4
+                .spinner-container.container3
+                    .circle1
+                    .circle2
+                    .circle3
+                    .circle4
+        #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            //少了.modal-dialog后模态框与document的宽度一致，role属性暂时没找到用途
+            .modal-dialog(role='document')
+                //少了.modal-content后模态框呈现为淡灰色半透明状态
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4#studentName.modal-title studentName
+                    .modal-body
+                        div.studentModalInfo
+                            span.studentModalInfo #{UITextMap.studentLearningCourse}
+                            ul#studentCurrentCourse.now-course
+                        div.studentModalInfo
+                            span.studentModalInfo #{UITextMap.studentUnfinishedCourse}
+                            .litter-spinner(title='#{UITextMap.loading}', style)
+                                .spinner-container.container1
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                                .spinner-container.container2
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                                .spinner-container.container3
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                            span#studentUnfinishedCourse
+                        div.studentModalInfo
+                            span.studentModalInfo #{UITextMap.studentFinishedCourse}
+                            .litter-spinner(title='#{UITextMap.loading}', style)
+                                .spinner-container.container1
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                                .spinner-container.container2
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                                .spinner-container.container3
+                                    .circle1
+                                    .circle2
+                                    .circle3
+                                    .circle4
+                            span#studentFinishedCourse
+                    //.modal-footer
+                    //   button.btn.btn-default(type='button', data-dismiss='modal') Close
+                    //   button.btn.btn-primary(type='button') Save changes
+        nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+            .navbar-header
+                button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(style='width:80px')
+                    i.fa.fa-group(style='margin-left:15px;')
+                    //   | Ople
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                // 向左对齐
+                ul.nav.navbar-nav.navbar-left
+                    li.dropdown
+                        a#conversionCourse.dropdown-toggle.conversion(onclick='conversionCourse()')
+                            | #{UITextMap.course}
+                    li.dropdown
+                        a#conversionStudent.dropdown-toggle(onclick='conversionStudent()')
+                            | #{UITextMap.user}
+                    li.dropdown
+                        a#oprate.dropdown-toggle
+                            | #{UITextMap.operation}
+                        ul.dropdown-menu
+                            li.dropdown-submenu
+                                a() #{UITextMap.displayMonitorCourse}
+                                ul.dropdown-menu
+                                    li
+                                        a#sortMethod(onclick='conversionSortMethod(this)', data-order='1')
+                                            | #{UITextMap.descendingSort}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("onlineCount", 0)')
+                                            | #{UITextMap.studentsSortByOnline}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("historyCount", 0)')
+                                            | #{UITextMap.studentsSortByHistoryLearning}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("historyCount", 1)')
+                                            | #{UITextMap.studentsSortByHistoryLearningM}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("unfinishedCount", 0)')
+                                            | #{UITextMap.studentsSortByUnfinishedCourse}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("unfinishedCount", 1)')
+                                            | #{UITextMap.studentsSortByUnfinishedCourseM}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("completedCount", 0)')
+                                            | #{UITextMap.studentsSortByFinishedCourse}
+                                    li
+                                        a(onclick='sortCourseInfoByCount("completedCount", 1)')
+                                            | #{UITextMap.studentsSortByFinishedCourseM}
+                            li.dropdown-submenu
+                                a() #{UITextMap.sendMessageShortcuts}
+                                ul#sendMessageMethodBtn.dropdown-menu
+                                    li
+                                        a(data-mode='Enter', data-sendMethod='1')
+                                            | #{UITextMap.PressEnterToSendMessages}
+                                            i.fa.fa-check.right-icon
+                                    li
+                                        a(data-mode='Ctrl+Enter')
+                                            | #{UITextMap.PressCtrlAndEnterToSendMessages}
+                            //li.dropdown-submenu
+                            //   a() #{UITextMap.language}
+                            //   ul#languageBtn.dropdown-menu
+                            //      li
+                            //         a(data-mode='Chinese')
+                            //            | #{UITextMap.Chinese}
+                            //            i.fa.fa-check.right-icon
+                            //      li
+                            //         a(data-mode='English')
+                            //            | #{UITextMap.English}
+                    li.search-input
+                        #search-input-1.search-input
+                            i.fa.fa-search.search-icon(onclick='showInfoBySearch()')
+                            input#search-input-2.search-input(type='search', placeholder='Search')
+                            i.fa.fa-close.cancel-input-button(onclick='cancelInput(this, true)', style='display:none')
+                        ul#search-menu.dropdown-menu
+                            li
+                                a 1
+                            li
+                                a 2
+                // 向右对齐
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle
+                            i.fa.fa-user(style='margin-right: 10px;')
+                            span#userName #{userName}
+                        //ul.dropdown-menu.logout
+                        //    li
+                        //        a.logout(href='/logout')
+                        //            i.fa.fa-sign-out.logout(style='margin-right: 9px;')
+                        //            | #{UITextMap.logout}
+        #chatRoom.chatRoom(style='display:none')
+            .chat-border(onmousedown='stretch(this.parentNode, event)', title='#{UITextMap.toDragAroundStretchingTheChatWindow}')
+            #session-group-members.session-group-members(style='display:none transition: -webkit-transform 0.4s cubic-bezier(0,1,0,1); transform: translate3d(0px,0px,0px);')
+                #group-member-title.chat-user
+                    button.btn-groupMember(onclick='showSessionInterface()')
+                        i.fa.fa-mail-reply(title='#{UITextMap.returnCurrentChatWindowByClick}')
+                    span
+                        | #{UITextMap.member}
+                #group-member-search.group-member-search
+                    .search-input
+                        i.fa.fa-search.search-icon
+                        input.search-input(type='search', placeholder='Search', onkeyup='searchGroupMember(this.value)')
+                        i#cancelInputButton.fa.fa-close.cancel-input-button(onclick='cancelInput(this)', style='display:none')
+                #group-member-list.group-member-list
+                    ul#session-group-members-list.list-group
+            #session-interface
+                #chat-user.chat-user
+                    .chat-userToName
+                #chat-contents.chat-contents
+                #chat-input.chat-input(contenteditable='true')
+                #chat-send.chat-send
+                    span#emoji.normal-icon
+                        i.fa.fa-smile-o
+                    span#image.normal-icon
+                        i.fa.fa-picture-o
+                    span#record.normal-icon
+                        i.fa.fa-microphone
+                    span#webRTC.normal-icon
+                        i.fa.fa-video-camera
+                    button#sendMessage.btn.btn-primary(style='float:right') #{UITextMap.send}
+        .sidebar
+            span#toggleChatRoom.sidebar-button(title='#{UITextMap.openOrCloseCurrentWindow}')
+                | #{UITextMap.chatting}
+                i.fa.fa-wechat
+            ul#session-list.list-group.session-list
+        .UI-container
+            input(type='file', accept='image/*', class='image-select', style='display: none')
+            .pretreatment
+            #courseUI.courseUI
+            #userUI.userUI(style='display:none')
+                .user-row.row
+            ul#menu.rightMenu.dropdown-menu(style='display:none')
+                li
+                    a(href='#myModal', data-toggle="modal", data-studentId="", onclick="addStudentInfoToModal(this)") #{UITextMap.viewDetails}
+                li
+                    a() #{UITextMap.startCommunicationConnection}
+            .bottom-sidebar
+        script(src='/communication/monitor/js/language.js')
+        script(src='#{socketPort}/socket.io/socket.io.js')
+        script(src='/communication/js/jquery/jquery.min.js')
+        script(src='/communication/js/bootstrap/bootstrap.min.js')
+        script(src='/communication/js/audio/audio.js')
+        script(src='/communication/js/audio/recorder.js')
+        script(src='/communication/js/tool/tool.js')
+        script(src='/communication/js/tool/compress.js')
+        script(src='/communication/js/emoji/emoji.js')
+        script(src='/communication/js/picbox/picbox.js')
+        //script(src='/communication/js/Base64/Base64.js')
+        script(src='/communication/js/monitor/monitor.js')
+        script(src='/communication/js/monitor/chat.js')
+                                                                                                                                                                                                                                                                                                                    

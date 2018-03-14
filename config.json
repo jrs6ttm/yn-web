@@ -1,0 +1,55 @@
+{
+
+  "dev":{
+         "port": 9188,
+          "domain": ".learn.com",
+          "mysql":{
+                    "url": "localhost",
+                    "user": "root",
+                    "password": "python",
+                    "database": "orgapp"
+                  },
+            
+            "mysql_engine":{
+                    "url": "localhost",
+                    "user": "root",
+                    "password": "python",
+                    "database": "yn_engine"
+                  },
+                  
+         "redis" : {
+                    "url" :  "localhost",
+                    "port": 6379 ,
+                    "password" : "python",
+                    "secret" : "you_guess"
+                   }  ,
+            
+
+
+           "engineHost": "localhost:8022/yn-engine",
+			"ecgeditorHost":"authoring.xuezuowang.com",
+			"OCPath":"www.xuezuowang.com"
+  },
+
+  "ports":{
+    "dev":{
+      "playerPort":"",
+      "processEnginePort":"http://oldengine3w.xuezuowang.com",
+      "newProcessEnginePort":"http://newengine3w.xuezuowang.com",
+      "soursePort":"",
+      "filePort":"http://newengine3w.xuezuowang.com",
+      "VMPort":"http://www.xuezuowang.com:10000",
+      "VM2Port":"http://www.xuezuowang.com:10001",
+      "VM3Port":"192.168.0.38",
+      "ecgeditorPort":"http://authoring.xuezuowang.com",
+      "ecgeditorPort2":"authoring.xuezuowang.com",
+      "examPort":"http://exam.xuezuowang.com",
+      "monitorPort":"http://www.xuezuowang.com",
+      "orgPort":"http://www.xuezuowang.com",
+      "studyPort":"http://comsocket.xuezuowang.com"
+    }
+  }
+
+
+}
+

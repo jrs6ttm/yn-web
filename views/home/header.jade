@@ -1,0 +1,144 @@
+//
+   Created by lijiemoop on 2/7/2017.
+
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title #{title}
+        link(href='/home/css/bootstrap/bootstrap.css', rel='stylesheet')
+        link(href='/home/css/module/header.css', rel='stylesheet')
+        link(href='/home/css/style.css', rel='stylesheet')
+        link(href='/home/css/module/sign_modal.css', rel='stylesheet')
+    body
+        script#sign-modal-template(type='text/template').
+            <div id="modal">
+            <div class="modal-background"></div>
+            <div id="sign">
+            <div class="sign-modal-header">
+            <h1>
+            <span class="active-title" data-to="modal-login">登录</span>
+            <span data-to="modal-reg">注册</span>
+            </h1>
+            <i type="button" class="close-modal"></i>
+            </div>
+            <div class="sign-modal-body">
+            <p id="sign-global-error"></p>
+            <form id="modal-login">
+            <div class="input-group">
+            <input name="userName" type="text" placeholder="请输入登录账号">
+            <p class="error-tips" data-error="请输入20位以内用户名，由数字、字母、下划线组成"></p>
+            </div>
+            <div class="input-group">
+            <input name="password" type="password" placeholder="请输入登录密码">
+            <p class="error-tips" data-error="请输入6-16位密码、区分大小写"></p>
+            </div>
+            <div class="control-group">
+            <div>
+            <input name="auto-login" type="checkbox" checked="checked">
+            下次自动登录
+            </div>
+            <a>忘记密码</a>
+            </div>
+            <button id="login-btn" class="btn modal-submit-btn btn-primary" disabled="disabled">登录</button>
+            </form>
+            <form id="modal-reg">
+            <div class="control-group">
+            <input name="type" type="checkbox">
+            企业用户注册
+            </div>
+            <div class="input-group" style="display: none" id="enterpriseName">
+            <input name="enterpriseName" type="text" maxlength="16"  placeholder="请输入企业名">
+            <p class="error-tips"></p>
+            </div>
+            <div class="input-group">
+            <input name="userName" type="text" maxlength="20" placeholder="请输入用户名">
+            <p class="error-tips" data-error="请输入20位以内用户名，由数字、字母、下划线组成"></p>
+            </div>
+            <div class="input-group">
+            <input name="password" type="password" maxlength="16"  placeholder="请输入6-18位密码、区分大小写">
+            <p class="error-tips" data-error="请输入6-18位密码、区分大小写"></p>
+            </div>
+            <div class="input-group">
+            <input name="password_repeat" type="password" maxlength="16"  placeholder="请再次输入密码">
+            <p class="error-tips" data-error="两次密码输入不一致"></p>
+            </div>
+            <div class="input-group">
+            <input name="email" type="email" placeholder="请输入注册邮箱">
+            <p class="error-tips" data-error="请输入正确的邮箱"></p>
+            </div>
+            <button id="reg-btn" class="btn modal-submit-btn btn-primary" disabled="disabled">注册</button>
+            </form>
+            </div>
+            </div>
+            </div>
+        script#header-template(type='text/template').
+            <header id="header">
+            <nav id="nav">
+            <ul id="nav-list">
+            <li><a href="/">主页</a></li>
+            <% if (status == 200){ %>
+            <% for (var key in nav){ %>
+            <li><a target="<%= nav[key].blank == 1 ? '_blank': '' %>" href="<%= nav[key].url ? nav[key].url : (window.location.pathname.indexOf('/app') === 0 ? '' : '/app') + '#/' + nav[key].appid %>"><%= nav[key].name %></a></li>
+            <% } %>
+            <% } %>
+            </ul>
+            </nav>
+            <div class="header-contain">
+            <a id="logo-icon">
+            <div class="logo-icon left"></div>
+            </a>
+            <% if (status != 200){ %>
+            <div class="right">
+            <a id="reg" class="item" style="display:none">注册</a>
+            <div id="login" class="item">
+            <div class="item-c">
+            <div class="item-i">
+            </div>
+            <div class="item-p">
+            登录
+            </div>
+            </div>
+            </div>
+            </div>
+            <% }else { %>
+            <div class="right">
+            <div id="logout" class="item">
+            <div class="item-c">
+            <div class="item-i">
+            </div>
+            <div class="item-p">
+            注销
+            </div>
+            </div>
+            </div>
+            <div id="personal" class="item">
+            <span><%= userData.name %></span>
+            <img src="/home/img/home/greenD2.png">
+            </div>
+            <ul id="personal-list">
+            <% for (var key in personal){ %>
+            <li><a href="<%= personal[key].url ? personal[key].url : (window.location.pathname.indexOf('/app') === 0 ? '' : '/app') + '#/' + personal[key].appid %>"><!--<img src="<%= '/app/img/svg/' + personal[key].svg %>">--><%= personal[key].name %></a></li>
+            <% } %>
+            <!--<li><a id="logout"><img src="/app/img/svg/logout.svg">注销</a></li>-->
+            </ul>
+            <% if (roles.length) { %>
+            <div id="role" class="item">
+            <span>
+            <%=  roles[defaultRoleIndex].dep + '-' + roles[defaultRoleIndex].role %>
+            </span>
+            <img src="/home/img/home/greenD2.png">
+            </div>
+            <ul id="roles-list">
+            <% roles.forEach(function(item, index) { %>
+            <li class="<%= index === defaultRoleIndex ? 'active' : '' %>">
+            <a data-index="<%= index %>"><%=  + item.dep + '-' + item.role %></a>
+            </li>
+            <% }) %>
+            </ul>
+            <% } %>
+            </div>
+            <% } %>
+            </div>
+            </header>
+        #app._page_view

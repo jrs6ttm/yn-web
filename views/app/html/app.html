@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/app/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="/app/css/module/header.css" rel="stylesheet">
+    <link href="/app/css/module/sign_modal.css" rel="stylesheet">
+    <link href="/app/css/module/app.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <script type="text/template" id="app-template">
+        <div id="app">
+            <div id="app-nav">
+                <ul>
+                    <% funs.forEach(function(item, index) { %>
+                    <li id="<%= item.id %>" class="<%= activeIndex === index ? 'active' : '' %>">
+                        <a href="<%= prefix + '/' + item.id %>"><%= item.name %></a>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div id="app-content">
+                <iframe id="iframe" src="<%= origin + funs[activeIndex].url %>"></iframe>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="header-template">
+        <header id="header">
+            <a id="logo-icon">
+                <div class="logo-icon left"></div>
+            </a>
+            <nav id="nav">
+                <ul id="nav-list">
+                    <li><a href="/">主页</a></li>
+                    <% if (status == 200){ %>
+                    <% for (var key in nav){ %>
+                    <li><a target="<%= nav[key].blank == 1 ? '_blank': '' %>" href="<%= nav[key].url ? nav[key].url : (window.location.pathname.indexOf('/app') === 0 ? '' : '/app') + '#/' + nav[key].appid %>"><%= nav[key].name %></a></li>
+                    <% } %>
+                    <% } %>
+                </ul>
+            </nav>
+            <% if (status != 200){ %>
+            <div class="right">
+                <a id="reg" class="item">注册</a>
+                <a id="login" class="item">登录</a>
+            </div>
+            <% }else { %>
+            <div class="right">
+                <a id="personal" class="item">
+                    <span><%= userData.name %></span>
+                    <img src="/app/img/svg/caret.svg">
+                </a>
+                <ul id="personal-list">
+                    <% for (var key in personal){ %>
+                    <li><a href="<%= personal[key].url ? personal[key].url : (window.location.pathname.indexOf('/app') === 0 ? '' : '/app') + '#/' + personal[key].appid %>"><img src="<%= '/app/img/svg/' + personal[key].svg %>"><%= personal[key].name %></a></li>
+                    <% } %>
+                    <li><a id="logout"><img src="/app/img/svg/logout.svg">注销</a></li>
+                </ul>
+                <% if (roles.length) { %>
+                <a id="role" class="item">
+                    <span>
+                        <%=  roles[defaultRoleIndex].dep + '-' + roles[defaultRoleIndex].role %>
+                    </span>
+                    <img src="/app/img/svg/caret.svg">
+                </a>
+                <ul id="roles-list">
+                    <% roles.forEach(function(item, index) { %>
+                    <li class="<%= index === defaultRoleIndex ? 'active' : '' %>">
+                        <a data-index="<%= index %>"><%=  item.dep + '-' + item.role %></a>
+                    </li>
+                    <% }) %>
+                </ul>
+                <% } %>
+            </div>
+            <% } %>
+        </header>
+    </script>
+    <script src="/app/js/config/config.js"></script>
+    <script src="/app/js/lib/jquery.js"></script>
+    <script src="/app/js/lib/underscore.js"></script>
+    <script src="/app/js/lib/common.js"></script>
+    <script src="/app/js/module/header.js"></script>
+    <script src="/app/js/module/app.js"></script>
+</body>
+</html>

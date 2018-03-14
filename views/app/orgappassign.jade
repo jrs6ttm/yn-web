@@ -1,0 +1,91 @@
+include ./html/head.html
+
+|<body>  
+|   <style>
+|      .one {
+|            padding-left: 30px;
+|            position: relative;
+|        } 
+|      .close {
+|            position: absolute;
+|            left: 10px;
+|        }
+|  </style>
+|    <div id='example'>
+|                    <div class='row'> 
+|                        <div class='col-sm-6' > 组织：功能指派</div> 
+|                    </div> <hr>
+|                    <div class='row'> 
+|                        <div class='col-sm-2' > 选择组织：</div>
+|                        <div class='col-sm-3' >
+|                                 <select onchange='getapplist()' class="form-control" name="courses"  id = 'org' >
+|                                        <option value="" area_name="">选择组织</option>
+|                                         !{optionList}
+|                                 </select>
+|                        </div>
+|                   </div> <br>
+|  
+| 
+|<div class="table-responsive"> 
+|  <table id='appTable' class="table table-bordered table-striped responsive-utilities">  
+|        <thead> 
+|            <tr> 
+|              <th>功能</th>
+|            </tr> 
+|        </thead>
+|    <tbody id='applist'>
+|   </tbody>
+|      </table> 
+| </div>
+
+|    </div>   
+|    <div class='responsive-message'></div>
+|    <script src='/app/mx/orgappassign.js'></script>
+|    <style>
+
+|        html {
+|            background-color:#fff;
+|         }
+|        .demo-section {      
+|            width: 95%;
+|        }
+|        #background {
+|            background: transparent url(../content/web/colorpicker/interior-bg.png) no-repeat;
+|            margin: 0 auto;
+|            width: 100%;
+|            height: 100%;
+|            overflow: hidden;
+|        }
+|        .column1 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 30px;
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 100%;
+|            text-align: center;
+|             padding: 20px 0;
+|        }
+|        .column2 {
+
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 30px;
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 100%;
+|             padding: 20px 0;
+
+|        }
+|        .column .title {
+|            color: #a3a3a3;
+|            text-transform: uppercase;
+|            font-size: 11px;
+|            font-weight: normal;
+|            padding: 41px 0 20px;
+|        }
+|    </style>
+|</div>
+include ./html/footer.html

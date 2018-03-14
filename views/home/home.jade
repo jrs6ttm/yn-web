@@ -1,0 +1,41 @@
+//
+   Created by lijiemoop on 2/7/2017.
+include header
+include footer
+script(src='/home/js/pages/home/home.js')
+script.
+    $(function () {
+        $('._page_view').css({
+            height: document.documentElement.clientHeight - 95,
+            minHeight: document.documentElement.clientHeight - 95
+        });
+        sendMessage('get', '', '/getConfig', '', function (data) {
+            playerPort = data.playerPort;
+            processEnginePort = data.processEnginePort;
+            newProcessEnginePort = data.newProcessEnginePort;
+            soursePort = data.soursePort;
+            filePort = data.filePort;
+            VMPort = data.VMPort;
+            VM2Port = data.VM2Port;
+            VM3Port = data.VM3Port;
+            ecgeditorPort = data.ecgeditorPort;
+            ecgeditorPort2 = data.ecgeditorPort2;
+            examPort = data.examPort;
+            monitorPort = data.monitorPort;
+            orgPort = data.orgPort;
+            studyPort = data.studyPort;
+            if(Bus.dataBase){
+                if(Bus.dataBase.permission){
+                    userData = Bus.dataBase.permission.userData;
+                    userData.id = Bus.dataBase.permission.userId;
+                    userData.roles = Bus.dataBase.permission.roles;
+                }else{
+                    userData = '';
+                }
+            }else{
+                userData = '';
+            }
+            var home = new Home;
+            home.init();
+        });
+    });

@@ -1,0 +1,40 @@
+doctype html
+html
+    head(lang='en')
+        meta(charset='UTF-8')
+        title #{title}
+    style.
+        html,body,video{padding: 0;margin: 0;height: 100%;width:100%}
+    body
+    script(src='/home/js/header/lib/jquery.js')
+    script(src='/home/js/script.js')
+    script(src='/home/js/index/publicFuc.js')
+    script(src='/home/js/index/users.js')
+    script.
+        window.onload = function(){
+            sendMessage('get', '', '/getConfig', '', function (data) {
+                playerPort = data.playerPort;
+                processEnginePort = data.processEnginePort;
+                newProcessEnginePort = data.newProcessEnginePort;
+                soursePort = data.soursePort;
+                filePort = data.filePort;
+                VMPort = data.VMPort;
+                VM2Port = data.VM2Port;
+                VM3Port = data.VM3Port;
+                ecgeditorPort = data.ecgeditorPort;
+                ecgeditorPort2 = data.ecgeditorPort2;
+                examPort = data.examPort;
+                monitorPort = data.monitorPort;
+                orgPort = data.orgPort;
+                studyPort = data.studyPort;
+
+                var filePath = '#{filePath}';
+                var userId = '#{userId}';
+                var link = filePort + '/ec_engine/fileManager/fileRead?userId=' + userId + '&filePath=' + filePath;
+                var video = document.createElement('video');
+                video.src = link;video.autoplay="autoplay"
+
+                $('body').append(video);
+            });
+        };
+

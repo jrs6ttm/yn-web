@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非组织课程</title>
+    <link href="/communication/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/communication/css/monitor/loading.css" rel="stylesheet">
+    <link href="/communication/css/courseSearch/style.css" rel="stylesheet">
+</head>
+<body>
+
+<ul class="dropdown-menu" id="rightMenu">
+    <li><a href="" target="_blank">查看组织信息</a></li>
+    <li><a href="" target="_blank">再次组织课程</a></li>
+    <li><a href="" target="_blank">继续组织课程</a></li>
+</ul>
+<div class="loading">
+    <div class="spinner">
+        <div class="spinner-container container1">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+</div>
+<div class="_container">
+    <div class="_header">
+        <label>个人中心>>我的课程>>非组织课程</label>
+        <div class="_type">
+            <span class="_active" data-type="learn">我学习的课程</span>
+            <span data-type="manage">我负责的课程</span>
+        </div>
+    </div>
+    <div class="_body"></div>
+    <div class="_footer">
+        <div id="paging_toolbar">
+            <div>
+                <span>每页</span>
+                <select id="count_of_page">
+                    <option>5</option>
+                    <option selected>10</option>
+                    <option>20</option>
+                </select>
+                <span>记录</span>
+            </div>
+            <div>
+                <a id="first_page">首页</a>
+                <a id="prev_page">上一页</a>
+                <a id="current_page">1</a>
+                <i>/</i>
+                <a id="page_counts">0</a>
+                <a id="next_page">下一页</a>
+                <a id="last_page">尾页</a>
+            </div>
+            <div>
+                <span>转到第</span>
+                <input id="search" type="text" style="width : 50px; height: 20px">
+                <span>页</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/communication/js/jquery/jquery-2.1.4.min.js"></script>
+<script src="/communication/js/bootstrap/bootstrap.min.js"></script>
+<!--<script src="/communication/js/tool/mock.js"></script>-->
+<!--<script src="/communication/js/mock/ongoing.js"></script>-->
+<script src="/communication/js/tool/common.js"></script>
+<script src="/communication/js/course_search/course_search.js"></script>
+<script src="/communication/js/course_search/notOrg.js"></script>
+</body>
+</html>

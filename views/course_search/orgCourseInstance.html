@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组织课程记录</title>
+    <link href="/communication/css/monitor/orgCourseInstance.css" rel="stylesheet">
+    <link href="/communication/css/monitor/loading.css" rel="stylesheet">
+    <style>
+        .loading {
+            background-color: #ffffff;
+            margin: 0;
+            top: 0;
+        }
+        select, option {
+            outline: none;
+        }
+        h1.tips {
+            padding-top: 90px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="background"></div>
+    <div class="modal">
+        <div><i class="_close"></i></div>
+        <iframe src="/communication/monitor/searchLearnInfo"></iframe>
+    </div>
+    <div class="container">
+        <div class="header">
+            <select id="courses"></select>
+        </div>
+        <div class="courses"></div>
+    </div>
+
+    <script src="/communication/js/jquery/jquery-2.1.4.min.js"></script>
+    <!--<script src="/communication/js/tool/mock.js"></script>-->
+    <!--<script src="/communication/js/mock/orgCourseInstance.js"></script>-->
+    <script src="/communication/js/tool/common.js"></script>
+    <script src="/communication/js/monitor/orgCourseInstance.js"></script>
+</body>
+</html>

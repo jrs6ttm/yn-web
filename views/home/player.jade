@@ -1,0 +1,61 @@
+//
+   Created by lijiemoop on 2/8/2017.
+include header
+include footer
+link(href='/home/css/summernote/summernote.css', rel='stylesheet')
+link(href='/home/css/kendoUI/kendo.common.min.css', rel='stylesheet')
+link(href='/home/css/kendoUI/kendo.bootstrap.min.css', rel='stylesheet')
+link(href='/home/css/jplayer/blue.monday/css/jplayer.blue.monday.css', rel='stylesheet')
+link(href='/home/css/mindMap/jsmind.css', rel='stylesheet')
+script(src='/home/js/mindMap/jsmind.js')
+script(src='/home/js/mindMap/jsmind.draggable.js')
+script(src='/home/js/mindMap/jsmind.screenshot.js')
+script(src='/home/js/socket/socket.js')
+script(src='/home/js/summernote/summernote.js')
+script(src='/home/js/jplayer/js/jquery.jplayer.js')
+script(src='/home/js/jplayer/js/video.js')
+script(src='/home/js/jqueryCookie/jquery.cookie.js')
+script(src='/home/js/kendoUI/kendo.all.min.js')
+script(src='/home/js/VM/VM.js')
+script(src='/home/js/pages/player/player2.js')
+script.
+    var globalView;
+    $(function () {
+        $('._page_view').css({
+            height: document.documentElement.clientHeight - 95,
+            minHeight: document.documentElement.clientHeight - 95
+        });
+        sendMessage('get', '', '/getConfig', '', function (data) {
+            playerPort = data.playerPort;
+            processEnginePort = data.processEnginePort;
+            newProcessEnginePort = data.newProcessEnginePort;
+            soursePort = data.soursePort;
+            filePort = data.filePort;
+            VMPort = data.VMPort;
+            VM2Port = data.VM2Port;
+            VM3Port = data.VM3Port;
+            ecgeditorPort = data.ecgeditorPort;
+            ecgeditorPort2 = data.ecgeditorPort2;
+            examPort = data.examPort;
+            monitorPort = data.monitorPort;
+            orgPort = data.orgPort;
+            studyPort = data.studyPort;
+            if(Bus.dataBase){
+                if(Bus.dataBase.permission){
+                    userData = Bus.dataBase.permission.userData;
+                    userData.id = Bus.dataBase.permission.userId;
+                    userData.roles = Bus.dataBase.permission.roles;
+                }else{
+                    userData = '';
+                }
+            }else{
+                userData = '';
+            }
+            var vals = location.hash.replace(/^#/,"").split('/');
+            if(vals[1]){
+                globalView = new View(vals[0],vals[1]);
+            }else{
+                globalView = new View(vals[0]);
+            }
+        });
+    });

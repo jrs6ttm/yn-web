@@ -1,0 +1,212 @@
+/**
+* 模态框样式
+*/
+#modal {
+    display: none;
+}
+
+.color-red {
+    color: #EF1300!important;
+}
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000000;
+    opacity: 0.75;
+}
+
+#sign, #reset {
+    position: fixed;
+    background: #fff;
+    z-index: 100000;
+    width: 360px;
+    padding-bottom: 30px;
+    left: 50%;
+    top: 50%;
+    margin: -218px 0 0 -180px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    color: #787d82;
+    display: block;
+}
+
+#sign-global-error{
+    color: #f01400;
+}
+
+.email-auto {
+    width: 300px;
+    padding: 0;
+    border: 1px solid #d0d6d9;
+    border-top: 0 none;
+    position: absolute;
+    height: 156px;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 10000;
+    top: 40px;
+    display: none;
+    list-style-type:none;
+    margin:0;
+}
+
+.email-auto > li {
+    height: 39px;
+    line-height: 39px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 10px;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    color:#333333;
+    /*font:12px/22px \5b8b\4f53;*/
+    text-indent:5px;
+}
+
+.email-auto > li.hover{
+    background-color: #6eb6fe;
+    color: #fff;
+}
+
+.sign-modal-header {
+    position: relative;
+    padding: 0 20px;
+}
+
+.sign-modal-header > h1 {
+    font-size: 16px;
+    line-height: 49px;
+    height: 49px;
+    color: #787d82;
+    border-bottom: 1px solid #d0d6d9;
+    margin: 0;
+}
+
+.sign-modal-header > h1 > span {
+    float: left;
+    width: 80px;
+    text-align: center;
+    height: 49px;
+    line-height: 49px;
+    cursor: pointer;
+}
+
+.sign-modal-header > .close-modal {
+    position: absolute;
+    top: 17px;
+    right: 20px;
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    background: url(../../img/nlogin.png) no-repeat 0 0;
+    -webkit-transition: transform 0.2s;
+}
+
+.sign-modal-header > .close-modal:hover {
+    background-position: 0 -21px;
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+}
+
+.sign-modal-header .active-title {
+    border-bottom: 1px solid #0a68b6;
+    color: #0a68b6;
+}
+
+.sign-modal-header > h1 > span:hover {
+    border-bottom: 1px solid #0a68b6;
+    color: #0a68b6;
+}
+
+.sign-modal-body {
+    padding: 0 30px;
+}
+
+#modal-reg {
+    display: none;
+}
+
+#sign-global-error {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.sign-modal-body .input-group input {
+    width: 300px;
+    padding: 9px 9px 9px 10px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px 0 #fff;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 0;
+    border: 1px solid #d0d6d9;
+    color: #14191e;
+    outline: 0;
+    animation: back 20s infinite;
+}
+
+.sign-modal-body .control-group {
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+.sign-modal-body p {
+    margin: 0;
+}
+
+.error-tips {
+    height: 20px;
+    color: #f01400;
+    font-size: 13px;
+}
+
+.control-group {
+    zoom: 1;
+    overflow:hidden;
+    margin-bottom: 20px;
+}
+
+.control-group input {
+    float: left;
+    margin-right: 10px;
+}
+
+.control-group > div {
+    float: left;
+    position: relative;
+}
+
+.control-group a {
+    display: block;
+    float: right;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.control-group a:hover {
+    color: #f01400;
+    /*color: #0a68b6;*/
+}
+
+.modal-submit-btn {
+    width: 300px;
+}
+
+/**
+用来消除浏览器自带input缓存造成的黄色背景
+**/
+@keyframes back{
+    0%{background-color:transparent;color:#000000;}
+    100%{background-color:transparent;color:#000000;}
+}
+

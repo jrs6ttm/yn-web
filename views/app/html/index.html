@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/app/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="/app/css/module/header.css" rel="stylesheet">
+    <link href="/app/css/module/sign_modal.css" rel="stylesheet">
+</head>
+<body>
+
+    <script type="text/template" id="sign-modal-template">
+        <div id="modal">
+            <div class="modal-background"></div>
+            <div id="sign">
+                <div class="sign-modal-header">
+                    <h1>
+                        <span class="active-title" data-to="modal-login">登录</span>
+                        <span data-to="modal-reg">注册</span>
+                    </h1>
+                    <i type="button" class="close-modal"></i>
+                </div>
+                <div class="sign-modal-body">
+                    <p id="sign-global-error"></p>
+                    <form id="modal-login">
+                        <div class="input-group">
+                            <input name="userName" type="text" placeholder="请输入登录账号">
+                            <p class="error-tips" data-error="请输入20位以内用户名，由数字、字母、下划线组成"></p>
+                        </div>
+                        <div class="input-group">
+                            <input name="password" type="password" placeholder="请输入登录密码">
+                            <p class="error-tips" data-error="请输入6-16位密码、区分大小写"></p>
+                        </div>
+                        <div class="control-group">
+                            <div>
+                                <input name="auto-login" type="checkbox" checked="checked">
+                                下次自动登录
+                            </div>
+                            <a>忘记密码</a>
+                        </div>
+                        <button id="login-btn" class="modal-submit-btn" disabled="disabled">登录</button>
+                    </form>
+                    <form id="modal-reg">
+                        <div class="input-group">
+                            <input name="name" type="text" maxlength="20" placeholder="请输入用户名">
+                            <p class="error-tips" data-error="请输入20位以内用户名，由数字、字母、下划线组成"></p>
+                        </div>
+                        <div class="input-group">
+                            <input name="password" type="password" maxlength="16"  placeholder="请输入6-16位密码、区分大小写">
+                            <p class="error-tips" data-error="请输入3-16位密码、区分大小写"></p>
+                        </div>
+                        <div class="input-group">
+                            <input name="password_repeat" type="password" maxlength="16"  placeholder="请再次输入密码">
+                            <p class="error-tips" data-error="两次密码输入不一致"></p>
+                        </div>
+                        <div class="input-group">
+                            <input name="email" type="email" placeholder="请输入注册邮箱">
+                            <p class="error-tips" data-error="请输入正确的邮箱"></p>
+                        </div>
+                        <button id="reg-btn" class="modal-submit-btn" disabled="disabled">注册</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="header-template">
+        <header id="header">
+            <a id="logo-icon">
+                <div class="logo-icon left"></div>
+            </a>
+            <nav id="nav">
+                <ul id="nav-list">
+                    <% for (var key in nav){ %>
+                    <li><a target="<%= nav[key].blank ? '_blank': '' %>" href="<%= nav[key].url %>"><%= nav[key].name %></a></li>
+                    <% } %>
+                </ul>
+            </nav>
+            <% if (status != 200){ %>
+            <div class="right">
+                <a id="reg" class="item">注册</a>
+                <a id="login" class="item">登录</a>
+            </div>
+            <% }else { %>
+            <div class="right">
+                <a id="personal" class="item">
+                    <span><%= userData.name %></span>
+                    <img src="/app/img/svg/caret.svg">
+                </a>
+                <ul id="personal-list">
+                    <% for (var key in personal){ %>
+                    <li><a href="<%= personal[key].url %>"><img src="<%= personal[key].svg %>"><%= personal[key].name %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+            <% } %>
+        </header>
+    </script>
+    <script src="/app/js/config/config.js"></script>
+    <script src="/app/js/lib/jquery.js"></script>
+    <script src="/app/js/lib/underscore.js"></script>
+    <script src="/app/js/lib/common.js"></script>
+    <script src="/app/js/module/sign_modal.js"></script>
+    <script src="/app/js/module/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+._container {
+    background-color: #ffffff;
+    min-height: 540px;
+    position: relative;
+    min-width: 1120px;
+    padding-bottom: 3px;
+}
+
+._clear-float {
+    zoom: 1;
+    overflow: hidden;
+}
+
+._w300 {
+    width: 300px;
+}
+
+._left {
+    float: left;
+}
+
+._right {
+    float: right;
+}
+
+._container > div {
+    height: 540px;
+    padding: 8px 18px 0 8px;
+    position: relative;
+}
+
+._select-label {
+    padding: 8px 8px 0;
+}
+
+#record-tree {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+._record-content {
+    margin-left: 300px;
+    zoom: 1;
+    overflow: auto;
+}
+
+._record-content ._header {
+    margin-bottom: 15px;
+}
+
+._record-content ._header > div {
+    width: 50%;
+    float: left;
+}
+
+._record-content ._body {
+    min-height: 440px;
+}
+
+._record-content ._footer {
+    margin-top: 20px;
+}
+
+table, th {
+    text-align: center;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+#record-tree ._icon {
+    background-image: url(../../images/icon.png);
+    background-position: -4px -4px;
+    cursor: pointer;
+}
+
+#record-tree i {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    text-decoration: none;
+    vertical-align: top;
+    text-align: center;
+    margin-right: 4px;
+}
+
+#record-tree i._icon {
+    margin-right: 0;
+}
+
+ul {
+    display: none;
+}
+
+#record-tree ._open > ._icon {
+    background-position: -36px -4px;
+}
+
+#record-tree li {
+    margin-left: 20px;
+}
+
+#record-tree > ul > li {
+    margin-left: 0;
+}
+
+#record-tree > ul, ._open > ul {
+    display: block;
+}
+
+#record-tree li > span {
+    line-height: 24px;
+    height: 24px;
+    display: inline-block;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#record-tree li > span:hover {
+    background-color: #e7f4f9;
+}
+
+#record-tree li > span._active {
+    background-color: #beebff;
+}
+
+#go_back {
+    margin-left: 8px;
+}
+
+#search_course_info {
+    position: absolute;
+    right: 18px;
+    margin-top: 2px;
+}
+
+button {
+    padding: 0 8px;
+}
+
+#paging_toolbar {
+     width: 500px;
+     margin: auto;
+ }
+
+#paging_toolbar > div {
+    float: left;
+    margin-right: 20px;
+}
+
+._loading {
+    background-image: url(../../images/loading.gif);
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: not-allowed;
+}
+
+._refresh {
+    background-image: url(../../images/refresh.png);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
+td > a:visited {
+    text-decoration: none;
+}

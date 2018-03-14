@@ -1,0 +1,101 @@
+include ./html/head.html
+|    <link href="/pub/K/content/shared/styles/examples-offline.css" rel="stylesheet">
+|    <link href="/pub/K/styles/kendo.common.min.css" rel="stylesheet">
+|    <link href="/pub/K/styles/kendo.rtl.min.css" rel="stylesheet">
+|    <link href="/pub/K/styles/kendo.default.min.css" rel="stylesheet">
+|    <link href="/pub/K/styles/kendo.dataviz.min.css" rel="stylesheet">
+|    <link href="/pub/K/styles/kendo.dataviz.default.min.css" rel="stylesheet">
+|    <script src="/pub/K/js/kendo.all.min.js"></script>
+|    <script src="/pub/K/content/shared/js/console.js"></script>
+|    <script src="/pub/K/js/messages/kendo.messages.zh-CN.min.js"></script>
+|<body style="min-width: 1080px;" >
+
+|<div id='example'  style=' margin-left: 20px; ' >   
+|<div> <input type='text' hidden id='orgID' value='#{orgID}'>  </div>
+
+|    <div id='left1' style='float:left ;  margin-top: 20px;border-style: solid;border-color: #eee;  border-width: 3px; padding:20px; height: 766px;'>  
+|          <div >   <input hidden  id='selectedDeptID' type='text' value=''>  
+|                <div > 机构名称：  <input id='deptDes' class='form-control myCondition'  type='text' value=''>  </div>
+
+|                <div>  机构级别： <select disabled>
+|                     <option #{selected_1} value='1'>学校组织 </option>
+|                     <option #{selected_0}  value='0'>非学校组织 </option>
+|                  </select> 
+
+|                </div> <br> 
+|               <div >   <input id='delDep' type='button' style='margin-bottom: 10px' class="btn btn-primary" value='删除机构'    >   <input id='upDep' style='margin-bottom: 10px' class="btn btn-primary"  type='button' value='同级上移' >    </div>
+|               <div > <input type='button' id='addChild' style='margin-bottom: 10px' class="btn btn-primary" value='增加下级' >  <input id='addPeer' style='margin-bottom: 10px' class="btn btn-primary" type='button' value='增加同级'    >  </div>
+
+|          </div>
+
+|          <div id='treelist' style='width: 250px;' > </div>
+|    </div>  
+
+|    <div id='left2' style='float:left ; margin-top: 20px; border-style: solid;border-color: #eee;  border-width: 3px; padding:20px 0 0 20px;'> 
+|         <div class="row" style="padding-left: 20px;" >
+|               <div class='col-md-1' style='padding:0px;' align='left'>用户账号</div>  <div class='col-md-2'style="padding-left:5px;" align="left" >  <input id='userAccount' type='text' class='form-control myCondition'  > </div>
+|               <div class='col-md-1' style="padding:0px;" align="center"> 姓名</div>  <div  class="col-md-2" style="padding:0px;" align="left" ><input id='userName'  type='text' class='form-control myCondition' > </div>
+|               <div class="col-md-2" align="center"  > <input id='depUserSearch'  type='button' value='查询' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 70px;'  >  </div>  
+|        </div><br>
+|          
+|        <div id='grid' style=' width: 635px;'></div>
+|    </div>   
+
+|  </div>
+
+|<div class='geDialog unselectable' style='width: 700px; z-index: 10005; left: 464px; top: 115px;'>
+|</div>
+ 
+
+|    <div class='responsive-message'></div>
+
+|    <style>
+
+|        html {
+|            background-color:#fff;
+|         }
+
+|        .demo-section {      
+|            width: 80%;
+
+|        }
+|        #background {
+|            background: transparent url(../content/web/colorpicker/interior-bg.png) no-repeat;
+|            margin: 0 auto;
+|            width: 100%;
+|            height: 100%;
+|            overflow: hidden;
+|        }
+|        .column1 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 30px;
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 150px;
+|            text-align: center;
+|        }
+|        .column2 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 10px; 
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 403px;
+|            text-align: center;
+|        }
+|        .column .title {
+|            color: #a3a3a3;
+|            text-transform: uppercase;
+|            font-size: 11px;
+|            font-weight: normal;
+|            padding: 41px 0 20px;
+|        }
+|    </style>
+
+|<script src='/app/mx/orgdepedit.js'></script>
+
+include ./html/footer.html   
+

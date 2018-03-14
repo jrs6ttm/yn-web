@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/communication/css/bootstrap/bootstrap.min.css')
+    link(rel='stylesheet', href='/communication/css/webRTC/webRTC.css')
+  body
+    #chat-room
+      #chat-content.chat-content
+      input#file-select.file-select(type="file")
+      #chat-input.chat-input(contenteditable='true')
+      #chat-send.chat-send
+        button#send-file-button.send-file-button
+          | 发送文件
+        button#send-message.btn.btn-defalut(style='float:right')
+          | 发送
+    #videos
+      .me
+        .tips #{userName}
+        video#me(autoplay="autoplay")
+    #files
+
+  script(src='/communication/js/jquery/jquery.min.js')
+  script(src='/communication/js/bootstrap/bootstrap.min.js')
+  script(src='#{socketPort}/socket.io/socket.io.js')
+  script.
+    var userId = '#{userId}';
+    var userName = '#{userName}';
+    var socketPort = '#{socketPort}';
+  script(src='/communication/js/webRTC/webRTC-client.js')
+  script(src='/communication/js/webRTC/demo.js')

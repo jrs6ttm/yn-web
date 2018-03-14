@@ -1,0 +1,51 @@
+{
+  "dev":{
+          "port": 9188,
+          "mysql":{
+                    "url": "192.168.1.182",
+                    "user": "root",
+                    "password": "1234",
+                    "database": "owncloud_dev"
+                  },
+          "engineHost": "192.168.1.25",
+          "ecgeditorHost":"192.168.1.44",
+          "OCPath":"192.168.1.77:8080"
+        },
+  "joint":{
+            "port": 9188,
+            "mysql":{
+              "url": "192.168.1.182",
+              "user": "root",
+              "password": "1234",
+              "database": "owncloud_dev"
+            },
+            "engineHost": "newengine.learn.com",
+            "ecgeditorHost":"authoring.learn.com",
+            "OCPath":"oc.learn.com"
+          },
+  "prod":{
+            "port": 9188,
+            "mysql":{
+              "url" :  "192.168.0.81",
+              "user" : "root",
+              "password" : "password",
+              "database" : "owncloud_dev"
+            },
+            "engineHost": "newengine.xuezuowang.com",
+            "ecgeditorHost":"authoring2.xuezuowang.com",
+            "OCPath":"www.xuezuowang.com"
+          },
+  "production":{
+                "port": 9188,
+                "mysql":{
+                  "url" :  "172.19.11.189",
+                  "user" : "root",
+                  "password" : "password",
+                  "database" : "owncloud_dev"
+                },
+                "engineHost": "172.19.11.189",
+                "ecgeditorHost":"172.19.11.189",
+				"OCPath":"www.xuezuowang.com"
+              }
+}
+

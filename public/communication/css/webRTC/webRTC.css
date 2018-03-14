@@ -1,0 +1,131 @@
+
+a {
+    color: #00B7FF;
+}
+
+html, body {
+    min-width: 1024px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#videos {
+    min-width: 700px;
+    position: absolute;
+    right: 25%;
+    top: 5px;
+    bottom: 0;
+    left: 5px;
+    overflow: auto;
+}
+
+#videos>div {
+    position: relative;
+    float: left;
+}
+
+#videos>div.other {
+    width: 33.3%;
+    /*padding: 1px;*/
+    /*border: 1px solid #888888;*/
+}
+
+#videos>div.me {
+    width: 66.6%;
+    /*padding: 1px;*/
+    /*border: 1px solid #888888;*/
+}
+
+video {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+#tooltip {
+
+}
+
+.tips {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 20px;
+    opacity: 1;
+    background-color: #012345;
+    color: #ffffff;
+    text-align: center;
+    z-index: 1000;
+    display: none;
+}
+
+#chat-room {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 25%;
+    border: 1px solid #888888;
+}
+#chat-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 150px;
+    width: 100%;
+    background-color: rgba(247,247,247,0.5);
+    overflow: auto;
+    padding: 5px;
+    margin-top: 3px;
+}
+#chat-input {
+    position: absolute;
+    bottom: 40px;
+    height: 88px;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f7f7f7;
+    border-top: 1px solid #888888;
+    border-bottom: 1px solid #888888;
+    overflow: auto;
+}
+#chat-send {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    background-color: #f7f7f7;
+    right: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+}
+
+#chat-tool {
+    position: absolute;
+    bottom: 128px;
+    height: 22px;
+    width: 100%;
+}
+
+#files {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 75%;
+    z-index: 1000;
+    background-color: #cccccc;
+    padding: 5px 10px 0 10px;
+    opacity: 0.5;
+    display: none;
+}
+
+#files .percent {
+    font-weight: bold;
+    text-decoration: none
+}

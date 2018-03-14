@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editing custom editor</title>
+    <meta charset="utf-8">
+    <link href="../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.default.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.dataviz.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.dataviz.default.min.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/kendo.all.min.js"></script>
+    <script src="../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+
+            <script src="../content/shared/js/products.js"></script>
+
+
+
+        <div id="example" >
+            <div style='float:left ;'>
+                <div > 机构名称： <input type='text'>  </div>
+                <div>  机构级别： <select >
+                     <option value='1'>学校组织 </option>
+                     <option value='0'>非学校组织 </option>
+                  </select> 
+                </div>
+               <div > <input type='button' value='保存更新' >  <input type='button' value='删除机构'    > <input type='button' value='同级下移' >    </div>
+               <div > <input type='button' value='增加下级' >  <input type='button' value='增加同级'    > <input type='button' value='同级上移' >    </div>
+               <div id='treelist' > </div>
+           </div>
+            
+           
+            <div id="grid" style='float:left ;'></div>
+
+            <script>
+
+                $(document).ready(function () {
+                    var dataSource = new kendo.data.DataSource({
+                       pageSize: 20,
+                       data: products,
+                       autoSync: true,
+                       schema: {
+                           model: {
+                             id: "ProductID",
+                             fields: {
+                                ProductID: { editable: false, nullable: true },
+                                ProductName: { validation: { required: true } },
+                                Category: { defaultValue: { CategoryID: 1, CategoryName: "Beverages"} },
+                                UnitPrice: { type: "number", validation: { required: true, min: 1} }
+                             }
+                           }
+                       }
+                    });
+
+
+                     
+
+                    $("#grid").kendoGrid({
+                        dataSource: dataSource,
+                        pageable: true,
+                        height: 550,
+                        toolbar: ["create", "save"],
+                        columns: [
+                            { field:"",title:"用户账号", width: "100px" },
+                            { field: "Category", title: "昵称", width: "100px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
+                            { field: "UnitPrice", title:"姓名",  width: "80px" },
+                            { field:"",title:"性别", width: "70px" },                            
+                            { field:"",title:"联系电话", width: "120px" },                            
+                            { field:"",title:"家庭地址", width: "150px" },   
+
+                            { command: "destroy", title: "操作", width: "100px" }],
+                        editable: true
+                    });
+                   
+                    var tree_data = new kendo.data.TreeListDataSource({
+                        data: [
+                          //{ orgId: 1, orgShortDes: "武汉理工大学",  parentId: null },
+                          //{ orgId: 2, orgShortDes: "计算机学院", parentId: 1 },
+{
+    orgID:"9abfb0c0-5303-11e6-af2d-358a86764e4c",
+    orgShortDes:"武大",     
+    parentId:null,   
+CREATEDATE:"2016-07-26T07:36:02.000Z",   
+CREATEORGID:null,   
+CREATORID:"J960DGV0",   
+ISVALID:"0",   
+LSTUPDDATE:"2016-07-26T08:03:40.000Z",   
+LSTUPDID:"J960DGV0",   
+REMARK:"名牌大学",   
+address:"武汉市武昌",   
+businessLicense:"77777777",   
+emailAdress:"dfkjkfdskf@12df.com",   
+legalPerson:"张三",   
+orgCode:"EIOSGD",   
+orgFullDes:"武汉大学",   
+
+ 
+orgSort:1,   
+orgscaleType:"100000",   
+
+registerMoney:1000000000,   
+schoolType:1,   
+tel1:"8698888",   
+tel2:"9999999",   
+testID:null
+
+} ,                      // { orgId: 3, orgShortDes: "软件工程", parentId: 2 }
+
+{
+orgID:"7475dd86-5582-11e6-9604-14dda9ddb56a",
+orgShortDes:"DSFDF",
+parentId:"9abfb0c0-5303-11e6-af2d-358a86764e4c"
+
+}
+
+
+                        ],
+
+                        schema: {
+                            model: {
+                                id: "orgID",
+                                expanded: true
+                            }
+                        }
+                    });
+
+
+                    $("#treelist").kendoTreeList({
+                        dataSource: tree_data,
+                        height : 510,
+                        columns: [
+                            { field: "orgShortDes", expandable: false, title: "", width: 80 },
+                        ]
+                    });
+
+
+
+
+                });
+
+                function categoryDropDownEditor(container, options) {
+                    $('<input required data-text-field="CategoryName" data-value-field="CategoryID" data-bind="value:' + options.field + '"/>')
+                        .appendTo(container)
+                        .kendoDropDownList({
+                            autoBind: false,
+                            dataSource: {
+                                type: "odata",
+                                transport: {
+                                    read: "//demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                                }
+                            }
+                        });
+                }
+
+            </script>
+        </div>
+
+
+    
+</body>
+</html>

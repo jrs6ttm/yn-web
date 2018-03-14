@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic usage</title>
+    <meta charset="utf-8">
+    <link href="../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.default.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.dataviz.min.css" rel="stylesheet">
+    <link href="../../styles/kendo.dataviz.default.min.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/kendo.all.min.js"></script>
+    <script src="../content/shared/js/console.js"></script>
+
+
+   <!--  BootStrap  -->
+   <!-- <link href="../../bts/bts.css" rel="stylesheet">  -->
+   <link href="../../bts/bts.css" rel="stylesheet">
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+                <script src="../content/shared/js/orders.js"></script>
+    <div id="example">
+
+    <div class="demo-section hidden-on-narrow k-content wide">
+     <div >  <strong>当前位置： <a  href="#">基础数据</a> >> <a  href="#">组织机构维护</a> >> <a  href="#">组织维护列表</a> <strong> </div>
+
+       <div  class='column1'>  
+          
+                    <div class='row' style='margin-top: 10px;' > 
+                        <div class='col-sm-4' > 组织代码：<input type ='text'></div>
+                        <div class='col-sm-4' > 机构名称：<input type ='text'></div>
+                    </div> 
+
+                    <div class='row' style='margin-top: 50px;'> 
+                        <div class='col-sm-4' > 机构简称：<input type ='text'></div>
+                        <div class='col-sm-4' > 备注：<input type ='text'></div>
+                   </div> 
+
+                    <div class='row'  style='margin-top: 100px;'> 
+                        <div class='col-sm-4' > </div>
+                        <div class='col-sm-1' > <button id="textButton"> 查询 </button></div>
+                        <div class='col-sm-1' > <button id="textButton"> 重置 </button></div>
+                        <div class='col-sm-1' > <button id="textButton" style= 'width: 100px;'  >  新增组织 </button></div>
+                    </div> 
+
+       </div>
+
+
+
+       <div  class='column2'> 
+           
+          <div id="singleSort">  </div>
+
+
+       </div>
+
+    </div>
+    
+    <div class="responsive-message"></div>
+
+            <script>
+                $(document).ready(function () {
+                    $("#singleSort").kendoGrid({
+                        dataSource: {
+                            data: orders,
+                            pageSize: 10
+                        },
+                        sortable: {
+                            mode: "single",
+                            allowUnsort: false
+                        },
+                        pageable: {
+                            buttonCount: 5
+                        },
+                        scrollable: false,
+                        columns: [
+                            {
+                                field: "ShipCountry",
+                                title: "组织代码",
+             template: "<a class='k-button' onclick=alert('#=ProvinceNo#')>回收</a><a onclick=alert('#=ProvinceNo#')>回收</a>", 
+                                width: 100
+                            },
+                            {
+                                field: "机构名称",
+                                width: 150
+                            },
+                       
+                           {
+                                field: "机构简称",
+                                width: 100
+                            },
+
+                           {
+                                field: "操作",
+                                width: 70
+                            },
+
+                           {
+                                field: "组织类型",
+                                width: 100
+                            },
+
+                           {
+                                field: "是否学校类型",
+                                width: 100
+                            },
+
+                           {
+                                field: "备注",
+                                width: 90
+                            },
+                        ]
+                    });
+
+                    $("#multipleSort").kendoGrid({
+                        dataSource: {
+                            data: orders,
+                            pageSize: 6
+                        },
+                        sortable: {
+                            mode: "multiple",
+                            allowUnsort: true
+                        },
+                        pageable: {
+                            buttonCount: 5
+                        },
+                        scrollable: false,
+                        columns: [
+                            {
+                                field: "ShipCountry",
+                                title: "Ship Country",
+                                width: 300
+                            },
+                            {
+                                field: "Freight",
+                                width: 300
+                            },
+                            {
+                                field: "OrderDate",
+                                title: "Order Date",
+                                format: "{0:d}"
+                            }
+                        ]
+                    });
+                });
+            </script>
+
+
+    <style>
+
+        .demo-section {
+            
+            width: 800px;
+        }
+
+        #background {
+            background: transparent url(../content/web/colorpicker/interior-bg.png) no-repeat;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .column1 {
+            border-style: solid;
+            border-color:  #B5B5B5;
+            border-width: 1px;
+
+            margin-top: 30px;
+            margin-left: 5px; 
+            margin-right: 5px; 
+            height: 150px;
+            text-align: center;
+
+        }
+
+        .column2 {
+
+            border-style: solid;
+            border-color:  #B5B5B5;
+            border-width: 1px;
+            margin-top: 10px; 
+            margin-left: 5px; 
+            margin-right: 5px; 
+            height: 338px;
+            text-align: center;
+        }
+        
+        .column .title {
+            color: #a3a3a3;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: normal;
+            padding: 41px 0 20px;
+        }
+
+
+    </style>
+</div>
+
+
+    
+</body>
+</html>

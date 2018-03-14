@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程评分</title>
+    <link href="/communication/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/communication/css/monitor/loading.css" rel="stylesheet">
+    <link href="/communication/css/courseScore/style.css" rel="stylesheet">
+    <style>
+        .loading {
+            background-color: #ffffff;
+            margin: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="_container">
+        <div class="select-student">
+            <select id="select-student"></select>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="width: 70px">序号</th>
+                    <th style="width: 120px">活动名</th>
+                    <th style="width: 130px">提交结果</th>
+                    <th style="width: 130px">评分点</th>
+                    <th style="width: 300px">评分标准</th>
+                    <th style="width: 50px">分值</th>
+                    <th style="width: 100px">得分</th>
+                    <th style="width: 100px">活动得分</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="button-container"></div>
+        </div>
+    </div>
+    <script type="text/template" id="button-template">
+        <% if (flag && database.instanceInfo && database.instanceInfo[database.userId] === "off") { %>
+            <button id="submit" class="btn btn-primary right">提交评价</button>
+        <% } %>
+    </script>
+    <script type="text/template" id="select-template">
+        <option>--请选择--</option>
+        <% for (var i = 0; i < data.length; i++) { %>
+            <option data-userId="<%= data[i].USER_ID %>" data-procInstId="<%= data[i].PROC_INST_ID %>"><%= data[i].NAME %></option>
+        <% } %>
+    </script>
+    <script type="text/template" id="table-template">
+        <% for (var i = 0; i < data.length; i++) { %>
+            <tr>
+                <td rowspan="<%= data[i].scoreRules.length %>"><%= i + 1 %></td>
+                <td rowspan="<%= data[i].scoreRules.length %>"><%= data[i].taskName %></td>
+                <td rowspan="<%= data[i].scoreRules.length %>">
+                <% if (data[i].target && !data[i].target.errorMsg) { %>
+                    <a target="<%= newTab(data[i].target.filePath) %>" href="<%= pathAssembly(data[i].target.filePath, data[i].target.userId, data[i].target.userName) %>">
+                     <%= data[i].target.fileName %>
+                    </a>
+                 <% } else { %>
+                    获取不到评估文件
+                 <% } %>
+                 </td>
+                <td><%= data[i].scoreRules[0].name %></td>
+                <td><%= data[i].scoreRules[0].direction %></td>
+                <td><%= data[i].scoreRules[0].score %></td>
+                <td class="edit" data-taskId="<%= data[i].taskId %>" data-ruleId="<%= data[i].scoreRules[0].id %>">
+                    <span><%= data[i].scoreRules[0].myScore || 0 %></span>
+                    <input type="number" value="<%= data[i].scoreRules[0].myScore || 0 %>">
+                </td>
+                <td rowspan="<%= data[i].scoreRules.length %>" id="<%= data[i].taskId %>">0</td>
+            </tr>
+            <% for (var j = 1; j < data[i].scoreRules.length; j++) { %>
+                <tr>
+                    <td><%= data[i].scoreRules[j].name %></td>
+                    <td><%= data[i].scoreRules[j].direction %></td>
+                    <td><%= data[i].scoreRules[j].score %></td>
+                    <td class="edit" data-taskId="<%= data[i].taskId %>" data-ruleId="<%= data[i].scoreRules[j].id %>">
+                        <span><%= data[i].scoreRules[j].myScore || 0 %></span>
+                        <input type="number" value="<%= data[i].scoreRules[j].myScore || 0 %>">
+                    </td>
+                </tr>
+            <% } %>
+        <% } %>
+        <% if (data.length && database.instanceInfo && database.instanceInfo[database.userId] === "off") { %>
+            <tr>
+                <td>总得分</td>
+                <td colspan="7" id="score">
+                    <%= parseInt(summarize.sumScore) || 0 %>
+                </td>
+            </tr>
+            <tr style="height: 100px">
+                <td>评价</td>
+                <td colspan="7" id="comment" class="edit">
+                    <span>
+                        <%= summarize.comment || '' %>
+                    </span>
+                    <textarea value="<%= summarize.comment || '' %>"><%= summarize.comment || '' %></textarea>
+                </td>
+            </tr>
+        <% } %>
+    </script>
+    <script src="/communication/js/config/config.js"></script>
+    <script src="/communication/js/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/communication/js/underscore/underscore.js"></script>
+    <script src="/communication/js/tool/common.js"></script>
+    <!--<script src="/communication/js/tool/mock.js"></script>-->
+    <!--<script src="/communication/js/mock/courseScore.js"></script>-->
+    <script src="/communication/js/courseScore/courseScore.js"></script>
+</body>
+</html>

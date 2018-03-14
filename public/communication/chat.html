@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/emoji/emoji.css" type="text/css" />
+    <script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="http://192.168.1.97:13000/socket.io/socket.io.js"></script>
+    <style>
+        ._player_sideBar{position: fixed;width: 200px;height: 100%;background: #222;top:0;margin: 0;padding:50px 0 30px 0;z-index: 100;margin-left: -150px}
+
+._player_mainCon{width: 100%;}
+
+._player_leftPageCon{background-color: #f5f5f5;margin: 0;padding: 10px 10px 10px 60px!important;}
+
+._player_leftPageCon h4{font-size: 16px;font-weight: bold}
+
+._player_leftPageCon h5{font-size: 14px;font-weight: bold}
+
+._player_leftPageCon ul{font-size: 15px;font-weight: bold}
+
+._player_leftPageCon p{font-size: 14px}
+
+._player_leftPageHeader,._player_rightPageHeader{height: 40px}
+
+._player_leftPageInfo,._player_rightPageInfo{height: 840px;background-color: #fff;width: 100%;overflow-y: scroll;}
+
+._player_rightPageCon{background-color: #f5f5f5;margin: 0;padding: 10px 10px 10px 10px!important;}
+
+._player_toolBarCon{width: auto;height: 40px;position: fixed;z-index: 100;background: transparent;right:25px;top:50px;}
+
+._player_chatSwitch,._player_VMSwitch{margin-left:10px;cursor:pointer;opacity:0.5;text-align:center;line-height:40px;color:#fff;font-size:18px;width: 40px;height: 40px;z-index: 99;position: relative;float:right;background-color: #222;border-radius: 20px;}
+
+._player_chatSwitch:hover,._player_VMSwitch:hover{opacity:1 }
+
+._player_chatRoomWindow{padding: 0!important;background: #efefef;}
+
+._player_chatArea{padding: 0!important;height: 450px;}
+
+._player_switchBar{width: 100%;padding: 0;height: 29px;font-size: 14px;text-align: center;line-height: 29px;background: #fff;border-bottom:1px solid #bfbfbf}
+
+._player_msgInputBtn{cursor:pointer;float:left;font-size: 16px;line-height: 40px;display: block;width: 20px;height: 40px;width: 40px;text-align: center;color:#000;opacity:0.6}
+
+._player_msgInputBtn:hover{opacity:0.95}
+
+._player_sendMsgBtn{float: right;margin: 10px 0}
+
+._player_switchBar>div{width: 100px;height: 100%;padding: 0;float: left;box-shadow: 0 0 1px #bfbfbf}
+
+._player_switchBar>div:hover a{color:#000;background: #dfdfdf}
+
+._player_switchBar>div._active{color:#000;background: #dfdfdf}
+
+._player_typeCon{height:130px;width: 780px;padding: 10px;float: left;background: #efefef}
+
+._player_msgInput{width: 760px;margin:0;padding:10px;height:70px;border:none;border-radius: 4px;font-size: 14px;line-height: 18px;}
+
+._player_switchBar>div>a{color:#474747;height: 29px;float: left;display: block;width: 100px;padding: 0}
+
+._player_switchBar>div>a>i{display: block;width:20px; float: left;text-align: right}
+
+._player_switchBar>div>a>p{display: block;width:50px ;float: left;}
+
+._player_chatTab{display:none}
+
+._player_chatTab._active{display:block}
+
+._player_msgWin{height:419px;background: #fff;border-bottom:1px solid #bfbfbf;width:100%}
+
+._player_leftPageHeader a,._player_rightPageHeader a{display: block;padding: 10px;color: #fff;background-color: #42a5f5;text-align: center;height: 40px;float:left;line-height: 20px;margin: 0 5px 0 0;text-decoration: none;cursor: pointer}
+
+._player_leftPageHeader a:hover,._player_rightPageHeader a:hover{background-color: #0c80df;}
+
+._player_tasklistCurrent{padding:0;margin:0;width: 200px;height:40px;float: left;color: #fff;text-align: center;line-height: 40px;font-size: 16px;}
+
+._player_tasklistLast,._player_tasklistNext{padding:0;margin:0;width: 200px;height:40px;float: left;color: #757575;text-align: center;line-height: 40px;font-size: 16px;}
+
+._player_tasklistCurrent,._player_tasklistLast{cursor: pointer}
+
+._player_meta_ul{list-style: none;padding: 0 10px;margin: 0 0 10px 0;font-size: 20px;border: 1px solid #dfdfdf;font-weight: bold}
+
+._player_meta_li{font-size: 14px;font-weight: 400;padding: 10px 0;border-top: 1px solid #dfdfdf;color: #42a5f5;cursor: pointer}
+
+._player_meta_li:hover{color: #0c80df}
+
+._player_closeLeftBtn{position: absolute;text-align:center;height: 30px;width: 10px;z-index: 99;color: #fff;background-color: #42a5f5;line-height: 30px;right:100%;top:50%;margin-top: -15px;font-size: 8px}
+
+._player_closeLeftBtn:hover{color: #fff;cursor: pointer}
+
+._player_closeLeftBtn:before{position: absolute;height: 30px;width: 10px;margin-right:-10px;z-index: 98;color: #fff;background-color: #42a5f5;line-height: 50px;right:100%;top:50%;margin-top: -35px;content:'';font-size: 8px;transform: skewY(60deg);-moz-border-radius-topright: 4px}
+
+._player_closeLeftBtn:after{position: absolute;height: 30px;width: 10px;margin-right:-10px;z-index: 98;color: #fff;background-color: #42a5f5;line-height: 50px;right:100%;top:50%;margin-top: 5px;content:'';font-size: 8px;transform: skewY(-60deg);-moz-border-radius-bottomright: 4px}
+
+._player_sendMsg{width: 100%;float: right;}
+
+._player_sendMsg img{width: 30px;height: 30px;display: block;border-radius: 4px;margin-right: 10px;margin-top: 10px;float: right;}
+
+._player_sendMsg>span{float: right;margin-top: 10px;padding: 0 10px;width: 380px}
+
+._player_sendMsg>span>p{text-align: right;font-size: 12px;height: 14px;line-height: 14px;color:#7f7f7f;margin: 0}
+
+._player_sendMsg>span>.chat{word-wrap: break-word;width: auto;max-width:380px;border-radius: 4px;border: 1px solid #bfbfbf;padding: 5px;float: right;font-size: 14px;line-height: 18px;}
+
+._player_receiveMsg{width: 100%;float: left;}
+
+._player_receiveMsg img{width: 30px;height: 30px;display: block;border-radius: 4px;margin-left: 10px;margin-top: 10px;float: left;}
+
+._player_receiveMsg>span{float: left;margin-top: 10px;padding: 0 10px;width: 380px}
+
+._player_receiveMsg>span>p{text-align: left;font-size: 12px;height: 14px;line-height: 14px;color:#7f7f7f;margin: 0}
+
+._player_receiveMsg>span>.chat{word-wrap: break-word;width: auto;max-width:380px;border-radius: 4px;border: 1px solid #bfbfbf;padding: 5px;float: left;font-size: 14px;line-height: 18px;}
+@font-face{
+    font-family: "imooc-icon";
+    src: url("./lijieFonts/icomoon.eot"); /* IE9 兼容模式 */
+    src: url("./lijieFonts/icomoon.eot?#iefix") format("embedded-opentype")
+    ,url("./lijieFonts/icomoon.woff") format("woff")
+    ,url("./lijieFonts/icomoon.ttf") format("truetype")
+    ,url("./lijieFonts/icomoon.svg") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+.imooc-icon{
+    font-family: "imooc-icon";
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+    </style>
+    <style>
+        .chat-contents-fBlock {
+            float: left;
+            text-align: left;
+            width: 100%;
+            margin: 5px 0;
+            position: relative;
+        }
+        .chat-contents-block {
+            float: right;
+            text-align: right;
+            width: 100%;
+            margin: 5px 0 ;
+            position: relative;
+        }
+        .chat-contents-block:before {
+            position: absolute;
+            content: "\00a0";
+            width: 0;
+            height: 0;
+            border-width: 6px 3px ;
+            border-style: solid;
+            border-color: transparent #94c2ed #94c2ed transparent;
+            top: 18px;
+            right: 5px;
+        }
+        .chat-contents-fBlock:before {
+            position: absolute;
+            content: "\00a0";
+            width: 0;
+            height: 0;
+            border-width: 6px 3px ;
+            border-style: solid;
+            border-color: transparent transparent #eeeeee #eeeeee;
+            top: 18px;
+            left: 5px;
+        }
+        .chat-contents-user {
+            font-size: 14px;
+            color : #888888;
+            margin-bottom: 10px;
+        }
+        .chat-contents-message {
+            line-height: 20px;
+            padding: 5px;
+            float: right;
+            text-align: left;
+            font-size: 14px;
+            color: #000000;
+            max-width: 90%;
+            word-wrap: break-word;
+            word-break: normal;
+            background-color: #94c2ed;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+        }
+        .chat-contents-fMessage {
+            line-height: 20px;
+            padding: 5px;
+            float: left;
+            text-align: left;
+            font-size: 14px;
+            color: #000000;
+            max-width: 90%;
+            word-wrap: break-word;
+            word-break: normal;
+            background-color: #eeeeee;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+        }
+        .chat-system-message {
+            line-height: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #888888;
+            margin-bottom: 3px;
+        }
+        ._player_chatRoom {
+            overflow: auto;
+        }
+        .message-image {
+            max-width: 200px;
+        }
+        ._player_msgInput {
+            background-color: #ffffff;
+            height: 90px;
+        }
+        #emojiBox {
+            border: 1px solid #DADADA;
+            padding: 10px 0;
+            width: 400px;
+            height: 100px;
+            overflow: auto;
+        }
+        #emojiBox img {
+            border: none;
+            margin: 3px;
+        }
+
+        #emojiBox img:hover {
+            cursor: pointer;
+        }
+
+        input.select-image {
+            display: none;
+        }
+
+        .chat-member {
+            font-size: 12px;
+            height: 28px;
+            float: left;
+            width: 100%;
+            text-align: left;
+            margin: 1px;
+            padding: 4px 0;
+            overflow: hidden;
+            color: #ffffff;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        .chat-group-member >img {
+            height: 24px;
+            width: 24px;
+            margin: 2px;
+        }
+
+        span.badge {
+            background-color: #ff0000;
+        }
+
+    </style>
+</head>
+<body>
+<div class='_player_chatRoomWindow' style='margin:0 auto;width:800px;height:600px;'></div>
+
+
+<script src="./js/bootstrap/bootstrap.min.js"></script>
+<script src="./js/audio/recorder.js"></script>
+<script src="./js/audio/audio.js"></script>
+<script src="./js/emoji/emoji.js"></script>
+<script src="./js/tool/compress.js"></script>
+<script>
+        (function() {
+            var chatArea = document.createElement('div');chatArea.className = '_player_chatArea col-sm-12';$('._player_chatRoomWindow').append(chatArea);
+            var switchBar = document.createElement('div');switchBar.className = '_player_switchBar';$(chatArea).append(switchBar);
+            var msgWin = document.createElement('div');msgWin.className = '_player_msgWin';$(chatArea).append(msgWin);
+
+            var arr = ['课程群','导师'];
+            $(arr).each(function(i,title){
+                var bar = document.createElement('div');bar.className = '_player_chatBar';$(switchBar).append(bar);
+                var a = document.createElement('a');$(bar).append(a);
+                if(title === '课程群'){
+                    $(bar).addClass('_active');
+                    var ic = document.createElement('i');ic.className = 'imooc-icon';ic.innerHTML = '&#xe972';$(a).append(ic);
+                    var p = document.createElement('p');p.innerHTML = title;$(a).append(p);
+                    var chatTab = document.createElement('div');chatTab.className = '_player_chatTab _active';$(chatTab).css({width:'100%',height:'100%'});$(msgWin).append(chatTab);
+                    var chatRoom = document.createElement('div');chatRoom.className = '_player_chatRoom';$(chatRoom).css({width:'75%',boxShadow:'1px 1px 0 #bfbfbf',height:'100%',float:'left'});$(chatTab).append(chatRoom);
+                    var memberList = document.createElement('div');$(memberList).css({width:'25%',height:'100%',float:'left'});$(chatTab).append(memberList);
+                }else if(title === '导师'){
+                    var ic = document.createElement('i');ic.className = 'imooc-icon';ic.innerHTML = '&#xe976';$(a).append(ic);
+                    var p = document.createElement('p');p.innerHTML = title;$(a).append(p);
+                    var chatTab = document.createElement('div');chatTab.className = '_player_chatTab';$(chatTab).css({width:'100%',height:'100%'});$(msgWin).append(chatTab);
+                    var chatRoom = document.createElement('div');chatRoom.className = '_player_chatRoom';$(chatRoom).css({width:'100%',height:'100%'});$(chatTab).append(chatRoom);
+                }
+
+                $(bar).click(function(){
+                    $('._player_chatBar._active').removeClass('_active');
+                    $(this).addClass('_active');
+                    $('._player_chatTab._active').removeClass('_active');
+                    $('._player_chatTab').eq(i).addClass("_active");
+//                    chator.active = i;
+                })
+            });
+
+            var typeCon = document.createElement('div');
+            typeCon.className = '_player_typeCon';
+            $('._player_chatRoomWindow').append(typeCon);
+            var msgInput = document.createElement('div');msgInput.className = '_player_msgInput';$(typeCon).append(msgInput);
+            var emoji = document.createElement('div');emoji.className = 'imooc-icon _player_msgInputBtn';emoji.innerHTML = '&#xe9e1';$(typeCon).append(emoji);
+            var chatVideo = document.createElement('i');chatVideo.className = 'imooc-icon _player_msgInputBtn';chatVideo.innerHTML = '&#xe914';$(typeCon).append(chatVideo);
+            var chatVoice = document.createElement('div');chatVoice.className = 'imooc-icon _player_msgInputBtn';chatVoice.innerHTML = '&#xe91e';$(typeCon).append(chatVoice);
+            var sendMsgBtn = document.createElement('div');sendMsgBtn.className = '_player_sendMsgBtn btn-xs btn btn-success';sendMsgBtn.innerHTML = '发送';$(typeCon).append(sendMsgBtn);
+            $(emoji).hover(function(){
+                $(this).html('&#xe9df');
+            },function(){
+                $(this).html('&#xe9e1');
+            });
+
+            var picture = document.createElement('i'); picture.className = 'imooc-icon _player_msgInputBtn'; picture.innerHTML = '&#xe912'; typeCon.appendChild(picture);
+            var file = document.createElement('input'); file.type = 'file'; typeCon.appendChild(file);  file.className = 'select-image'; file.accept = 'image/*';
+            //让div可编辑
+            msgInput.setAttribute('contenteditable', '');
+
+            emoji.setAttribute('id', 'emoji');
+            picture.setAttribute('id', 'picture');
+
+            /*
+             初始化emoji
+             */
+
+            new Emoji({
+                emojiArray: ['angry', 'anguished', "astonished", "disappointed",
+                    "blush", "bowtie",  "cold_sweat", "confounded", "confused",
+                    "cry", "crying_cat_face",
+                    "relieved", "satisfied",
+                    "relaxed", "scream", "scream_cat", "see_no_evil",
+                    "dizzy_face", "expressionless", "fearful",
+                    "flushed", "frowning", "full_moon_with_face",
+                    "grin", "grinning", "heart_eyes", "heart_eyes_cat",
+                    "hushed", "innocent", "joy", "joy_cat",
+                    "kissing", "kissing_cat", "kissing_heart",
+                    "neutral_face", "open_mouth", "pensive", "persevere",
+                    "rage", "pouting_cat", "sleeping", "sleepy", "smile",
+                    "kissing_smiling_eyes", "laughing", "mask", "smile_cat", "smiling_imp", "smirk",
+                    "smiley", "smirk_cat", "sob", "stuck_out_tongue", "weary", "wink", "worried", "yum",
+                    "sweat_smile", "sweat", "triumph", "unamused",
+                    "heart", "heavy_exclamation_mark",
+                    "stuck_out_tongue_closed_eyes", "stuck_out_tongue_winking_eye", "sun_with_face",
+                    "sunglasses", "tired_face",
+                    "pill", "v",  "point_up_2", "point_up", "point_down",
+                    "point_left", "point_right", "poop", "pray", "raised_hands",
+                    "tada",
+                    "\\+1", "-1", "balloon", "bicyclist", "beer",
+                    "bomb", "bouquet", "broken_heart", "clap", "crown", "fire", "ghost", "gift", "gift_heart"],
+                textarea: msgInput,
+                emojiButton: emoji,
+                emojiContainer: msgWin
+            }).init();
+
+            document.addEventListener('click', function() {
+                document.getElementById('emojiBox').style.display = 'none';
+            });
+
+        })($);
+
+        (function(window, io, $){
+            var clientSockets = {};
+            var init;
+            var idTable = {};
+            var receiver = {};
+            var chatMemberList = {};
+            var unReadMsgNum = {};
+            function Chat(options) {
+                this.tabContainer = options.tabContainer;
+                this.groupTabContainer = options.groupTabContainer;
+                this.teacherTabContainer = options.teacherTabContainer;
+                this.msgContainer = options.msgContainer;
+                this.groupMsgContainer = options.groupMsgContainer;
+                this.teacherMsgContainer = options.teacherMsgContainer;
+                this.groupMemberContainer = options.groupMemberContainer;
+                this.userId = options.userId;
+                this.userName = options.userName;
+                this.groupId = options.groupId;
+                this.groupName = options.groupName;
+                this.teacherId = options.teacherId;
+                this.teacherName = options.teacherName;
+                this.socketPort = options.socketPort;
+                this.chatInput = options.chatInput;
+                this.sendButton = options.sendButton;
+                this.emoji = options.emoji;
+                this.picture = options.picture;
+                this.fileSelector = options.fileSelector;
+                this.chatMemberList = options.chatMemberList;
+                this.userAvatarsPath = options.userAvatarsPath;
+            }
+            Chat.prototype.init = function() {
+                if (init === true) {
+                    return;
+                }
+                var _this = this;
+                _this.connectGroup(_this.groupId, _this.groupName);
+                _this.connectPeer(_this.teacherId, _this.teacherName);
+
+                receiver.userId = _this.groupId;
+                receiver.userName = _this.groupName;
+
+                /*
+                添加时间监听器
+                 */
+                _this.groupTabContainer.addEventListener('click', function(){
+                    receiver.userId = _this.groupId;
+                    receiver.userName = _this.groupName;
+                    unReadMsgNum[receiver.userId] = 0;
+                    try {
+                        _this.groupTabContainer.children[0].children[2].innerHTML = '';
+                    } catch(e) {
+
+                    }
+                });
+                _this.teacherTabContainer.addEventListener('click', function(){
+                    receiver.userId = _this.teacherId;
+                    receiver.userName = _this.teacherName;
+                    unReadMsgNum[receiver.userId] = 0;
+                    try {
+                        _this.teacherTabContainer.children[0].children[2].innerHTML = '';
+                    } catch(e) {
+
+                    }
+                });
+                _this.sendButton.addEventListener('click', function() {
+                    _this.sendMessage();
+                });
+                _this.emoji.addEventListener('click', function(event) {
+                    cancelEventBubble(event);
+                });
+                _this.picture.addEventListener('click', function() {
+                    _this.fileSelector.click();
+                });
+                _this.fileSelector.addEventListener('change', function() {
+                    _this.sendImage(this);
+                    this.value = '';
+                });
+            };
+            Chat.prototype.initGroupMemberList = function(users) {
+                var memberEle;
+                var _this = this;
+                init = true;
+                for (var userId in users) {
+                    memberEle = '<div class="chat-group-member"><img src="' + this.userAvatarsPath + users[userId] +
+                            '.jpg"><span>' + users[userId] + '</span></div>';
+                    this.chatMemberList.insertAdjacentHTML('afterBegin', memberEle);
+                    this.chatMemberList.children[0].children[0].addEventListener('error', function() {
+                        _this.imgLoadError(this);
+                        this.removeEventListener('error', arguments.callee);
+                    });
+                    chatMemberList[userId] = this.chatMemberList.children[0];
+                }
+            };
+            Chat.prototype.addGroupMember = function(id, name) {
+//                var newId = this.generateId(id);
+//                idTable[id] = newId;
+//                idTable[newId] = id;
+                var memberEle, _this;
+                if (chatMemberList[id]) {
+                    return;
+                }
+                _this =this;
+                memberEle = '<div class="chat-group-member"><img src="' + this.userAvatarsPath + name +
+                        '.jpg"><span>' + name + '</span></div>';
+                this.chatMemberList.insertAdjacentHTML('afterBegin', memberEle);
+                this.chatMemberList.children[0].children[0].addEventListener('error', function() {
+                    _this.imgLoadError(this);
+                    this.removeEventListener('error', arguments.callee);
+                });
+                chatMemberList[id] = this.chatMemberList.children[0];
+            };
+            Chat.prototype.removeGroupMember = function(id) {
+                console.log(chatMemberList);
+                chatMemberList[id].parentNode.removeChild(chatMemberList[id]);
+                delete chatMemberList[id];
+            };
+            Chat.prototype.getOnlinePromptMsg = function(msg, flag, peer) {
+                if (peer) {
+                    return '<div class="chat-system-message">系统消息：你进入了课程讨论组</div>';
+                } else if (flag) {
+                    return '<div class="chat-system-message">系统消息：' + msg + '进入了课程讨论组</div>';
+                }
+                return '<div class="chat-system-message">系统消息：' + msg + '上线了</div>';
+            };
+            Chat.prototype.getOfflinePromptMsg = function(msg, flag) {
+                if (flag) {
+                    return '<div class="chat-system-message">系统消息：' + msg + '离开了课程讨论组</div>';
+                }
+                return '<div class="chat-system-message">系统消息：' + msg + '下线了</div>';
+            };
+            Chat.prototype.getTimePromptMsg = function(msg) {
+                return '<div class="chat-system-message">' + msg + '</div>';
+            };
+            Chat.prototype.getTextMsg = function(id, name ,msg) {
+                if (id !== this.userId) {
+                    return '<div class="chat-contents-fBlock"><div class="chat-contents-user">' + name +
+                            '</div><div class="chat-contents-fMessage"> ' + msg + '</div>';
+                }
+                return '<div class="chat-contents-block"><div class="chat-contents-user">' + name +
+                        '</div><div class="chat-contents-message"> ' + msg + '</div>';
+            };
+            Chat.prototype.getAudioMsg = function(id, name, msg) {
+                var data = new Blob([msg], { type: 'audio/wav' });
+                var resource;
+                var arr= [];
+                if (window.URL) {
+                    window.URL = window.URL || window.webkitURL;
+                    resource = window.URL.createObjectURL(data);
+                    if (id !== this.userId) {
+                        arr.push('<div class="chat-contents-fBlock"><div class="chat-contents-user">' + name +
+                                '</div><div class="chat-contents-fMessage"><audio class="audio" controls src=' + resource + '></audio></div>');
+                    } else {
+                        arr.push('<div class="chat-contents-block"><div class="chat-contents-user">' + name +
+                                '</div><div class="chat-contents-message"><audio class="audio" controls src=' + resource + '></audio></div>');
+                    }
+                    return arr;
+                } else {
+                    alert('浏览器版本不兼容！');
+                    return [];
+                }
+            };
+            Chat.prototype.getImageMsg = function(id, name, msg) {
+                var arr= [];
+
+                if (id !== this.userId) {
+                    arr.push('<div class="chat-contents-fBlock"><div class="chat-contents-user">' + name +
+                            '</div><div class="chat-contents-fMessage"><a href="' + msg + '" target="_blank"><img class="message-image"  src=' +
+                            msg + ' title="点击查看大图"></img></a></div>');
+                } else {
+                    arr.push('<div class="chat-contents-block"><div class="chat-contents-user">' + name +
+                            '</div><div class="chat-contents-message"><a href="' + msg + '" target="_blank"><img class="message-image"  src=' +
+                            msg + ' title="点击查看大图"></img></a></div>');
+                }
+                return arr;
+            };
+            Chat.prototype.generateId = function() {
+                var id = Math.random();
+                id += '';
+                return id.split('.')[1];
+            };
+            Chat.prototype.imgLoadError = function(ele) {
+                ele.src = this.userAvatarsPath + 'error.jpg';
+            };
+            Chat.prototype.sendMessage = function() {
+                var msg = this.chatInput.innerHTML;
+                if (msg) {
+                    clientSockets[receiver.userId].emit('say', {
+                        userId: this.userId,
+                        userName: this.userName,
+                        userToId: receiver.userId,
+                        userToName: receiver.userName,
+                        msg: msg,
+                        type: 'text'
+                    });
+                    this.chatInput.innerHTML = '';
+                }
+            };
+            Chat.prototype.sendImage = function(target) {
+                var _this = this;
+                if (window.File && window.FileReader && window.FileList && window.Blob) {
+                    // Great success! All the File APIs are supported.
+                } else {
+                    alert('The File APIs are not fully supported in this browser.');
+                    return;
+                }
+                lrz(target.files[0], {
+                    width: 800
+                })
+                        .then(function(result) {
+                            if (!result.base64) {
+                                return;
+                            }
+                            //发送请求信息
+                            clientSockets[receiver.userId].emit('say', {
+                                userId : _this.userId,
+                                userName : _this.userName,
+                                userToId : receiver.userId,
+                                userToName : receiver.userName,
+                                msg : result.base64,
+                                type : 'image'
+                            });
+                            console.log('发送图片消息');
+                        });
+            };
+            Chat.prototype.connectGroup = function(id, name) {
+                var _this = this;
+                var userInfo, socket;
+
+                socket= io.connect(_this.socketPort);
+                userInfo = {
+                    userId : _this.userId,
+                    userName : _this.userName,
+                    roomId : id,
+                    userToName : name
+                };
+
+                socket.on('connect', function () {
+                    socket.emit('socketType', {
+                        type : 'chat'
+                    });
+                    socket.emit('userInformation', userInfo);
+                });
+
+                clientSockets[id] = socket;
+
+                console.log("connect to group!");
+
+                socket.on('online', function (data) {
+                    var content, chatContent;
+                    if (chatMemberList[data.userId]) {
+                        return;
+                    }
+                    chatContent = $(_this.groupMsgContainer);
+
+                    console.log('room peer online!');
+                    console.log(data);
+
+                    if (init === undefined) {
+                        _this.initGroupMemberList(data.users);
+                    } else {
+                        _this.addGroupMember(data.userId, data.userName);
+                    }
+
+                    if (data.userId === _this.userId) {
+                        content = _this.getOnlinePromptMsg(false, false, true);
+                    } else {
+                        content = _this.getOnlinePromptMsg(data.userName, true);
+                    }
+
+                    chatContent.append(content);
+                    chatContent[0].scrollTop = chatContent[0].scrollHeight;
+                });
+
+                socket.on('say', function (data) {
+                    _this.handleSay(data, _this.groupMsgContainer, _this.groupTabContainer, data.userToId);
+                    console.log('group say!');
+                });
+
+                socket.on('offline', function (data) {
+                    _this.removeGroupMember(data.userId);
+                    _this.handleOffline(_this.groupMsgContainer, data.userName, true);
+                    console.log('room peer offline!');
+                });
+
+            };
+            Chat.prototype.connectPeer = function(id, name) {
+                var _this = this;
+                var userInfo, socket;
+                if (id === _this.userId) {
+                    return;
+                }
+
+                socket= io.connect(_this.socketPort);
+                userInfo = {
+                    userId : _this.userId,
+                    userName : _this.userName,
+                    userToId : id,
+                    userToName : name
+                };
+
+                socket.on('connect', function () {
+                    socket.emit('socketType', {
+                        type : 'chat'
+                    });
+                    socket.emit('userInformation', userInfo);
+                });
+
+                clientSockets[id] = socket;
+
+                console.log("connect to peer!");
+
+                socket.on('online', function (data) {
+                    var chatContent, content;
+                    //data.userId指的是发送信息的人的ID，data.userToId指的是接收信息的人的ID
+                    if (data.userId !== _this.userId) {                //如果上线的不是自己，进行操作
+                        content = _this.getOnlinePromptMsg(data.userName);
+                        chatContent = $(_this.teacherMsgContainer);
+
+                        console.log('peer online!');
+
+                        chatContent.append(content);
+                        chatContent[0].scrollTop = chatContent[0].scrollHeight;
+                    }
+                });
+
+                socket.on('say', function (data) {
+                    _this.handleSay(data, _this.teacherMsgContainer, _this.teacherTabContainer, data.userId);
+                    console.log('peer say!');
+                });
+
+                socket.on('offline', function (data) {
+                    _this.handleOffline(_this.teacherMsgContainer, data.userName);
+                    console.log('peer offline!');
+                });
+
+                socket.on('offlineMsg', function (data) {
+                    //没有使用amqp时候实现的data.msg是一个数组，使用amqp后发过来的data.msg是一个字符串，产生多次offlineMsg事件
+                    console.log('offlineMsg');
+                    var chatContent = $(_this.teacherMsgContainer);
+                    var content, resource, arr;
+
+                    switch (data.type) {
+                        case 'time' : content = _this.getTimePromptMsg(data.msg.substring(5));
+                            break;
+                        case 'text' : content = _this.getTextMsg(child, data.userId, data.userName, data.msg.substring(5));
+                            break;
+                        case 'audio' : arr = _this.getAudioMsg(child, data.userId, data.userName, data.msg);
+                            content = arr[0];
+                            resource = arr[1];
+                            break;
+                        //未压缩时
+                        //case 'image' : arr = getImageMsg(child, data.userId, data.userName, data.msg);
+                        //    content = arr[0];
+                        //    break;
+                        case 'image' : arr = _this.getImageMsg(child, data.userId, data.userName, data.msg.substring(5));
+                            content = arr[0];
+                            break;
+                        default : content = _this.getTextMsg(child, data.userId, data.userName, data.msg);
+                    }
+
+                    chatContent.append(content);
+                    if (resource) {
+                        $('.audio[src="' + resource +'"]').Audio();
+                    }
+
+                    chatContent[0].scrollTop = chatContent[0].scrollHeight;
+                });
+            };
+            Chat.prototype.handleSay = function(data, msgContainer, tabContainer, target) {
+                var chatContent = $(msgContainer);
+                var content, resource;
+                var arr = [];
+
+                switch (data.type) {
+                    case 'text' : content = this.getTextMsg(data.userId, data.userName, data.msg);
+                        break;
+                    case 'audio' : arr = this.getAudioMsg(data.userId, data.userName, data.msg);
+                        content = arr[0];
+                        resource = arr[1];
+                        break;
+                    case 'image' : arr = this.getImageMsg(data.userId, data.userName, data.msg);
+                        content = arr[0];
+                        break;
+                    default : content = this.getTextMsg(data.userId, data.userName, data.msg);
+                }
+
+                if (data.time) {
+                    chatContent.append(this.getTimePromptMsg(data.time));
+                }
+                chatContent.append(content);
+                if (resource) {
+                    $('.audio[src="' + resource +'"]').Audio();
+                }
+                chatContent[0].scrollTop = chatContent[0].scrollHeight;
+
+                if (receiver.userId !== target) {
+                    unReadMsgNum[target] = (unReadMsgNum[target] || 0) + 1;
+                    if (tabContainer.children[0].children[2] === undefined) {
+                        var unReadMsgFlag = '<span class="badge">' + unReadMsgNum[target] + '</span>';
+                        tabContainer.children[0].insertAdjacentHTML('beforeEnd', unReadMsgFlag);
+                    } else {
+                        tabContainer.children[0].children[2].innerHTML = unReadMsgNum[target];
+                    }
+                }
+            };
+            Chat.prototype.handleOffline = function(msgContainer, userName, group) {
+                var content = this.getOfflinePromptMsg(userName, group);
+                var chatContent = $(msgContainer);
+
+                chatContent.append(content);
+                chatContent[0].scrollTop = chatContent[0].scrollHeight;
+            };
+            window.Chat = Chat;
+        })(window, io, $);
+
+        new Chat({
+            userId: window.parent.userId || '123456',
+            userName: window.parent.userName || '李杰',
+            socketPort: window.parent.socketPort || 'https://comsocket.xuezuowang.com',
+            groupId: window.parent.courseId || '4981db90-0b5d-11e6-95dd-d972e5b562a1',
+            groupName: window.parent.courseName || 'nodejs+mongodb+express搭建简单的blog教程（jade）',
+            teacherId: window.parent.teacherId || 'PKCH5L9U',
+            teacherName: window.parent.teacherName || '王中华',
+            groupMsgContainer: document.getElementsByClassName('_player_chatTab')[0].children[0],
+            teacherMsgContainer: document.getElementsByClassName('_player_chatTab')[1].children[0],
+            groupTabContainer: document.getElementsByClassName('_player_chatBar')[0],
+            teacherTabContainer: document.getElementsByClassName('_player_chatBar')[1],
+            sendButton: document.getElementsByClassName('_player_sendMsgBtn')[0],
+            chatInput: document.getElementsByClassName('_player_msgInput')[0],
+            emoji: document.getElementById('emoji'),
+            picture: document.getElementById('picture'),
+            fileSelector: document.getElementsByClassName('select-image')[0],
+            chatMemberList: document.getElementsByClassName('_player_chatTab')[0].children[1],
+            userAvatarsPath: window.parent.userAvatarsPath || 'images/'
+        }).init();
+
+        function cancelEventBubble(event) {
+            //并且不让事件进一步传播
+            if (event.stopPropagation) { //标准模型
+                event.stopPropagation();
+            } else { //IE
+                event.cancelBubble = true;
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "runMode":"prod",
+  "rabbitmq" : {
+    "dev" : "amqp://testmq:testmq@192.168.1.188:5672",
+    "joint" : "amqp://testmq:testmq@192.168.1.188:5672",
+    "prod" : "amqp://hzjw:951010@192.168.1.137:5672"
+  },
+  "socketPort" : {
+    "dev" : "https://comsocket.xuezuowang.com",
+    "joint" : "http://192.168.1.155:13000",
+    "prod" : "https://comsocket.xuezuowang.com"
+  },
+  "ecgeditor": {
+    "dev": "http://authoring.learn.com",
+    "joint": "http://authoring.learn.com",
+    "prod": "http://authoring.xuezuowang.com"
+  },
+  "newXueZuoWang": {
+    "dev": "http://www.xuezuowang.com",
+    "joint": "http://org.learn.com",
+    "prod": "http://www.xuezuowang.com"
+  },
+  "courseOrg": {
+    "dev": "http://192.168.1.18:1010",
+    "joint": "http://org.learn.com",
+    "prod": "http://www.xuezuowang.com"
+  },
+  "coursePlayer": {
+    "dev": "http://org.learn.com/",
+    "joint": "http://org.learn.com/",
+    "prod": "http://www.xuezuowang.com/"
+  }
+}

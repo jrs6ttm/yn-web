@@ -1,0 +1,141 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title></title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<input type="file" value="选择图片" accept="image/*" />-->
+<!--<button>选择图片</button>-->
+<!--<div>-->
+    <!--<img src />-->
+<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+    <!--window.URL = window.URL || window.webkitURL;-->
+    <!--// Check for the various File API support.-->
+    <!--if (window.File && window.FileReader && window.FileList && window.Blob) {-->
+        <!--// Great success! All the File APIs are supported.-->
+    <!--} else {-->
+        <!--alert('The File APIs are not fully supported in this browser.');-->
+    <!--}-->
+    <!--var files = document.getElementsByTagName('input')[0];-->
+    <!--var img = document.getElementsByTagName('img')[0];-->
+    <!--files.addEventListener('change', function() {-->
+<!--//        var url = window.URL.createObjectURL(files.files[0]);-->
+        <!--var reader = new FileReader();-->
+        <!--reader.readAsArrayBuffer(files.files[0]);-->
+        <!--reader.onloadend = function() {-->
+            <!--var data = new Blob([reader.result], { type: 'image/jpeg' });-->
+            <!--var url = window.URL.createObjectURL(data);-->
+            <!--img.src = url;-->
+            <!--console.log(reader.result);-->
+        <!--};-->
+<!--//        var url = window.URL.createObjectURL(files.files[0]);-->
+<!--//        img.src = url;-->
+    <!--});-->
+    <!--var btn = document.getElementsByTagName('button')[0];-->
+    <!--btn.addEventListener('click', function() {-->
+        <!--files.click();-->
+    <!--});-->
+   <!--console.log(files);-->
+<!--</script>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>File API Test</title>
+    <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+    <style>
+        #test{
+            display: none;
+        }
+    </style>
+    <script>
+        var userId = '123456';
+        var userName = '2333';
+    </script>
+</head>
+<body>
+<input type="file" id="fileImg" >
+<form>
+    <a id='test1' target="_blank">
+    <img src="" id="test" alt="">
+    </a>
+</form>
+<iframe src="chat.html" style="width:800px; height:600px">
+
+</iframe>
+<script>
+    function handleFileSelect (evt) {
+        // var filebtn = document.getElementById(id);
+        // console.log(filebtn);
+        // var files = filebtn.target.files;
+        // console.log(filebtn.target);
+        // console.log(files);
+        var files = evt.target.files;
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onloaded = (function(theFile) {
+                return function(e) {
+                    // Render thumbnail.
+                    // console.log(evt.target.files[0]);
+                    // console.log(e.target);
+//                    console.log(e.target.result);
+                    var i = document.getElementById("test");
+                    var j = document.getElementById("test1");
+                    i.src = event.target.result;
+                    console.log($(i).width());
+                    console.log($(i).height());
+                    $(i).css('width',800 + 'px');
+                    //$(i).css('height',$(i).height()/10+'px');
+                    console.log($(i).width());
+                    console.log($(i).height());
+                    var quality =  10;
+//                    i.src = jic.compress(i,quality).src;
+                    i.src = jic.compress(theFile,quality).src;
+                    j.href = i.src;
+//                    console.log(i.src);
+                    i.style.display = "block";
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsArrayBuffer(f);
+        }
+    }
+
+    document.getElementById('fileImg').addEventListener('change', handleFileSelect, false);
+    var jic = {
+                compress: function(source_img_obj, quality, output_format){
+
+                    var mime_type = "image/jpeg";
+                    if(output_format!=undefined && output_format=="png"){
+                        mime_type = "image/png";
+                    }
+
+                    var cvs = document.createElement('canvas');
+                    //naturalWidth真实图片的宽度
+                    cvs.width = source_img_obj.naturalWidth;
+                    cvs.height = source_img_obj.naturalHeight;
+                    var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
+                    var newImageData = cvs.toDataURL(mime_type, quality/100);
+                    var test = cvs.toDataURL(mime_type, 1);
+                    console.log(newImageData.length / test.length);
+                    var result_image_obj = new Image();
+                    result_image_obj.src = newImageData;
+                    return result_image_obj;
+                }
+    }
+</script>
+</body>
+</html>

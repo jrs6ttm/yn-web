@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#container {
+    margin: 20px;
+}
+#container > div {
+    position: relative;
+    margin: 0 0 20px 0;
+}
+#container > div > div {
+    position: relative;
+    margin: 0 0 10px 40px;
+    height: 40px;
+    line-height: 20px;
+}
+#container > div > div > label {
+    width: 100px;
+    text-align: center;
+    margin: 0;
+    height: 30px;
+    float: left;
+    line-height: 30px;
+}
+#container p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px;
+    padding: 5px 30px 5px 5px;
+    width: 200px;
+    border: 1px solid #aaa;
+    display: inline-block;
+}
+#container .editing p, #container input[type="text"], #container input[type="email"] {
+    display: none;
+}
+#container .editing input[type="text"],  #container .editing input[type="email"]{
+    display: inline-block;
+}
+#container .editing i.pencil {
+    display: none;
+}
+#container i {
+    cursor: pointer;
+}
+#container i.pencil {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    top: 10px;
+    left: 280px;
+    background: url(../../img/svg/pencil.svg);
+    background-size: 12px;
+}
+#container label {
+    margin-bottom: 10px;
+}
+#container input {
+    outline: none;
+    height: 30px;
+    padding: 5px 30px 5px 5px ;
+    width: 200px;
+}
+#container .show #new-password, #container #new-password-clone {
+    display: none;
+}
+#container .show #new-password-clone, #container #new-password{
+    display: inline-block;
+}
+#container .show .show-password{
+    opacity: .8;
+}
+#container .success-tips {
+    color: 	#00FF7F;
+    margin-left: 10px;
+}
+#container .error-tips {
+    color: #EF1300;
+    margin-left: 10px;
+}
+#container .show-password {
+    position: absolute;
+    left: 275px;
+    top: 5px;
+    height: 20px;
+    width: 24px;
+    background-image: url(../../img/svg/toggle.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    opacity: .3;
+}
+#container p {
+    position: relative;
+}

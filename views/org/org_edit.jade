@@ -1,0 +1,185 @@
+include head.html
+
+|<body>   
+|    <div id='example'>
+|    <div class='demo-section hidden-on-narrow k-content wide'>
+|    <input hidden type='text' id='orjID' value = '#{orgID}' >     
+|     <div >  <strong>当前位置： <a  href='#'>基础数据</a> >> <a  href='#'>组织机构维护</a> >> <a  href='#'>组织维护</a> <strong> </div>
+
+|       <div disabled class='column1'>  
+
+
+
+|<div class="searchCondition">
+
+|  <ul class="list-group">
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right"> 组织代码</span>
+|         <div class="col-sm-3"><input class='form-control myCondition'   id='orgCode'  type ='text' value = '#{orgCode}'></div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>    
+|         <span class="col-sm-1" align="right">法人</span>
+|         <div class="col-sm-3"><input class='form-control myCondition'   id='legalPerson'   type ='text' value = '#{legalPerson}'></div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>   
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right"> 组织名称</span>
+|         <div class="col-sm-3"> <input class='form-control myCondition'  id='orgFullDes'    value = '#{orgFullDes}'  type ='text' > </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>    
+|         <span class="col-sm-1" align="right">简称</span>
+|         <div class="col-sm-3"><input class='form-control myCondition'  id='orgShortDes' value = '#{orgShortDes}'  type ='text'  > </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>   
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right">  地址  </span>
+|         <div class="col-sm-3">  <input class='form-control myCondition'  id='address'  value = '#{address}'  type ='text'   > </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>    
+|         <span class="col-sm-1" align="right"> 手机号 </span>
+|         <div class="col-sm-3"> <input class='form-control myCondition'  id='tel1'   value = '#{tel1}'  type ='text'  > </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>*</strong>   
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right">  注册资金 </span>
+|         <div class="col-sm-3">  <input class='form-control myCondition'  id='registerMoney'     value = '#{registerMoney}'  type ='text' >  </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '>(万) </strong>    
+|         <span class="col-sm-1" align="right"> 营业执照 </span>
+|         <div class="col-sm-3"> <input class='form-control myCondition'  id='businessLicense'  value = '#{businessLicense}'  type ='text'  > </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '></strong>   
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right">   组织类型  </span>
+|         <div class="col-sm-3" align="left">   <select    id='orgSort' >
+
+|                                <option value='0'  #{orgSort_sle_0}  >非正式组织</option> 
+|                                <option value='1'  #{orgSort_sle_1}   >正式组织</option> 
+|                                <option value='2'  #{orgSort_sle_2}    >临时组织</option> 
+|                                <option value='3'  #{orgSort_sle_3}   >其它</option> 
+
+|                          </select>   </div>  <strong class="col-sm-1" align="left" style='font-size:17px;color:red '></strong> 
+|         <span class="col-sm-2" align="left"> 是否高校类型 </span>
+|         <div class="col-sm-3"  align="left">      <select       id='schoolType' >
+
+|                                <option value='1'  #{schoolType_sle_1} >学校结构</option> 
+|                                <option value='0'  #{schoolType_sle_0}  >非学校结构</option> 
+|                          </select></div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '></strong> 
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right"> 组织规模 </span>
+|         <div class="col-sm-3" align="left">     
+|                          <select id='orgscaleType'     id='orgscaleType' >
+
+|                                <option value='50'      #{orgscaleType_sle_50}      >50人以下</option> 
+|                                <option value='100'     #{orgscaleType_sle_100}      >100人以下</option> 
+|                                <option value='500'     #{orgscaleType_sle_500}      >500人以下</option> 
+|                                <option value='1000'    #{orgscaleType_sle_1000}     >1000人以下</option> 
+|                                <option value='5000'    #{orgscaleType_sle_5000}     >5000人以下</option> 
+|                                <option value='10000'   #{orgscaleType_sle_10000}     >10000人以下</option> 
+|                                <option value='50000'   #{orgscaleType_sle_50000}     >50000人以下</option> 
+|                                <option value='100000'  #{orgscaleType_sle_100000}     >10万人以下</option> 
+|                                <option value='500000'  #{orgscaleType_sle_500000}     >50万人以下</option> 
+|                                <option value='1000000' #{orgscaleType_sle_1000000}    >100万人以下</option> 
+|                                <option value='1500000' #{orgscaleType_sle_1500000}     >150万人以下</option> 
+|                                <option value='9999999' #{orgscaleType_sle_9999999}     >150万人以上</option> 
+|                          </select>  </div>  <strong class="col-sm-1" align="left" style='font-size:17px;color:red '></strong> 
+|         <span class="col-sm-1" align="right"> 邮箱地址 </span>
+|         <div class="col-sm-3"> <input class='form-control myCondition'  id='emailAdress'  value = '#{emailAdress}'  type ='text'   > </div>  
+|      </div><strong class="col-sm-1" align="left" style='font-size:17px;color:red '></strong> 
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right">电话 </span>
+|         <div class="col-sm-3"> <input class='form-control myCondition'  id='tel2'  value = '#{tel2}'  type ='text'   > </div>
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|      <div class="row">
+|         <span class="col-sm-1" align="right">备注说明 </span>
+|         <div class="col-sm-8">  <textarea  id='REMARK'   class='form-control feedback' rows='5' placeholder='请输入选项解析信息'>#{REMARK}</textarea></div>
+|      </div>
+|    </li>
+
+|    <li class="list-group-item">
+|                    <div class='row'  style=style='margin-top: 30px; width:60%;  '> 
+|                        <div class='col-sm-2' > <button id='chongzhi' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 60px;' > 重置 </button></div>
+|                        <div class='col-sm-2' > <button id='save' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 60px;' > 保存 </button></div>
+|                        <div class='col-sm-2' > <button id='OKsumbit' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 100px;'  > 提交生效 </button></div>
+|                        <div class='col-sm-2' > <button id='toOrgEdit' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 130px;'  >  转机构维护页 </button></div>
+|                        <div class='col-sm-2' > <button id='toOrgList' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 130px;'  >  返回组织列表页 </button></div>
+|                    </div> 
+|                     <br>
+|                   <div class='row' style=style='margin-top: 30px; '> </div>
+|       </div>
+|    </li>
+
+
+|  </ul></div>
+
+
+|</div>
+|   <div class='responsive-message'></div>
+
+
+|   <style>
+|        html {
+|            background-color:#fff;
+|         }
+
+|        .demo-section {
+
+|           width: 95%;
+
+|        }
+|        #background {
+|            background: transparent url(../content/web/colorpicker/interior-bg.png) no-repeat;
+|            margin: 0 auto;
+|            width: 100%;
+|            height: 100%;
+|            overflow: hidden;
+|        }
+|        .column1 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 30px;
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: auto;
+|            text-align: center;
+|        }
+|        .column2 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 10px; 
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            text-align: center;
+|        }
+|        .column .title {
+|            color: #a3a3a3;
+|            text-transform: uppercase;
+|            font-size: 11px;
+|            font-weight: normal;
+|            padding: 41px 0 20px;
+|        }
+|    </style>
+|</div>
+
+include footer.html
+
+
+|<script src='/org/js/orj.js'></script>
+
+
+
+

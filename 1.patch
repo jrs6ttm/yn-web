@@ -1,0 +1,60 @@
+Index: views/home/course.jade
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- views/home/course.jade	(revision bfc9e2b3a36f9942662bbe572fd632fd7552c3ba)
++++ views/home/course.jade	(revision )
+@@ -28,6 +28,7 @@
+                 if(Bus.dataBase.permission){
+                     userData = Bus.dataBase.permission.userData;
+                     userData.id = Bus.dataBase.permission.userId;
++                    userData.roles = Bus.dataBase.permission.roles;
+                 }else{
+                     userData = '';
+                 }
+Index: views/home/situation.jade
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- views/home/situation.jade	(revision bfc9e2b3a36f9942662bbe572fd632fd7552c3ba)
++++ views/home/situation.jade	(revision )
+@@ -26,6 +26,7 @@
+                 if(Bus.dataBase.permission){
+                     userData = Bus.dataBase.permission.userData;
+                     userData.id = Bus.dataBase.permission.userId;
++                    userData.roles = Bus.dataBase.permission.roles;
+                 }else{
+                     userData = '';
+                 }
+Index: views/home/player.jade
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- views/home/player.jade	(revision bfc9e2b3a36f9942662bbe572fd632fd7552c3ba)
++++ views/home/player.jade	(revision )
+@@ -43,6 +43,7 @@
+                 if(Bus.dataBase.permission){
+                     userData = Bus.dataBase.permission.userData;
+                     userData.id = Bus.dataBase.permission.userId;
++                    userData.roles = Bus.dataBase.permission.roles;
+                 }else{
+                     userData = '';
+                 }
+Index: views/home/home.jade
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- views/home/home.jade	(revision bfc9e2b3a36f9942662bbe572fd632fd7552c3ba)
++++ views/home/home.jade	(revision )
+@@ -28,6 +28,7 @@
+                 if(Bus.dataBase.permission){
+                     userData = Bus.dataBase.permission.userData;
+                     userData.id = Bus.dataBase.permission.userId;
++                    userData.roles = Bus.dataBase.permission.roles;
+                 }else{
+                     userData = '';
+                 }

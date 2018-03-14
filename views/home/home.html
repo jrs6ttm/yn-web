@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="/home/css/style.css" rel="stylesheet">
+    <link href="/home/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <title>学做网</title>
+</head>
+<body>
+<div id="app" class="_page_view">
+</div>
+<div class="modal-footer _footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <h4>公司情况</h4>
+                <ul class="list-unstyled">
+                    <li><a href="http://www.xuezuowang.com">关于公司</a></li>
+                    <!--                    <li><a href="#">公司办公</a></li>-->
+                    <!--                    <li><a href="#">合作伙伴</a></li>-->
+                    <!--                    <li><a href="#">我们的团队</a></li>-->
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <h4>询问咨询</h4>
+                <ul class="list-unstyled">
+                    <li><a href="http://newengine.xuezuowang.com/NKTOForMyDemo/MyNTKODemo/posetup.exe">office插件</a></li>
+                    <!--                    <li><a href="">教师资讯</a></li>-->
+                    <!--                    <li><a href="">价格查询</a></li>-->
+                    <!--                    <li><a href="">申请教师</a></li>-->
+                </ul>
+            </div>
+            <!--            <div class="col-xs-12 col-md-6">-->
+            <!--                <h4>联系我们</h4>-->
+            <!--                <div class="form-group">-->
+            <!--                    <div class="input-group">-->
+            <!--                        <input type="text" placeholder="输入内容..." class="form-control"/><span class="input-group-btn">-->
+            <!--              <button type="button" class="btn btn-grey-800">提交</button></span>-->
+            <!--                    </div>-->
+            <!--                </div><br/>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+<script src="/org/ext_js/jquery.min.js"></script>
+<script src="/home/js/bootstrap/bootstrap.js"></script>
+<script src="/home/js/script.js"></script>
+<script src="/home/js/index/publicFuc.js"></script>
+<script src="/home/js/index/users.js"></script>
+<script src="/home/js/pages/home/home.js"></script>
+<script>
+    $(function(){
+        $('._page_view').css({height:document.documentElement.clientHeight - 95,minHeight:document.documentElement.clientHeight - 95});
+        sendMessage('get','','/getConfig','',function(data){
+            playerPort = data.playerPort;
+            processEnginePort =data.processEnginePort;
+            newProcessEnginePort = data.newProcessEnginePort;
+            soursePort =data.soursePort;
+            filePort = data.filePort;
+            VMPort =data.VMPort;
+            VM2Port = data.VM2Port;
+            VM3Port = data.VM3Port;
+            ecgeditorPort = data.ecgeditorPort;
+            ecgeditorPort2 = data.ecgeditorPort2;
+            examPort = data.examPort;
+            monitorPort =data.monitorPort;
+            orgPort = data.orgPort;
+            studyPort =data.studyPort;
+            sendMessage('get',playerPort,'/getSession','',function(data){
+                userData = data;
+                var home = new Home;
+                home.init();
+            });
+        });
+    });
+</script>
+</body>
+</html>

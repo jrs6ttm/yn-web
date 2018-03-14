@@ -1,0 +1,176 @@
+.container {
+    margin-top: 50px;
+}
+
+.topTip {
+    margin: 20px 20px 20px 0;
+}
+
+h1.tips {
+    padding-top: 90px;
+    text-align: center;
+}
+
+ul.rightMenu {
+    position: fixed;
+    display: none;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+ul.dropdown-menu > li:hover {
+    cursor: pointer;
+}
+
+.searchAction {
+    margin: 20px 0 0 20px;
+}
+
+.searchAction > .searchOption {
+    width: 100px;
+    float: left;
+}
+
+div.searchInput {
+    display: inline-block;
+    width: 300px;
+    height: 26px;
+    border-radius: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+input.searchInput {
+    margin-left: 10px;
+    width: 260px;
+    height: 24px;
+    border: 0;
+    outline: none;
+}
+
+i.cancel {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.searchOption > .searchDescription {
+    padding-top: 2px;
+}
+
+.searchOption > .searchCheckbox {
+
+}
+
+.searchOption > input {
+
+}
+
+.searchOption > .searchFont {
+    padding-left: 2px;
+}
+
+.searchResult {
+    margin-top: 50px;
+}
+
+.searchResult > .searchResultInfo {
+    height: 300px;
+}
+
+.litterButton {
+    padding: 3px 10px;
+    margin-left: 30px;
+}
+
+._block {
+    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2), -1px 0 1px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2), 0 -1px 1px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+.img-thumbnail {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.status-description {
+    /*padding-left: 4px;*/
+    margin-top: -5px;
+    width: 100%;
+    text-align: center;
+}
+
+a {
+    cursor: pointer;
+}
+
+.bottomTip {
+    margin-bottom: 100px;
+    width: 500px;
+    min-height: 30px;
+    padding-left: 20px;
+}
+
+.bottomTip > .operate {
+    float : left;
+    margin-right: 20px;
+}
+.bottomTip > .operate > a {
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+a > h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .bottomTip {
+        margin-left: 130px;
+    }
+}
+@media (min-width: 992px) {
+    .bottomTip {
+        margin-left: 250px;
+    }
+}
+@media (min-width: 1200px) {
+    .bottomTip {
+        margin-left: 350px;
+    }
+}
+@media (min-width: 1400px) {
+    .container {
+        width: 1370px;
+    }
+    .bottomTip {
+        margin-left: 450px;
+    }
+}
+@media (min-width: 1600px) {
+    .container {
+        width: 1570px;
+    }
+    .bottomTip {
+        margin-left: 550px;
+    }
+}
+.row.searchResult {
+    margin-left: 5px;
+    margin-right: 5px;
+}

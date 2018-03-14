@@ -1,0 +1,33 @@
+doctype html
+html(lang='en' style="height:100%;padding:0;margin:0")
+    head
+        meta(charset='UTF-8')
+        title #{title}
+    body(style="height:100%;padding:0;margin:0")
+        script(src='/home/js/header/lib/jquery.js')
+        script.
+            $(function () {
+                var userId = '#{id2}';
+                var fileId = '#{id1}';
+                var container = '<div class="container" style="height:100%;padding:20px 20px;background-color: #fff;overflow-y: auto;;width:80%;margin:0 auto"></div>';
+                $('.page_view').append(container);
+                $('#header').hide();
+                $('#content-wrapper').css({padding: 0});
+                $.ajax({
+                    url:'/getConfig',
+                    method: 'GET'
+                }).done(function (config) {
+                    $.ajax({
+                        url:config.filePort + '/ec_engine/fileManager/fileContentRead?fileId=' + fileId + '&userId=' + userId + '&createType=study',
+                        method: 'GET'
+                    }).done(function (content) {
+                        $('.container').append(content);
+                    }).fail(function () {
+                        console.log('sys_get_user_txt fail!');
+                    });
+                }).fail(function () {
+                    console.log('sys_get_user_txt fail!');
+                });
+
+            });
+        #app.page_view(style='background-color: #14191e;height:100%')

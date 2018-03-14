@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <link href="/app/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="/app/css/personal/info.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/template" id="person-info-template">
+        <div id="personal-info">
+            <label>个人信息</label>
+            <div>
+                <label>全名</label>
+                <p id="full-name-value"><%= displayname || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="full-name" id="full-name" placeholder="全名" value="<%= displayname || '' %>">
+                <span id="full-name-tips"></span>
+            </div>
+            <div>
+                <label>邮箱</label>
+                <p id="email-value"><%= email || '' %></p>
+                <i class="pencil"></i>
+                <input type="email" name="email" id="email" placeholder="邮箱" value="<%= email || '' %>">
+                <span id="email-tips"></span>
+            </div>
+            <div>
+                <label>密码</label>
+                <input type="password" name="new-password" id="new-password" placeholder="新密码">
+                <input type="text" name="new-password-value" id="new-password-clone" placeholder="新密码">
+                <span id="password-tips"></span>
+                <i class="show-password"></i>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="enterprise-info-template">
+        <div id="enterprise-info">
+            <label>企业信息</label>
+            <div>
+                <label>组织代码</label>
+                <p id="org-code-value"><%= orgCode || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="org-code" id="org-code" placeholder="组织代码" value="<%= orgCode || '' %>">
+                <span id="org-code-tips"></span>
+            </div>
+            <div>
+                <label>组织名称</label>
+                <p id="org-full-des-value"><%= orgFullDes || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="org-full-des" id="org-full-des" placeholder="组织名称" value="<%= orgFullDes || '' %>">
+                <span id="org-full-des-tips"></span>
+            </div>
+            <div>
+                <label>组织简称</label>
+                <p id="org-short-des-value"><%= orgShortDes || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="org-short-des" id="org-short-des" placeholder="组织简称" value="<%= orgShortDes || '' %>">
+                <span id="org-short-des-tips"></span>
+            </div>
+            <div>
+                <label>法人姓名</label>
+                <p id="legal-person-value"><%= legalPerson || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="legal-person" id="legal-person" placeholder="法人姓名" value="<%= legalPerson || '' %>">
+                <span id="legal-person-tips"></span>
+            </div>
+            <div>
+                <label>电话1</label>
+                <p id="tel1-value"><%= tel1 || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="tel1" id="tel1" placeholder="电话1" value="<%= tel1 || '' %>">
+                <span id="tel1-tips"></span>
+            </div>
+            <div>
+                <label>电话2</label>
+                <p id="tel2-value"><%= tel2 || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="tel2" id="tel2" placeholder="电话2" value="<%= tel2 || '' %>">
+                <span id="tel2-tips"></span>
+            </div>
+            <div>
+                <label>组织地址</label>
+                <p id="address-value"><%= address || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="address" id="address" placeholder="组织地址" value="<%= address || '' %>">
+                <span id="address-tips"></span>
+            </div>
+            <div>
+                <label>组织邮箱</label>
+                <p id="email-address-value"><%= emailAdress || '' %></p>
+                <i class="pencil"></i>
+                <input type="text" name="email-address" id="email-address" placeholder="组织邮箱" value="<%= emailAdress || '' %>">
+                <span id="email-address-tips"></span>
+            </div>
+        </div>
+    </script>
+    <script src="/app/js/config/config.js"></script>
+    <script src="/app/js/lib/jquery.js"></script>
+    <script src="/app/js/lib/underscore.js"></script>
+    <script src="/app/js/lib/common.js"></script>
+    <script src="/app/js/personal/info.js"></script>
+</body>
+</html>

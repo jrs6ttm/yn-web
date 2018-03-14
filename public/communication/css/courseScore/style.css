@@ -1,0 +1,57 @@
+th, td {
+    text-align: center;
+}
+.table.table-bordered td {
+    vertical-align: middle;
+}
+.table .editing {
+    padding: 0;
+}
+.edit {
+    cursor: text;
+}
+.edit span {
+    display: block;
+}
+.edit input, .edit textarea {
+    display: none;
+}
+.editing span {
+    display: none;
+}
+.editing input, .editing textarea {
+    margin: 0;
+    width: 100%;
+    display: block;
+}
+#comment textarea {
+    max-width: 100%;
+}
+.select-student {
+    margin-bottom: 20px;
+}
+._container {
+    margin: 20px 20px 0;
+    position: relative;
+}
+.right {
+    float: right;
+}
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1002;
+    background: rgba(255, 255, 255, 0.6);
+    text-align: center;
+}
+.cover div {
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #f01400;
+}

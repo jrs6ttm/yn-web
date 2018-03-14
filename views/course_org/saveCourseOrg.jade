@@ -1,0 +1,62 @@
+//
+   Created by Administrator on 2016/9/20.
+
+doctype html
+html
+   head
+      meta(http-equiv="Content-Type",content="text/html; charset=utf-8")
+      title 编辑课程组织
+      script(type="text/javascript", src="../../course_org/ext_js/jquery.min.js")
+      script(type="text/javascript", src="../../course_org/ext_js/underscore.js")
+      script(type="text/javascript", src="../../course_org/ext_js/backbone.js")
+   body
+      .container(style="padding: 50px 10px 10px;")
+      script(type="text/javascript", src="../../course_org/js/courseOrgModel.js")
+      script(type="text/javascript").
+         var ecgeditorHost = '#{ecgeditorHost}';
+         var courseId = '#{courseId}';
+
+         $(function(){
+            $.get('http://'+ecgeditorHost+'/getSingleCourseInfo', {courseId: courseId}, function(course){
+               if(course && course.success){
+                  var courseInfo = course.data, tempC = new CourseOrgModel();
+                  //if(!courseInfo[0].isCooperation || courseInfo[0].isCooperation == 'false'){
+                  /*
+                   if(!courseInfo.isCooperation || courseInfo.isCooperation == 'false'){
+                     $('.container', 'body').html('<h3>Sorry, this is not a cooperative course.</h3>');
+                     console.log('Sorry, this is not a cooperative course, course id : '+courseId);
+                  }else {*/
+                     var groupRange = {};
+                     if(courseInfo.groupRange){
+                        groupRange = JSON.parse(courseInfo.groupRange);
+                     }
+                     tempC.set({
+                           INSTANCE_ID: courseId,
+                           INSTANCE_NAME: courseInfo.courseName,
+                           LRN_AREA_ID: '',
+                           LRN_AREA_NAME: '',
+                           //MIN_GROUP: groupRange.minGroup?groupRange.minGroup:1,
+                           //MAX_GROUP: groupRange.maxGroup?groupRange.maxGroup:6,
+                           MIN_GROUP: 1,
+                           MAX_GROUP: 6,
+                           MIN_MEMBER: groupRange.minMember?groupRange.minMember:1,
+                           MAX_MEMBER: groupRange.maxMember?groupRange.maxMember:6,
+                           MIN_ROLE: groupRange.minRole?groupRange.minRole:1,
+                           MAX_ROLE: groupRange.maxRole?groupRange.maxRole:6,
+                           FILE_ICON: courseInfo.fileIcon
+                     });
+
+                     $.post('/CourseOrg/optCourseOrg/save', {saveObj: JSON.stringify(tempC.toJSON())}, function (saveResult) {
+                        if (saveResult && saveResult.isOk) {
+                           console.log(tempC.toJSON());
+                           window.location.href = '/CourseOrg/opt?LRNSCN_ORG_ID=' + saveResult.LRNSCN_ORG_ID + '&optType=edit';
+                            //window.open('/CourseOrg/opt?LRNSCN_ORG_ID=' + saveResult.LRNSCN_ORG_ID + '&optType=edit');
+                        } else {
+                           alert('组织课程时出现错误!');
+                        }
+                     });
+                  //}
+               }
+            });
+         });
+

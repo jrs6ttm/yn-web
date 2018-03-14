@@ -1,0 +1,38 @@
+doctype html
+html
+    head
+        title 易能教育
+        meta(charset='utf-8')
+        link(href='styles/loginStyle.css', rel='stylesheet', type='text/css')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        script(type='application/x-javascript').
+            addEventListener("load", function () {
+                setTimeout(hideURLbar, 0);
+            }, false); function hideURLbar() {
+                window.scrollTo(0, 1);
+            }
+    body
+        // ---start-main--
+        .login-form
+            .head
+                img(src='images/loginImages/photo.jpg', alt='')
+            form(action="/loginHandle", method="post",id = 'check')
+                div.loginInput
+                    a.icon.user(style="cursor:default;")
+                    input.text(name="username",type='text', placeholder='用户名')
+                div.loginInput
+                    a.icon.lock(style="cursor:default;")
+                    input(type="password",style="display:none")
+                    input(name="password",type='password', placeholder='密码', onfocus="this.value = '';")
+                .p-container
+                    input(type='submit', value='登   录',id = "login")
+                div(style="text-align: center;margin: 5px;")
+                    a.link(href="http://www.xuezuowang.com:3000/#/sign-up") 创建账号
+        // ---start-copyright--
+        .copy-right
+            p
+                | 2015 © Copyright
+                | &nbsp;
+                a(href='/') 武汉易能教育
+                |   - All right reserved
+        // ---//end-copyright--

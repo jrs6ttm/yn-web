@@ -1,0 +1,19 @@
+/*
+改变audio的样式 其实是隐藏了audio，然后显示一个div元素，通过这个div元素来操控audio
+*/
+.ui-audio{
+    background:url(../../images/audio.png) no-repeat 10px center;
+    background-size:18px 18px; cursor:pointer;
+    /*background-color: #94c2ed;*/
+    height: 24px;
+    line-height: 24px;
+    width:100px;
+    border-radius: 5px;
+}
+.ui-audio.play{
+    background-image: url(../../images/audio.gif);
+}
+.ui-duration{
+    float: right;
+    margin:0 10px;color:#fff;
+}

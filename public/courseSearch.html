@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head><title>学习课程查询</title>
+    <link href="/communication/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/communication/css/font_awesome/font-awesome.min.css" rel="stylesheet">
+    <link href="/communication/css/monitor/courseSearch.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <script>
+        var userId = 'J960DGV0';
+        var userName = '';
+        var roleArr = '';
+        var courseOrg = 'http://192.168.1.25:1188';
+        var coursePlayer = 'http://www.xuezuowang.com';
+    </script>
+</head>
+<body>
+<ul style="display:none" class="rightMenu dropdown-menu">
+    <li><a href="" target="_blank">查看组织信息</a></li>
+    <li><a href="" target="_blank"></a></li>
+    <li><a href="" target="_blank"></a></li>
+</ul>
+<div class="container">
+    <div class="row topTip"><label>个人中心>>学习课程查询</label></div>
+    <div style="display:none" class="row searchAction">
+        <div class="searchOption"><label class="searchDescription">当前角色：</label></div>
+        <div class="searchOption"><input type="radio" value="teacher" name="role" checked>&nbsp老师</div>
+        <div class="searchOption"><input type="radio" value="student" name="role">&nbsp学生</div>
+    </div>
+    <div class="row searchAction">
+        <div class="searchOption"><label class="searchDescription">课程状态：</label></div>
+        <div class="searchOption"><input id="publishing" type="checkbox" value="publishing" class="searchCheckbox"><span
+                class="searchFont">&nbsp组织中课程</span></div>
+        <div class="searchOption"><input id="published" type="checkbox" value="published" class="searchCheckbox"><span
+                class="searchFont">&nbsp已组织课程</span></div>
+        <div class="searchOption"><input id="learning" type="checkbox" value="learning" class="searchCheckbox"><span
+                class="searchFont">&nbsp学习中课程</span></div>
+        <div class="searchOption"><input id="finished" type="checkbox" value="finished" class="searchCheckbox"><span
+                class="searchFont">&nbsp已学完课程</span></div>
+    </div>
+    <div class="row searchAction">
+        <div class="searchOption"><label class="searchDescription">课程名称：</label></div>
+        <div>
+            <div class="searchInput"><input type="text" placeholder="Search" class="searchInput">
+                <i id="cancelInputBtn" style="display:none" class="fa fa-close cancel"></i>
+            </div>
+            <button class="btn btn-default litterButton">查询</button>
+        </div>
+    </div>
+    <div class="row searchResult">
+
+    </div>
+    <div class="row">
+        <div class="bottomTip">
+            <div class="operate"><span>每页</span>
+                <select id="countOfPage">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+                <span>记录</span></div>
+            <div class="operate">
+                <a id="firstPage">首页</a>
+                <a id="prevPage">上一页</a>
+                <a id="currentPage">1</a>
+                <i>/</i>
+                <a id="pageCounts"></a>
+                <a id="nextPage">下一页</a>
+                <a id="lastPage">尾页</a>
+            </div>
+            <div class="operate">
+                <span>转到第</span>
+                <input id="search" type="text" style="width : 50px; height: 20px">
+                <span>页</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/communication/js/jquery/jquery.min.js"></script>
+<script src="/communication/js/bootstrap/bootstrap.min.js"></script>
+<script src="/communication/js/tool/tool.js"></script>
+<script src="/communication/js/monitor/courseSearch.js"></script>
+</body>
+</html>

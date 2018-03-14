@@ -1,0 +1,123 @@
+include head.html
+
+|<body style="min-width: 1080px;" >
+
+|<div id='example'  style=' margin-left: 20px; ' >   
+
+|    <div id='left1' style='float:left ;  margin-top: 20px;border-style: solid;border-color: #eee;  border-width: 3px; padding:20px;'>  
+|          <div >   <input hidden  id='selectedDeptID' type='text' value=''>  
+|                <div >  <a id='backOrg' href='/org/org_search' ><<返回组织列表 </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id='editOrg'><<组织维护</a>  </div>
+|                <div > 机构名称：  <input id='deptDes' class='form-control myCondition'  type='text' value=''>  </div>
+
+|                <div>  机构级别： <select disabled>
+|                     <option #{selected_1} value='1'>学校组织 </option>
+|                     <option #{selected_0}  value='0'>非学校组织 </option>
+|                  </select> 
+
+|                </div> <br>     <!-- <input type='button' value='同级下移' >   <input type='button' value='保存更新' >-->
+|              <!-- <div >   <input id='backOrg' type='button' style='margin-bottom: 10px' class="btn btn-success organizeNewCourse" value='返回组织列表' >   <input id='editOrg' style='margin-bottom: 10px' class="btn btn-success organizeNewCourse"  type='button' value='组织维护' >    </div>  -->
+|               <div >   <input id='delDep' type='button' style='margin-bottom: 10px' class="btn btn-primary" value='删除机构'    >   <input id='upDep' style='margin-bottom: 10px' class="btn btn-primary"  type='button' value='同级上移' >    </div>
+|               <div > <input type='button' id='addChild' style='margin-bottom: 10px' class="btn btn-primary" value='增加下级' >  <input id='addPeer' style='margin-bottom: 10px' class="btn btn-primary" type='button' value='增加同级'    >  </div>
+
+|          </div>
+
+|          <div id='treelist' style='width: 250px;' > </div>
+|    </div>  
+
+|    <div id='left2' style='float:left ; margin-top: 20px; border-style: solid;border-color: #eee;  border-width: 3px; padding:20px 0 0 20px;'> 
+|         <div class="row" style="padding-left: 20px;" >
+|               <div class='col-md-1' style='padding:0px;' align='left'>用户账号</div>  <div class='col-md-2'style="padding-left:5px;" align="left" >  <input id='userAccount' type='text' class='form-control myCondition'  > </div>
+|               <div class='col-md-1' style="padding:0px;" align="center"> 姓名</div>  <div  class="col-md-2" style="padding:0px;" align="left" ><input id='userName'  type='text' class='form-control myCondition' > </div>
+|               <div class="col-md-2" align="center"  > <input id='depUserSearch'  type='button' value='查询' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 70px;'  >  </div>  
+|               <div  class='col-sm-1' > <input type='button' id='addUser' value='新增' class="btn btn-info btn-xs optOrganizedCourse" style= 'width: 70px;'  >  </div>  
+|        </div><br>
+|          
+|        <div id='grid' style=' width: 635px;'></div>
+|    </div>   
+
+|  </div>
+
+|<div class='geDialog unselectable' style='width: 700px; z-index: 10005; left: 464px; top: 115px;'>
+|</div>
+
+
+
+|<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+
+|   <div class='demo-section hidden-on-narrow k-content wide'>
+
+|       <div >  <strong>当前位置： <a  href='#'>人员信息查询列表</a> <strong> </div>
+|       <div  class='column1'>  
+|                    <div class='row' style='margin-top: 10px;' > 
+
+|                        <div class='col-sm-1' align='right'>用户名</div><div class='col-sm-2' ><input id='uid' type ='text' class='form-control myCondition' ></div>
+|                        <div class='col-sm-1' align='right'>全名</div><div class='col-sm-2' ><input id='displayname' type ='text' class='form-control myCondition'  ></div>  
+|                        <div class='col-sm-1' align='right'>电子邮箱</div><div class='col-sm-2' ><input id='email'  type ='text' class='form-control myCondition'  ></div>
+|                    </div> 
+|                    <div class='row'  style='margin-top: 40px;'> 
+|                        <div class='col-sm-1' > </div>
+|                        <div class='col-sm-2' > <button id='userSearch'  class="btn btn-info btn-xs optOrganizedCourse"  style= 'width: 80px;' > 查询 </button></div>
+|                        <div class='col-sm-2' > <button id='userSet'  class="btn btn-info btn-xs optOrganizedCourse"   style= 'width: 80px;' > 重置 </button></div>
+|                        <div class='col-sm-2' > <button id='userSure'  class="btn btn-info btn-xs optOrganizedCourse"  style= 'width: 80px;' >  确定选择 </button></div>
+|                        <div class='col-sm-2' > <button id='userClosed'  class="btn btn-default btn-info btn-xs optOrganizedCourse" data-dismiss="modal"   style= 'width: 80px;'  >  关闭 </button></div>
+|                    </div> 
+|       </div>
+|       <div  class='column2'  class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">       
+|          <div id='singleSort'>  </div>
+|       </div>
+|    </div>
+|</div>   
+
+|    <div class='responsive-message'></div>
+|    <script src='/org/js/orgSearch.js'></script>
+
+|    <style>
+
+|        html {
+|            background-color:#fff;
+|         }
+
+|        .demo-section {      
+|            width: 80%;
+
+|        }
+|        #background {
+|            background: transparent url(../content/web/colorpicker/interior-bg.png) no-repeat;
+|            margin: 0 auto;
+|            width: 100%;
+|            height: 100%;
+|            overflow: hidden;
+|        }
+|        .column1 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 30px;
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 150px;
+|            text-align: center;
+|        }
+|        .column2 {
+|            border-style: solid;
+|            border-color:  #B5B5B5;
+|            border-width: 1px;
+|            margin-top: 10px; 
+|            margin-left: 5px; 
+|            margin-right: 5px; 
+|            height: 403px;
+|            text-align: center;
+|        }
+|        .column .title {
+|            color: #a3a3a3;
+|            text-transform: uppercase;
+|            font-size: 11px;
+|            font-weight: normal;
+|            padding: 41px 0 20px;
+|        }
+|    </style>
+
+|<script src='/org/js/orjDep_edit.js'></script>
+
+include footer.html   
+
