@@ -106,7 +106,7 @@ Database.prototype = {
         }
     },
     getPreFile : function(filePath,next){
-        sendMessage('post',newProcessEnginePort,'/ec_engine/fileManager/fileContentRead',{userId:userData.id,filePath:filePath},function(resData){
+        sendMessage('post',newProcessEnginePort,'fileManager/fileContentRead',{userId:userData.id,filePath:filePath},function(resData){
             //if(resData.substr(0, 3) != '<!D'){
                 next(resData);
             //}
@@ -116,7 +116,7 @@ Database.prototype = {
         var me = this;
         me.findFile(me.courseId.split('@')[1],taskId,function(data){
             if(data.length){
-                sendMessage('post',newProcessEnginePort,'/ec_engine/fileManager/fileContentRead',{userId:userData.id,fileId:data[data.length-1].fileId,createType:'study'},function(resData){
+                sendMessage('post',newProcessEnginePort,'fileManager/fileContentRead',{userId:userData.id,fileId:data[data.length-1].fileId,createType:'study'},function(resData){
                     if(resData.substr(0, 3) != '<!D'){
                         next(resData);
                     }
@@ -139,7 +139,7 @@ Database.prototype = {
         formData.append("fileStr",content);
 
         var xhr = new XMLHttpRequest();
-        path = newProcessEnginePort + '/ec_engine/fileManager/fileUpload';
+        path = newProcessEnginePort + 'fileManager/fileUpload';
         xhr.open('post', path, true);
         xhr.onload = function(e){
             if (this.status == 200) {
@@ -148,13 +148,15 @@ Database.prototype = {
                     result = JSON.parse(result);
                 }
                 if (result.errorMsg) {
-                    // err
+                    me.view.showNotification(result.errorMsg,'error');
                 }else{
                     sendMessage('post',playerPort,'/saveFile',{courseInstId:me.courseId.split('@')[1],taskId:workData.taskId,updateTime:new Date().getTime(),fileId:fileId,fileName:workData.output.name,fileUrl:workData.input.filePath,fileType:'html'},function(){
                         me.view.showNotification('保存成功~','success');
                     });
                 }
-            }
+            }else{
+				me.view.showNotification('保存时出现问题!','error');
+			}
         };
         xhr.send(formData);
         /*var sendData = {
@@ -162,7 +164,7 @@ Database.prototype = {
             fileId : fileId,
             fileStr : content
         };
-        sendMessage('post',newProcessEnginePort,'/ec_engine/fileManager/fileUpload',sendData,function(data){
+        sendMessage('post',newProcessEnginePort,'fileManager/fileUpload',sendData,function(data){
             if(data){
                 sendMessage('post',playerPort,'/saveFile',{courseInstId:me.courseId.split('@')[1],taskId:workData.taskId,updateTime:new Date().getTime(),fileId:fileId,fileName:workData.output.name,fileUrl:JSON.parse(data).filePath,fileType:'html'},function(){
                     me.view.showNotification('保存文件成功~','success');
@@ -174,7 +176,7 @@ Database.prototype = {
     },
     getGroupData : function(next){
         var me = this;
-        sendMessage('post',newProcessEnginePort,'/ec_engine/course/getUserGroupInfo',{userId:userData.id,courseOrgId:me.courseData.lrnScnOrgId},function(groupData){
+        sendMessage('post',newProcessEnginePort,'course/getUserGroupInfo',{userId:userData.id,courseOrgId:me.courseData.lrnScnOrgId},function(groupData){
             me.groupData = groupData;
             next();
         });
@@ -981,7 +983,7 @@ View.prototype = {
             alert(workData.errorMsg);
             return;
         }
-        sendMessage('get',newProcessEnginePort,'/ec_engine/form/getFormRun?cId='+workData.input.formId,'',function(data){
+        sendMessage('get',newProcessEnginePort,'form/getFormRun?cId='+workData.input.formId,'',function(data){
             $(content).append(data.formHtml);
             if(!me.checkMode && !me.viewMode){
                 var saveBtn = createEle('button');saveBtn.innerHTML = '提交';saveBtn.className = 'btn btn-primary pull-left';content.appendChild(saveBtn);
@@ -1081,10 +1083,10 @@ View.prototype = {
                 if(workData.input.errorMsg){
                     alert(workData.input.errorMsg);
                 }else{
-                    var downPath = newProcessEnginePort.split('://')[1] + '/ec_engine/fileManager/fileRead?userId='+userData.id+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1].split('.')[0]+'&createType=study&ign=';
+                    var downPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileRead?userId='+userData.id+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1].split('.')[0]+'&createType=study&ign=';
                     downPath = escape(downPath);
                     var fileName = escape((workData.input.fileName?workData.input.fileName:'文件.doc'));
-                    var upPath = newProcessEnginePort.split('://')[1] + '/ec_engine/fileManager/fileUpload?userId='+ userData.id+'&fileName='+fileName+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length - 1].split('.')[0]+'&createType=study';
+                    var upPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileUpload?userId='+ userData.id+'&fileName='+fileName+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length - 1].split('.')[0]+'&createType=study';
                     upPath = escape(upPath);
                     var permission = 'rw';
                     console.log('pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MySecondWordEditor.jsp?upLoadPath='+upPath+'&downLoadPath='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id+'&filePath='+workData.input.filePath)
@@ -1098,7 +1100,7 @@ View.prototype = {
                 if(workData.input.errorMsg){
                     alert(workData.input.errorMsg);
                 }else{
-                    var downPath = newProcessEnginePort.split('://')[1] + '/ec_engine/fileManager/fileRead?userId='+userData.id+'&filePath='+workData.input.filePath+''+'&ign=' ;
+                    var downPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileRead?userId='+userData.id+'&filePath='+workData.input.filePath+''+'&ign=' ;
                     downPath = escape(downPath);
                     var permission = 'r';
                     console.log('pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MyFirstWordEditor.jsp?path='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name);
