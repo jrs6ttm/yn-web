@@ -130,14 +130,41 @@ Database.prototype = {
         });
     },
     saveTxtFile : function(fileId,content,workData){
-        var me = this;
+		var me = this;
         var formData = new FormData();
         formData.append("userId",  userData.id);
         formData.append("fileId",workData.input.fileId);
         formData.append("fileName",workData.input.fileName);
         formData.append("createType","study");
         formData.append("fileStr",content);
-
+	
+		$.ajax({
+            url: newProcessEnginePort + 'fileManager/fileUpload', 
+            type: "POST",
+            contentType: 'multipart/form-data',
+            data: formData,
+            async: true,
+            cache: false,
+            processData: false, //告诉jQuery不要去处理发送的数据
+            success: function(result) {
+                var result = this.response;
+                if(result){
+                    result = JSON.parse(result);
+                }
+                if (result.errorMsg) {
+                    me.view.showNotification(result.errorMsg,'error');
+                }else{
+                    sendMessage('post',playerPort,'/saveFile',{courseInstId:me.courseId.split('@')[1],taskId:workData.taskId,updateTime:new Date().getTime(),fileId:fileId,fileName:workData.output.name,fileUrl:workData.input.filePath,fileType:'html'},function(){
+                        me.view.showNotification('保存成功~','success');
+                    });
+                }
+            },
+			error: function(error){
+				me.view.showNotification('保存时出现问题!','error');
+			}
+        });
+		
+	   /*
         var xhr = new XMLHttpRequest();
         path = newProcessEnginePort + 'fileManager/fileUpload';
         xhr.open('post', path, true);
@@ -159,20 +186,7 @@ Database.prototype = {
 			}
         };
         xhr.send(formData);
-        /*var sendData = {
-            userId : userData.id,
-            fileId : fileId,
-            fileStr : content
-        };
-        sendMessage('post',newProcessEnginePort,'fileManager/fileUpload',sendData,function(data){
-            if(data){
-                sendMessage('post',playerPort,'/saveFile',{courseInstId:me.courseId.split('@')[1],taskId:workData.taskId,updateTime:new Date().getTime(),fileId:fileId,fileName:workData.output.name,fileUrl:JSON.parse(data).filePath,fileType:'html'},function(){
-                    me.view.showNotification('保存文件成功~','success');
-                });
-            }else{
-                $.MsgBox.Alert('保存失败','文档保存失败！');
-            }
-        });*/
+        */
     },
     getGroupData : function(next){
         var me = this;
