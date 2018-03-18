@@ -1434,9 +1434,14 @@ View.prototype = {
                 });
             };
         }
-        me.database.getPreFile(workData.input.filePath,function(preText){
-            $('#textArea').summernote('code',preText);
-        });
+		if(workData.input.errorMsg){
+			$('#textArea').summernote('code', workData.input.errorMsg);
+		}else{
+			me.database.getPreFile(workData.input.filePath,function(preText){
+				$('#textArea').summernote('code',preText);
+			});
+		}
+        
        /* var myTextBtn = createEle('a');myTextBtn.innerHTML = '查看保存内容';myTextBtn.className = 'btn btn-defult pull-left';myTextBtn.onclick = function(){
             me.database.getTxtFile(workData.taskId,function(myText){
                 $('#textArea').summernote('code',myText);
