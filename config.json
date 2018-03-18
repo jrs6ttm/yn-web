@@ -35,7 +35,7 @@
     "dev":{
       "playerPort":"",
       "processEnginePort":"http://localhost:8022/yn-engine/socket/hello",
-      "newProcessEnginePort":"http://localhost:8022/yn-engine/",
+      "newProcessEnginePort":"http://localhost:9100/yn-engine/",
       "soursePort":"",
       "filePort":"http://newengine3w.xuezuowang.com",
       "VMPort":"http://www.xuezuowang.com:10000",
@@ -44,8 +44,8 @@
       "ecgeditorPort":"http://authoring.xuezuowang.com",
       "ecgeditorPort2":"authoring.xuezuowang.com",
       "examPort":"http://exam.xuezuowang.com",
-      "monitorPort":"http://localhost:9188",
-      "orgPort":"http://localhost:9188",
+      "monitorPort":"http://localhost:9100",
+      "orgPort":"http://localhost:9100",
       "studyPort":"http://comsocket.xuezuowang.com"
     }
   }

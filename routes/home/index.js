@@ -389,7 +389,8 @@ if(mySQL) {
             userId = req.session.userData.id;
 
         var insertStr = 'insert into oc_courseplayer_file(course_inst_id,task_id, user_id, update_time, file_id, file_name,file_url,file_type) values ("'+courseInstId+ '","'+taskId+ '","' +userId+ '","'+updateTime+ '","'+fileId+ '","'+fileName+ '","'+fileUrl+'","' +fileType+'")';
-        mySQL.toSQL(insertStr, function(err) {
+        console.log(insertStr);
+		mySQL.toSQL(insertStr, function(err) {
             if(err){
                 console.log(err);
                 res.send('err');
