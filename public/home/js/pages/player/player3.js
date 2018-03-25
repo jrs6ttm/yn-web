@@ -378,8 +378,9 @@ ProcessController.prototype = {
                                 taskName : me.database.currActionData.currSubTask?me.database.currActionData.currTask.taskInfo.taskName:'',
                                 subtaskId : me.database.currActionData.currSubTask?me.database.courseId.split('@')[0]+'_'+me.database.currActionData.currSubTask.subId:me.database.courseId.split('@')[0]+'_'+me.database.currActionData.currTask.taskInfo.taskDefinKey,
                                 subtaskName : me.database.currActionData.currSubTask?me.database.currActionData.currSubTask.subName:me.database.currActionData.currTask.taskInfo.taskName,
-                                link : 'pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MyFirstWordEditor.jsp?path='+ecgeditorPort2 + escape('/load/loadPdfFile?source=pgofc&ownerId=system&path=/user_file/'+userData.name+'_sys_file/')+'&fileName='+me.database.currActionData.currTask.taskInfo.data.input.filePath.split('/')[me.database.currActionData.currTask.taskInfo.data.input.filePath.split('/').length-1]+'&permission=r&userName='+userData.name
-                            });
+                                //link : 'pageoffice://|'+newProcessEnginePort+'MyNTKODemo/MyFirstWordEditor.jsp?path='+ecgeditorPort2 + escape('/load/loadPdfFile?source=pgofc&ownerId=system&path=/user_file/'+userData.name+'_sys_file/')+'&fileName='+me.database.currActionData.currTask.taskInfo.data.input.fileName+'&permission=r&userName='+userData.name
+								link : 'pageoffice://|'+newProcessEnginePort+'pageOffice/editFile.jsp?filePath='+me.database.currActionData.currTask.taskInfo.data.input.filePath+'&fileName='+me.database.currActionData.currTask.taskInfo.data.input.fileName+'&permission=r&userName='+userData.name+'&userId='+userData.id
+							});
                         }
                         next(data);
                     }).fail(function(){
@@ -1068,14 +1069,9 @@ View.prototype = {
                 if(workData.input.errorMsg){
                     alert(workData.input.errorMsg);
                 }else{
-                    var downPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileRead?userId='+userData.id+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1].split('.')[0]+'&createType=study&ign=';
-                    downPath = escape(downPath);
-                    var fileName = escape((workData.input.fileName?workData.input.fileName:'文件.doc'));
-                    var upPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileUpload?userId='+ userData.id+'&fileName='+fileName+'&fileId='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length - 1].split('.')[0]+'&createType=study';
-                    upPath = escape(upPath);
                     var permission = 'rw';
-                    console.log('pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MySecondWordEditor.jsp?upLoadPath='+upPath+'&downLoadPath='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id+'&filePath='+workData.input.filePath)
-                    window.location.href = 'pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MySecondWordEditor.jsp?upLoadPath='+upPath+'&downLoadPath='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id+'&filePath='+workData.input.filePath;
+                    console.log('pageoffice://|'+newProcessEnginePort+'pageOffice/editFile.jsp?filePath='+workData.input.filePath+'&fileName='+workData.input.fileName+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id)
+                    window.location.href = 'pageoffice://|'+newProcessEnginePort+'pageOffice/editFile.jsp?filePath='+workData.input.filePath+'&fileName='+workData.input.fileName+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id;
                 }
             });
             $(content).append(pageOfficeBtn);
@@ -1085,11 +1081,9 @@ View.prototype = {
                 if(workData.input.errorMsg){
                     alert(workData.input.errorMsg);
                 }else{
-                    var downPath = newProcessEnginePort.split('://')[1] + 'fileManager/fileRead?userId='+userData.id+'&filePath='+workData.input.filePath+''+'&ign=' ;
-                    downPath = escape(downPath);
                     var permission = 'r';
-                    console.log('pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MyFirstWordEditor.jsp?path='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name);
-                    window.location.href = 'pageoffice://|'+newProcessEnginePort+'/NKTOForMyDemo/MyNTKODemo/MyFirstWordEditor.jsp?path='+downPath+'&fileName='+workData.input.filePath.split('/')[workData.input.filePath.split('/').length-1]+'&permission='+permission+'&userName='+userData.name;
+                    console.log('pageoffice://|'+newProcessEnginePort+'pageOffice/editFile.jsp?filePath='+workData.input.filePath+'&fileName='+workData.input.fileName+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id);
+                    window.location.href = 'pageoffice://|'+newProcessEnginePort+'pageOffice/editFile.jsp?filePath='+workData.input.filePath+'&fileName='+workData.input.fileName+'&permission='+permission+'&userName='+userData.name+'&userId='+userData.id;
                 }
             });
             $(content).append(pageOfficeBtn);
