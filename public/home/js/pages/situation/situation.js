@@ -63,7 +63,7 @@
                     });*/
                     var courseImg_a  = createEle('div');courseCon.appendChild(courseImg_a);
                     if(course.fileIcon && course.fileIcon != 'undefined'&& course.fileIcon != 'null'){
-                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + '/ec_engine/fileManager/fileRead?userId=' +JSON.parse(course.fileIcon).ownerId +'&filePath='+JSON.parse(course.fileIcon).filePath;courseImg.className = '_situation_courseImg';courseImg_a.appendChild(courseImg);
+                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + 'fileManager/fileRead?userId=' +JSON.parse(course.fileIcon).ownerId +'&filePath='+JSON.parse(course.fileIcon).filePath;courseImg.className = '_situation_courseImg';courseImg_a.appendChild(courseImg);
                     }
                     else{
                         courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = '/home/img/home/course.png';courseImg.className = '_situation_courseImg';courseImg_a.appendChild(courseImg);
@@ -137,7 +137,7 @@
             if(!arr) return;
             if(!arr.length) return;
             for(i=0;i<arr.length;i++){
-                sendMessage('post',playerPort,'/saveCourse',{nodeType:'learnScn',courseId:arr[i].courseId,name:arr[i].courseName,parentId:me.courseId,imageUrl:((arr[i].fileIcon && arr[i].fileIcon != 'undefined'&& arr[i].fileIcon != 'null')?filePort + '/ec_engine/fileManager/fileRead?userId=' +JSON.parse(arr[i].fileIcon).ownerId +'&filePath='+JSON.parse(arr[i].fileIcon).filePath:'/home/img/home/course.png')},function(){});
+                sendMessage('post',playerPort,'/saveCourse',{nodeType:'learnScn',courseId:arr[i].courseId,name:arr[i].courseName,parentId:me.courseId,imageUrl:((arr[i].fileIcon && arr[i].fileIcon != 'undefined'&& arr[i].fileIcon != 'null')?filePort + 'fileManager/fileRead?userId=' +JSON.parse(arr[i].fileIcon).ownerId +'&filePath='+JSON.parse(arr[i].fileIcon).filePath:'/home/img/home/course.png')},function(){});
             }
 
             var temArrClass = [];
@@ -191,7 +191,7 @@
             //var imgCon          = createEle('div');imgCon.className = '_course_headerImgCon';headerCon.appendChild(imgCon);
            /* var courseImg       = createEle('img');
             if(me.courseData.fileIcon && me.courseData.fileIcon != 'undefined'&& me.courseData.fileIcon != 'null'){
-                courseImg.title = courseImg.alt = me.courseData.courseName;courseImg.src = filePort + '/ec_engine/fileManager/fileRead?userId=' +JSON.parse(me.courseData.fileIcon).ownerId +'&filePath='+JSON.parse(me.courseData.fileIcon).filePath;courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
+                courseImg.title = courseImg.alt = me.courseData.courseName;courseImg.src = filePort + 'fileManager/fileRead?userId=' +JSON.parse(me.courseData.fileIcon).ownerId +'&filePath='+JSON.parse(me.courseData.fileIcon).filePath;courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
             }else{
                 courseImg.title = courseImg.alt = me.courseData.courseName;courseImg.src = '/home/img/home/course.png';courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
             }*/

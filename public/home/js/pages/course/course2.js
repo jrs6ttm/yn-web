@@ -496,7 +496,7 @@ View.prototype = {
        /* var imgCon          = createEle('div');imgCon.className = '_course_headerImgCon';headerCon.appendChild(imgCon);
         var courseImg       = createEle('img');
         if(me.database.courseData.fileIcon && me.database.courseData.fileIcon != 'undefined'&& me.database.courseData.fileIcon != 'null'){
-            courseImg.title = courseImg.alt = me.database.courseData.courseName;courseImg.src = filePort + '/ec_engine/fileManager/fileRead?userId=' +JSON.parse(me.database.courseData.fileIcon).ownerId +'&filePath='+JSON.parse(me.database.courseData.fileIcon).filePath;courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
+            courseImg.title = courseImg.alt = me.database.courseData.courseName;courseImg.src = filePort + 'fileManager/fileRead?userId=' +JSON.parse(me.database.courseData.fileIcon).ownerId +'&filePath='+JSON.parse(me.database.courseData.fileIcon).filePath;courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
         }else{
             courseImg.title = courseImg.alt = me.database.courseData.courseName;courseImg.src = '/home/img/home/course.png';courseImg.className = '_situation_courseImg';imgCon.appendChild(courseImg);
         }*/
