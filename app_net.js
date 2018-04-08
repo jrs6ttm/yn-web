@@ -63,7 +63,7 @@ console.log('----------local IP: '+IPv4);
 
 var env=app.get('env');
 global.orgENV=env;
-//console.log('----------NODE ENV: ', env  ) ;
+console.log('----------NODE ENV: ', env  ) ;
 var client = redis.createClient(Config[env]['redis']['port'],Config[env]['redis']['url']);
 
 client.on("error", function (err) {
