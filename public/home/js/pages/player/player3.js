@@ -1941,7 +1941,7 @@ var ec_link = function(userId,filePath,me){
     }else{
         var type = filePath.split('.')[1];
 
-        var link = filePort + '/ec_engine/fileManager/fileRead?userId='+ userId + '&filePath='+ filePath;
+        var link = filePort + 'fileManager/fileRead?userId='+ userId + '&filePath='+ filePath;
         //tfz170630===
         if((type=='doc')||(type=='docx')||(type=='ppt')||(type=='pptx')||(type=='xls')||(type=='xlsx')){
             window.open($(me).attr('data-href'));

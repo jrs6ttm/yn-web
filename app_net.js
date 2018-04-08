@@ -21,6 +21,8 @@ var redisStore = require('./node_modeles_ext/connect-redis')(session);
 
 var app = express();
 
+app.set('env' , Config['runMode']) ;
+ 
 //*****env 环境模式： dev：本机 ， joint：192.168.1.155联合调试， prod: 192.168.1.114瑞星试用，production:..ip未知..产品使用 ******//
 var os = require('os'); 
 //console.log(env);
@@ -34,7 +36,7 @@ var prod_ENV="192.168.1.114__192.168.0.29";
 var joint_ENV="192.168.1.155__";
 
 
-
+/*
 if(os.networkInterfaces().eth0) {
     for(var i=0;i<os.networkInterfaces().eth0.length;i++){
         if(os.networkInterfaces().eth0[i].family=='IPv4'){
@@ -50,6 +52,7 @@ if(os.networkInterfaces().eth0) {
    console.log(os.networkInterfaces());
    app.set('env' ,'dev') ;
 }
+*/
 
 hostName=os.hostname();
 //console.log(os.networkInterfaces() );
