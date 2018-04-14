@@ -35,19 +35,19 @@
   
   "joint":{
          "port": 9188,
-         "domain": "xuezuowang.com",
+         "domain": "new.xuezuowang.com",
          "mysql":{
                     "url": "192.168.0.81",
                     "user": "root",
                     "password": "password",
-                    "database": "orgapp"
+                    "database": "orgapp_test"
                   },
                   
         "mysql_engine":{
                     "url": "192.168.0.81",
                     "user": "root",
                     "password": "password",
-                    "database": "yn_engine"
+                    "database": "yn_engine_test"
                   },
 
          "redis" : {
