@@ -1,67 +1,67 @@
 {
 
-  "runMode":"joint",
- 
+  "runMode":"prod",
+
   "dev":{
-         "port": 9188,
-          "domain": ".learn.com",
-          "mysql":{
-                    "url": "localhost",
-                    "user": "root",
-                    "password": "python",
-                    "database": "orgapp"
-                  },
-            
-            "mysql_engine":{
-                    "url": "localhost",
-                    "user": "root",
-                    "password": "python",
-                    "database": "yn_engine"
-                  },
-                  
-         "redis" : {
-                    "url" :  "localhost",
-                    "port": 6379 ,
-                    "password" : "python",
-                    "secret" : "you_guess"
-                   }  ,
-            
+    "port": 9188,
+    "domain": ".learn.com",
+    "mysql":{
+      "url": "localhost",
+      "user": "root",
+      "password": "python",
+      "database": "orgapp"
+    },
+
+    "mysql_engine":{
+      "url": "localhost",
+      "user": "root",
+      "password": "python",
+      "database": "yn_engine"
+    },
+
+    "redis" : {
+      "url" :  "localhost",
+      "port": 6379 ,
+      "password" : "python",
+      "secret" : "you_guess"
+    }  ,
 
 
-           "engineHost": "localhost:8022/yn-engine",
-			"ecgeditorHost":"authoring.xuezuowang.com",
-			"OCPath":"www.xuezuowang.com"
+
+    "engineHost": "localhost:8022/yn-engine",
+    "ecgeditorHost":"authoring.xuezuowang.com",
+    "OCPath":"www.xuezuowang.com"
   },
-  
-  "joint":{
-         "port": 9188,
-         "domain": "new.xuezuowang.com",
-         "mysql":{
-                    "url": "192.168.0.81",
-                    "user": "root",
-                    "password": "password",
-                    "database": "orgapp_test"
-                  },
-                  
-        "mysql_engine":{
-                    "url": "192.168.0.81",
-                    "user": "root",
-                    "password": "password",
-                    "database": "yn_engine_test"
-                  },
 
-         "redis" : {
-                    "url" :  "192.168.0.92",
-                    "port": 6379 ,
-                    "user" : "ecgeditor",
-                    "password" : "ec123456",
-                    "secret" : "you_guess", 
-                    "prefix" : "PHPREDIS_SESSION:",
-                    "client": "client"
-                   }  ,
+  "prod":{
+    "port": 9188,
+    "domain": "xuezuowang.com",
+    "mysql":{
+      "url": "192.168.0.81",
+      "user": "root",
+      "password": "password",
+      "database": "orgapp_test"
+    },
 
-        "engineHost": "newengine.xuezuowang.com",
-        "ecgeditorHost":"authoring.xuezuowang.com"
+    "mysql_engine":{
+      "url": "192.168.0.81",
+      "user": "root",
+      "password": "password",
+      "database": "yn_engine_test"
+    },
+
+    "redis" : {
+      "url" :  "192.168.0.92",
+      "port": 6379 ,
+      "user" : "ecgeditor",
+      "password" : "ec123456",
+      "secret" : "you_guess",
+      "prefix" : "PHPREDIS_SESSION:",
+      "client": "client"
+    }  ,
+
+    "engineHost": "newengine.xuezuowang.com",
+    "ecgeditorHost":"authoring2.xuezuowang.com"
   },
 
   "ports":{
@@ -81,7 +81,7 @@
       "orgPort":"http://localhost:9100",
       "studyPort":"http://comsocket.xuezuowang.com"
     },
-	"joint":{
+    "prod":{
       "playerPort":"",
       "processEnginePort":"http://newengine.xuezuowang.com/yn-engine/socket/hello",
       "newProcessEnginePort":"http://newengine.xuezuowang.com/yn-engine/",
@@ -90,9 +90,9 @@
       "VMPort":"http://www.xuezuowang.com:10000",
       "VM2Port":"http://www.xuezuowang.com:10001",
       "VM3Port":"192.168.0.38",
-      "ecgeditorPort":"http://authoring.xuezuowang.com",
-      "ecgeditorPort2":"authoring.xuezuowang.com",
-      "examPort":"http://exam.xuezuowang.com",
+      "ecgeditorPort":"http://authoring2.xuezuowang.com",
+      "ecgeditorPort2":"authoring2.xuezuowang.com",
+      "examPort":"http://oldengine.xuezuowang.com",
       "monitorPort":"http://www.xuezuowang.com",
       "orgPort":"http://www.xuezuowang.com",
       "studyPort":"http://comsocket.xuezuowang.com"
