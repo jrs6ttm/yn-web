@@ -33,7 +33,7 @@
     "OCPath":"www.xuezuowang.com"
   },
 
-  "prod":{
+  "joint":{
     "port": 9188,
     "domain": "xuezuowang.com",
     "mysql":{
@@ -64,6 +64,37 @@
     "ecgeditorHost":"authoring2.xuezuowang.com"
   },
 
+  "prod":{
+    "port": 9188,
+    "domain": "xuezuowang.com",
+    "mysql":{
+      "url": "192.168.0.81",
+      "user": "root",
+      "password": "password",
+      "database": "orgapp"
+    },
+
+    "mysql_engine":{
+      "url": "192.168.0.81",
+      "user": "root",
+      "password": "password",
+      "database": "yn_engine"
+    },
+
+    "redis" : {
+      "url" :  "192.168.0.92",
+      "port": 6379 ,
+      "user" : "ecgeditor",
+      "password" : "ec123456",
+      "secret" : "you_guess",
+      "prefix" : "PHPREDIS_SESSION:",
+      "client": "client"
+    }  ,
+
+    "engineHost": "newengine3w.xuezuowang.com",
+    "ecgeditorHost":"authoring.xuezuowang.com"
+  },
+
   "ports":{
     "dev":{
       "playerPort":"",
@@ -81,7 +112,7 @@
       "orgPort":"http://localhost:9100",
       "studyPort":"http://comsocket.xuezuowang.com"
     },
-    "prod":{
+    "joint":{
       "playerPort":"",
       "processEnginePort":"http://newengine.xuezuowang.com/yn-engine/socket/hello",
       "newProcessEnginePort":"http://newengine.xuezuowang.com/yn-engine/",
@@ -93,12 +124,26 @@
       "ecgeditorPort":"http://authoring2.xuezuowang.com",
       "ecgeditorPort2":"authoring2.xuezuowang.com",
       "examPort":"http://oldengine.xuezuowang.com",
+      "monitorPort":"http://new.xuezuowang.com",
+      "orgPort":"http://new.xuezuowang.com",
+      "studyPort":"http://comsocket.xuezuowang.com"
+    },
+    "prod":{
+      "playerPort":"",
+      "processEnginePort":"http://newengine3w.xuezuowang.com/yn-engine/socket/hello",
+      "newProcessEnginePort":"http://newengine3w.xuezuowang.com/yn-engine/",
+      "soursePort":"",
+      "filePort":"http://newengine3w.xuezuowang.com/yn-engine/",
+      "VMPort":"http://www.xuezuowang.com:10000",
+      "VM2Port":"http://www.xuezuowang.com:10001",
+      "VM3Port":"192.168.0.38",
+      "ecgeditorPort":"http://authoring.xuezuowang.com",
+      "ecgeditorPort2":"authoring.xuezuowang.com",
+      "examPort":"http://exam.xuezuowang.com",
       "monitorPort":"http://www.xuezuowang.com",
       "orgPort":"http://www.xuezuowang.com",
       "studyPort":"http://comsocket.xuezuowang.com"
     }
   }
 
-
 }
-
