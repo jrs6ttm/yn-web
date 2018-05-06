@@ -1,22 +1,16 @@
-CREATE TABLE `oc_courseplayer_coursetype` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `course_type_id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `course_type_des` varchar(100) COLLATE utf8_bin NOT NULL,
-  `course_type_code` varchar(50) COLLATE utf8_bin NOT NULL,
-  `course_type_short_des` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `course_type_tree_node_no` varchar(100) COLLATE utf8_bin NOT NULL,
-  `level_index` int(11) DEFAULT NULL,
-  `is_leaf` varchar(1) COLLATE utf8_bin DEFAULT NULL,
-  `course_type_parent_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `remark` varchar(200) COLLATE utf8_bin DEFAULT NULL,
-  `is_valid` varchar(1) COLLATE utf8_bin DEFAULT NULL,
-  `creator_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `create_org_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `lst_upd_id` varchar(36) COLLATE utf8_bin DEFAULT NULL,
-  `lst_upd_date` datetime DEFAULT NULL,
+CREATE TABLE `base_course_type` (
+  `id` varchar(36) COLLATE utf8_bin NOT NULL COMMENT '基础课程分类id',
+  `name` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '基础课程分类名称',
+  `code` varchar(50) COLLATE utf8_bin NOT NULL,
+  `short_des` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '基础课程分类描述',
+  `tree_node_no` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '分类编码',
+  `level_index` int(11) DEFAULT NULL COMMENT '分类层级序号',
+  `is_leaf` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT '节点状态, 1: 是末节点, 0:不是末节点',
+  `parent_id` varchar(36) COLLATE utf8_bin DEFAULT NULL COMMENT '父分类id',
+  `remark` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '备注',
+  `data_status` varchar(1) COLLATE utf8_bin DEFAULT NULL COMMENT '数据有效性, 1:有效, 0:删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `base_course_classification` (
   `id` varchar(64) NOT NULL COMMENT '基础课程分类的id',
@@ -32,7 +26,7 @@ CREATE TABLE `base_course` (
   `description` longtext COMMENT '基础课程描述',
   `base_course_classification_id` varchar(64) DEFAULT NULL COMMENT '基础课程分类id',
   `is_published` varchar(1) DEFAULT NULL COMMENT '发布状态, 1: 发布, 0:未发布',
-  `icon_id` varchar(64) DEFAULT NULL COMMENT '基础课程的图标id',
+  `icon` varchar(64) DEFAULT NULL COMMENT '基础课程的图标',
   `scan_times` int(11) DEFAULT 0 COMMENT '浏览次数',
   `subscribe_times` int(11) DEFAULT 0  COMMENT '订阅次数',
   `graph_xml_id` varchar(64) DEFAULT NULL COMMENT '基础课程的bpmn文件id',
@@ -78,7 +72,7 @@ CREATE TABLE `course` (
   `description` longtext COMMENT '课程描述',
   `is_leaf` varchar(1) DEFAULT NULL COMMENT '节点状态, 1: 是末节点, 可学习的课程, 0:不是末节点',
   `position` int(11) DEFAULT 0   COMMENT '课程次序',
-  `icon_id` varchar(64) DEFAULT NULL COMMENT '课程的图标id',
+  `icon` varchar(64) DEFAULT NULL COMMENT '课程的图标',
   `is_published` varchar(1) DEFAULT NULL COMMENT '发布状态, 1: 发布, 0:未发布',
   
   `is_cooperation` varchar(1) DEFAULT NULL COMMENT '1: 合作课程, 0:非合作课程',

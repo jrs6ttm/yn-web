@@ -258,6 +258,9 @@ Database.prototype = {
         //me.lastTasks = [me.fakeData,me.fakeData2];next();return;
         sendMessage('get',playerPort,'getLastTasks?courseId='+me.courseId,'',function(data){
             if(data){
+                //兼容旧课程的旧资料链接问题
+                data = data.replace(/ec_engine/, "yn-engine").replace(/\/NKTOForMyDemo\/MyNTKODemo\/MyFirstWordEditor\.jsp\?path/, "/yn-engine/pageOffice/editFile.jsp?filePath");
+
                 var arr = data.split('^^');
                 arr.pop();
                 me.lastTasks = arr;
