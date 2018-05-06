@@ -174,7 +174,7 @@
             var me = this;
 
             if(me.org && me.courseData.isCooperation ){
-                sendMessage('post',newProcessEnginePort,'/ec_engine/course/getUserGroupInfo',{userId:userData.id,courseOrgId:me.orgId},function(resData){
+                sendMessage('post',newProcessEnginePort,'course/getUserGroupInfo',{userId:userData.id,courseOrgId:me.orgId},function(resData){
                     if(!resData.processDefinitionId){
                         $.MsgBox.Alert('选课失败',resData.errorMsg,function(){
                             location.reload();
@@ -210,7 +210,7 @@
                 });
             }
             else{
-                sendMessage('post',newProcessEnginePort,'/ec_engine/course/deploy',{isCooperation:'0',ecgeditorHost: ecgeditorPort.substring(7),courseInstanceId :courseInstanceId,bpmnInstanceId :bpmnInstanceId},function(resData){
+                sendMessage('post',newProcessEnginePort,'course/deploy',{isCooperation:'0',ecgeditorHost: ecgeditorPort.substring(7),courseInstanceId :courseInstanceId,bpmnInstanceId :bpmnInstanceId},function(resData){
                     if(!resData.processDefinitionId){
                         $.MsgBox.Alert('选课失败',resData.errorMsg,function(){
                             location.reload();

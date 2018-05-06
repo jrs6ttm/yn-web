@@ -141,7 +141,7 @@
 
         var playVideo = {
             title:inVideo.name,
-            m4v:filePort + '/ec_engine/fileManager/fileRead?userId='+inVideo.userId + '&filePath=' + inVideo.sourceF,
+            m4v:filePort + 'fileManager/fileRead?userId='+inVideo.userId + '&filePath=' + inVideo.sourceF,
             poster:'./images/public/post.png'
         };
 

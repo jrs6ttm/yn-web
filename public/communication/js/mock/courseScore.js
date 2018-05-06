@@ -101,6 +101,6 @@ var instanceInfo = [
     }
 ];
 
-Mock.mock(/\/ec_engine\/course\/getMyEstimationItems\s*/, tableInfo);
+Mock.mock(/\/yn-engine\/course\/getMyEstimationItems\s*/, tableInfo);
 Mock.mock(/\/CourseOrg\/optCourseOrgUser\/searchUsers\s*/, studentInfo);
 Mock.mock(/\/getUsersByOrgId\s*/, instanceInfo);

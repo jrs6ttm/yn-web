@@ -18,7 +18,7 @@ html(lang='en' style="height:100%;padding:0;margin:0")
                     method: 'GET'
                 }).done(function (config) {
                     $.ajax({
-                        url:config.filePort + '/ec_engine/fileManager/fileContentRead?fileId=' + fileId + '&userId=' + userId + '&createType=study',
+                        url:config.filePort + 'fileManager/fileContentRead?fileId=' + fileId + '&userId=' + userId + '&createType=study',
                         method: 'GET'
                     }).done(function (content) {
                         $('.container').append(content);

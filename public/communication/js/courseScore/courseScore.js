@@ -248,7 +248,7 @@ function getTableInfo(id, userId) {
         }
     };
     $.ajax({
-        url: config.newengine + '/ec_engine/course/getMyEstimation',
+        url: config.newengine + 'course/getMyEstimation',
         type: 'get',
         dataType: 'json',
         data: {
@@ -324,7 +324,7 @@ function saveRuleScore(taskId, ruleId, score) {
         }
     };
     $.ajax({
-        url: config.oldengine + '/ec_engine/course/setScoreToEstimationItem',
+        url: config.newengine + 'course/setScoreToEstimationItem',
         type: 'post',
         data: {
             userId: database.userId,
@@ -369,7 +369,7 @@ function saveTotalScore() {
     //    error: callback.error
     //});
     $.ajax({
-        url: config.oldengine + '/ec_engine/course/setSummarize ',
+        url: config.newengine + 'course/setSummarize ',
         type: 'post',
         data: {
             procInstId: database.procInstId,

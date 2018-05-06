@@ -266,7 +266,7 @@ header高度100%,body长宽100%*/
                 });
             }
             else{
-                src =  filePort + '/ec_engine/fileManager/fileRead?userId='+me.filePath.split('\\')[0]+'&filePath=' + me.filePath;
+                src =  filePort + 'fileManager/fileRead?userId='+me.filePath.split('\\')[0]+'&filePath=' + me.filePath;
                 me.createIframe(src);
             }
 

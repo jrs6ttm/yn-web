@@ -1290,7 +1290,7 @@
                 }
                 if(cName == 'complete'){
                     var LRNSCN_ORG_ID = $('.tab1', 'body').attr('data-org-id'), bpmnInstanceId = this.model.get('INSTANCE_ID');
-                    $.post('http://'+engineHost+'/ec_engine/course/deploy',
+                    $.post('http://'+engineHost+'course/deploy',
                         {ecgeditorHost: ecgeditorHost, bpmnInstanceId:bpmnInstanceId, courseInstanceId:bpmnInstanceId+'@'+LRNSCN_ORG_ID, isCooperation: "1"},
                         //{ecgeditorHost: 'authoring2.xuezuowang.com', bpmnInstanceId:bpmnInstanceId, courseInstanceId:bpmnInstanceId+'@'+LRNSCN_ORG_ID},
                         function(deployResult){
