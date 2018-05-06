@@ -1,5 +1,4 @@
 {
-
   "runMode":"prod",
 
   "dev":{
@@ -24,13 +23,10 @@
       "port": 6379 ,
       "password" : "python",
       "secret" : "you_guess"
-    }  ,
-
-
+    },
 
     "engineHost": "localhost:8022/yn-engine",
-    "ecgeditorHost":"authoring.xuezuowang.com",
-    "OCPath":"www.xuezuowang.com"
+    "ecgeditorHost":"authoring.xuezuowang.com"
   },
 
   "joint":{
@@ -58,14 +54,14 @@
       "secret" : "you_guess",
       "prefix" : "PHPREDIS_SESSION:",
       "client": "client"
-    }  ,
+    },
 
     "engineHost": "newengine.xuezuowang.com",
     "ecgeditorHost":"authoring2.xuezuowang.com"
   },
 
   "prod":{
-    "port": 9188,
+    "port": 9177,
     "domain": "xuezuowang.com",
     "mysql":{
       "url": "192.168.0.81",
@@ -89,7 +85,7 @@
       "secret" : "you_guess",
       "prefix" : "PHPREDIS_SESSION:",
       "client": "client"
-    }  ,
+    },
 
     "engineHost": "newengine3w.xuezuowang.com",
     "ecgeditorHost":"authoring.xuezuowang.com"

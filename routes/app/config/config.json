@@ -1,5 +1,4 @@
 {
-
   "runMode":"prod",
 
   "dev":{
@@ -24,13 +23,10 @@
       "port": 6379 ,
       "password" : "python",
       "secret" : "you_guess"
-    }  ,
-
-
+    },
 
     "engineHost": "localhost:8022/yn-engine",
-    "ecgeditorHost":"authoring.xuezuowang.com",
-    "OCPath":"www.xuezuowang.com"
+    "ecgeditorHost":"authoring.xuezuowang.com"
   },
 
   "joint":{
@@ -65,7 +61,7 @@
   },
 
   "prod":{
-    "port": 9188,
+    "port": 9177,
     "domain": "xuezuowang.com",
     "mysql":{
       "url": "192.168.0.81",
