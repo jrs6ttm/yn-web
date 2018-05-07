@@ -259,7 +259,7 @@ Database.prototype = {
         sendMessage('get',playerPort,'getLastTasks?courseId='+me.courseId,'',function(data){
             if(data){
                 //兼容旧课程的旧资料链接问题
-                data = data.replace(/ec_engine/, "yn-engine").replace(/\/NKTOForMyDemo\/MyNTKODemo\/MyFirstWordEditor\.jsp\?path/, "/yn-engine/pageOffice/editFile.jsp?filePath");
+                data = data.replace(/ec_engine/, "yn-engine").replace(/\/NKTOForMyDemo\/MyNTKODemo\/MyFirstWordEditor\.jsp/, "/yn-engine/pageOffice/redirect.jsp");
 
                 var arr = data.split('^^');
                 arr.pop();
