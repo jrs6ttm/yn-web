@@ -1,5 +1,5 @@
 {
-  "runMode":"prod",
+  "runMode":"prod_aliyun",
 
   "dev":{
     "port": 9188,
@@ -91,6 +91,37 @@
     "ecgeditorHost":"authoring.xuezuowang.com"
   },
 
+  "prod_aliyun":{
+    "port": 8500,
+    "domain": "47.94.230.26",
+    "mysql":{
+      "url": "47.94.230.26",
+      "user": "root",
+      "password": "password",
+      "database": "orgapp_aliyun"
+    },
+
+    "mysql_engine":{
+      "url": "47.94.230.26",
+      "user": "root",
+      "password": "password",
+      "database": "yn_engine_aliyun"
+    },
+
+    "redis" : {
+      "url" :  "47.94.230.26",
+      "port": 6379 ,
+      "user" : "ecgeditor",
+      "password" : "ec123456",
+      "secret" : "you_guess",
+      "prefix" : "PHPREDIS_SESSION:",
+      "client": "client"
+    },
+
+    "engineHost": "47.94.230.26:8501",
+    "ecgeditorHost":"47.94.230.26:8502"
+  },
+
   "ports":{
     "dev":{
       "playerPort":"",
@@ -138,6 +169,22 @@
       "examPort":"http://exam.xuezuowang.com",
       "monitorPort":"http://www.xuezuowang.com",
       "orgPort":"http://www.xuezuowang.com",
+      "studyPort":"http://comsocket.xuezuowang.com"
+    },
+    "prod":{
+      "playerPort":"",
+      "processEnginePort":"http://47.94.230.26:8501/yn-engine/socket/hello",
+      "newProcessEnginePort":"http://47.94.230.26:8501/yn-engine/",
+      "soursePort":"",
+      "filePort":"http://47.94.230.26:8501/yn-engine/",
+      "VMPort":"http://www.xuezuowang.com:10000",
+      "VM2Port":"http://www.xuezuowang.com:10001",
+      "VM3Port":"192.168.0.38",
+      "ecgeditorPort":"http://47.94.230.26:8502",
+      "ecgeditorPort2":"47.94.230.26:8502",
+      "examPort":"http://47.94.230.26:8503",
+      "monitorPort":"http://47.94.230.26:8500",
+      "orgPort":"http://47.94.230.26:8500",
       "studyPort":"http://comsocket.xuezuowang.com"
     }
   }
