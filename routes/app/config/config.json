@@ -171,7 +171,7 @@
       "orgPort":"http://www.xuezuowang.com",
       "studyPort":"http://comsocket.xuezuowang.com"
     },
-    "prod":{
+    "prod_aliyun":{
       "playerPort":"",
       "processEnginePort":"http://47.94.230.26:8501/yn-engine/socket/hello",
       "newProcessEnginePort":"http://47.94.230.26:8501/yn-engine/",
