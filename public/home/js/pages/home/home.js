@@ -437,7 +437,6 @@
         },
         init : function(){
             var me = this;
-            /*
             sendMessage('get',playerPort, '/getPopularCourses','',function(popularCourses){
                 me.popularCourses = popularCourses;
                 if(popularCourses.length >= 3){
@@ -524,8 +523,6 @@
                 }
                 me.createClasses();
             });
-            */
-            me.createClasses();
         }
     };
 
