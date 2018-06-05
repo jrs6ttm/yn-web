@@ -15,7 +15,7 @@ module.exports = orgInfo;
 
 //执行SQL
 orgInfo.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -26,7 +26,7 @@ orgInfo.toSQL =  function toSQL(sqlstr, callback){
 //插入数据
 orgInfo.insertData =  function insertData(data, callback){
 	console.log(data);
-   MySql.query('INSERT INTO `bsd_orginfo`  SET ?', data  , function(err, doc) {
+   MySql.toSQL('INSERT INTO `bsd_orginfo`  SET ?', data  , function(err, doc) {
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -56,7 +56,7 @@ orgInfo.updateData_Json = function updateData_Json(data,orgID , callback ) {
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -85,7 +85,7 @@ orgInfo.searchData_Json = function searchData_Json(data, callback ) {
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -116,7 +116,7 @@ orgInfo.delOrg =  function delOrg(orgID ,  callback ) {
  function delOrg_V1(orgID){
 	var sqlstr="DELETE FROM `bsd_orginfo`   WHERE `orgID` = '" + orgID + "'"; 
 	console.log(sqlstr);
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		if(err)  console.log(err); 
     });	
 }
@@ -126,7 +126,7 @@ orgInfo.delOrg =  function delOrg(orgID ,  callback ) {
  function delDeptPeo(ID) {
 	var sqlstr="DELETE FROM `bsd_orgdeptpeo`   WHERE `deptID` = '" + ID + "'"; 
 	console.log(sqlstr);
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		if(err)  console.log(err); 
     });	
   }
@@ -138,7 +138,7 @@ orgInfo.isOrgValid = function isOrgValid(orgID,  callback) {
 		//console.log('isOrgValid:' + orgID  );
    var sql ="SELECT * FROM `bsd_orginfo` WHERE `orgID` = '" + orgID + "'";
    console.log(sql);
-   MySql.query(sql , function(err,docs) {
+   MySql.toSQL(sql , function(err,docs) {
 	   console.log(err);
 	   console.log(docs);
        // return  callback(err,results);
@@ -162,7 +162,7 @@ orgInfo.isOrgValid = function isOrgValid(orgID,  callback) {
 	 else { //如果orgID不为空
          var sqlstr = "select  * from `bsd_orginfo` where `orgID` = '" + orgID + "'";
 		 console.log(sqlstr);
-		 MySql.query(sqlstr, function(err, docs) {
+		 MySql.toSQL(sqlstr, function(err, docs) {
 			 if(docs.length==0 )  return  callback('未查询到此ID数据');
 			 else if(docs.length > 1 )  return  callback('ID数据不正确，此ID存在多条记录');
 			 else {
@@ -181,7 +181,7 @@ orgInfo.isOrgValid = function isOrgValid(orgID,  callback) {
 				});
 			 }  //if end
 				    
-	     });// MySql.query
+	     });// MySql.toSQL
 	
      } //if end
  }
@@ -197,7 +197,7 @@ orgInfo.isOrgValid = function isOrgValid(orgID,  callback) {
 //ID是否存在
 orgInfo.isIDexist =  function isIDexist(orgID,callback) {
 
-   MySql.query('SELECT * FROM `bsd_orginfo` WHERE  orgID = ?', [orgID]  , function(err,results) {
+   MySql.toSQL('SELECT * FROM `bsd_orginfo` WHERE  orgID = ?', [orgID]  , function(err,results) {
         return  callback(err,results);
     });
 }
@@ -206,7 +206,7 @@ orgInfo.isIDexist =  function isIDexist(orgID,callback) {
 orgInfo.isOrgExist =  function isOrgExist(orgCode , callback){
    var sqlstr = "SELECT * FROM `bsd_orginfo` WHERE  `orgCode`= '" + orgCode + "'";
    console.log(sqlstr);
-   MySql.query(sqlstr,  function(err,results) {
+   MySql.toSQL(sqlstr,  function(err,results) {
         return  callback(err,results);
     });
 }
@@ -215,7 +215,7 @@ orgInfo.isOrgExist =  function isOrgExist(orgCode , callback){
 orgInfo.isOrgExist_V2 =  function isOrgExist_V2(data , callback){
    var sqlstr = "SELECT * FROM `bsd_orginfo` WHERE  `orgCode`= '" + data.orgCode + "' and `orgID` != '" + data.orgID + "'";
    console.log(sqlstr);
-   MySql.query(sqlstr,  function(err,results) {
+   MySql.toSQL(sqlstr,  function(err,results) {
         return  callback(err,results);
     });
 }
@@ -224,7 +224,7 @@ orgInfo.isOrgExist_V2 =  function isOrgExist_V2(data , callback){
 //是否存在有效ID
 orgInfo.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 
-   MySql.query('SELECT * FROM `bsd_orginfo` WHERE `ISVALID` =1 AND orgID = ?', [orgID]  , function(err,results) {
+   MySql.toSQL('SELECT * FROM `bsd_orginfo` WHERE `ISVALID` =1 AND orgID = ?', [orgID]  , function(err,results) {
         return  callback(err,results);
     });
 
@@ -233,7 +233,7 @@ orgInfo.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 
 
 orgInfo.seachForm =  function seachForm(data, callback){
-   MySql.query('SELECT ?? FROM `bsd_orginfo` WHERE ?? = ?', data  , function(err,results) {
+   MySql.toSQL('SELECT ?? FROM `bsd_orginfo` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
@@ -244,7 +244,7 @@ orgInfo.seachForm =  function seachForm(data, callback){
 //查询数据
 orgInfo.searchData =  function searchData(sql, callback){
     sqlstr=sql;
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -254,7 +254,7 @@ orgInfo.searchData =  function searchData(sql, callback){
 //更新数据
 orgInfo.updateData =  function updateData(sql, callback){
     sqlstr=sql;
-    MySql.query(sqlstr, function(err, doc) {
+    MySql.toSQL(sqlstr, function(err, doc) {
 		return   callback(err, doc);	    
 	 });	
 }
@@ -263,7 +263,7 @@ orgInfo.updateData =  function updateData(sql, callback){
 orgInfo.savePage = function savePage(orgID, callback){
 	 var sqlstr='UPDATE `bsd_orginfo`  SET  `ISVALID`  = 1 WHERE `orgID` = ' + orgID;
 	 //console.log(sqlstr);
-		MySql.query(sqlstr, function(err, doc) {
+		MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 
@@ -333,7 +333,7 @@ orgInfo.getOrg_option = function getOrg_option(callback) {
 	var sqlstr = "select * from  bsd_orginfo where ISVALID = '1'  ";
 	var optionList = "";
 	var data = {};
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		if(err) return callback(err);
 		else {
 			async.eachSeries(docs, function(doc, callback) {    
@@ -352,7 +352,7 @@ orgInfo.getOrg_option = function getOrg_option(callback) {
 
 		} //if end 
 			    
-	});	  // MySql.query  end
+	});	  // MySql.toSQL  end
 
 }
 
