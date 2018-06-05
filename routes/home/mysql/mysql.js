@@ -45,6 +45,7 @@ var query = {
 			if(err){
 				callback(err, null);
 			}else{
+				console.log("connect pool created.");
 				conn.query(sqlstr, [], function(err,results){
 					if(err) console.log("MySql :toSQL err:" + err);
 					//释放连接
