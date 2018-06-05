@@ -81,7 +81,7 @@
                     var courseCon    = createEle('a');courseCon.className = '_home_courseCon _block';courseCon.href = playerPort + '/situation#'+course.courseId;coursePlace.appendChild(courseCon);
                     var courseImg_a  = createEle('div');courseCon.appendChild(courseImg_a);$(courseImg_a).css({borderBottom:'1px solid #d8e1ea',width:'100%',height:189,overflow:'hidden',margin:0,padding:0});
                     if(course.fileIcon && course.fileIcon != 'undefined'&& course.fileIcon != 'null'){
-                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + 'fileManager/fileRead?userId=' +JSON.parse(course.fileIcon).ownerId +'&filePath='+JSON.parse(course.fileIcon).filePath;courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
+                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + JSON.parse(course.fileIcon).filePath;courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
                     }else{
                         courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = '/home/img/home/course.png';courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
                     }
