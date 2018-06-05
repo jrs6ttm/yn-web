@@ -63,9 +63,6 @@ var query = {
 	},
 
 	toSQL_noback :  function toSQL_noback(sqlstr){
-		connection.query(sqlstr, function(err, doc) {
-			if(err) console.log("MySql :toSQL_noback err:" + err);
-		});
 		pool.getConnection(function(err, conn){
 			if(err){
 				console.log("MySql :toSQL_noback err:" + err);
