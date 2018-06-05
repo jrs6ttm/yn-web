@@ -437,6 +437,7 @@
         },
         init : function(){
             var me = this;
+            /*
             sendMessage('get',playerPort, '/getPopularCourses','',function(popularCourses){
                 me.popularCourses = popularCourses;
                 if(popularCourses.length >= 3){
@@ -481,7 +482,6 @@
                     var titleMain = createEle('div');titleMain.className = '_home_titleMain';titleCon.appendChild(titleMain);
                     var titleMainH4 = createEle('h4');titleMainH4.innerHTML = '学做网简介';titleMain.appendChild(titleMainH4);
                     var titleMainP = createEle('p');titleMainP.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学做网是用学习设计的思想和技术开发的在线教育平台，全方位支持工学结合在线课程的设计、开发、实施、评估，和共享。特别支持职教学生在应用的情境中通过任务驱动，以工作过程为导向，学习相关知识和技能，同时能够运用所学的知识与技能解决问题、完成任务，并在应用中评估学习效果。';titleMain.appendChild(titleMainP);
-                   /* var titleLearnMore = createEle('div');titleLearnMore.innerHTML = '了解详情';titleMain.appendChild(titleLearnMore);*/
                     var titleListCon = createEle('div');titleListCon.className = '_home_titleListCon';
                     var titleListC = createEle('div');titleListC.className = '_home_titleListC';titleListCon.appendChild(titleListC);
                     //var tjkc = createEle('div');tjkc.className = '_home_tjkc';titleListC.appendChild(tjkc);
@@ -503,15 +503,7 @@
                     ];
 
                     var titleCourseC,titleCourseT,titleCourseD;
-
-                   /* $(fakeListData).each(function(i,d){
-                        titleCourseC = createEle('div');titleCourseC.className = '_home_titleCourseC';
-                        titleCourseT = createEle('h4');titleCourseC.appendChild(titleCourseT);
-                        titleCourseD = createEle('p');titleCourseC.appendChild(titleCourseD);
-                        titleCourseT.innerHTML = d.name;
-                        titleCourseD.innerHTML = d.det;
-                        $(titleListC).append(titleCourseC);
-                    });*/
+                  
                     $('._page_view').append(titleCon).append(titleListCon);
 
                     //$('._page_view').append(headerCon);
@@ -532,6 +524,8 @@
                 }
                 me.createClasses();
             });
+            */
+            me.createClasses();
         }
     };
 
