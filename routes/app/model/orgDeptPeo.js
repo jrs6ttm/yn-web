@@ -15,7 +15,7 @@ module.exports = bsd_orgDeptPeo;
 
 //执行SQL
 bsd_orgDeptPeo.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -56,7 +56,7 @@ bsd_orgDeptPeo.insertData_arry = function insertData_arry(datas,creatorID, callb
 //插入数据
 bsd_orgDeptPeo.insertData =  function insertData(data, callback){
 
-	MySql.query('INSERT INTO `bsd_orgdeptpeo`  SET ?', data  , function(err, doc) {
+	MySql.toSQL('INSERT INTO `bsd_orgdeptpeo`  SET ?', data  , function(err, doc) {
 			// console.log(err);  console.log(doc);
 			if(err)  console.log(err); 
 			return callback(err,doc);
@@ -70,7 +70,7 @@ bsd_orgDeptPeo.insertData =  function insertData(data, callback){
 bsd_orgDeptPeo.isUserexist =  function isUserexist(data,callback) {
   var sqlstr = "SELECT * FROM `bsd_orgdeptpeo` WHERE  `deptID` = '" + data.deptID + "' and `synid` = '" + data.synid + "' ";
   //console.log(sqlstr);
-   MySql.query(sqlstr  , function(err,results) {
+   MySql.toSQL(sqlstr  , function(err,results) {
 	    if(results.length <= 0) return callback(false);
         else  return  callback(true);
     });
@@ -137,7 +137,7 @@ bsd_orgDeptPeo.delData_arry = function delData_arry(datas , callback ) {
 bsd_orgDeptPeo.delDeptPeo_callback  =  function delDeptPeo_callback(ID , callback) {
 	var sqlstr="DELETE FROM `bsd_orgdeptpeo`   WHERE `DeptPeoID` = '" + ID + "'"; 
 	console.log(sqlstr);
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		return  callback(err,doc);
     });	
   }
@@ -167,7 +167,7 @@ bsd_orgDeptPeo.arry_to_sql = function arry_to_sql(data ,  callback ) {
 
 	  sqlstr = sql1 + sql2;
 	  //console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 		    if(err) console.log(err);
 			return   callback(sqlstr);    
 	   });	
@@ -201,7 +201,7 @@ bsd_orgDeptPeo.updateData_Json = function updateData_Json(data,DeptPeoID , callb
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 		 return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -239,7 +239,7 @@ bsd_orgDeptPeo.updateData_Json_kendoUI = function updateData_Json_kendoUI(data,D
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 		 return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -272,7 +272,7 @@ bsd_orgDeptPeo.searchData_Json_V2 = function searchData_Json_V2(data, callback )
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -302,7 +302,7 @@ bsd_orgDeptPeo.searchData_Json_V3 = function searchData_Json_V3(roletype ,data, 
 		if(roletype != '')  sqlstr = sqlstr + " and `orgRoleID` IN (select `orgRoleID` from `bsd_orgrole` where  ISVALID = '1' and type = '" + roletype + "' ) ";
 
 		console.log(sqlstr);
-		MySql.query(sqlstr, function(err, doc) {
+		MySql.toSQL(sqlstr, function(err, doc) {
 				return    callback(err, doc);	    
 		});	
 		}  //if end
@@ -330,7 +330,7 @@ bsd_orgDeptPeo.searchData_Json = function searchData_Json(data, callback ) {
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -363,7 +363,7 @@ bsd_orgDeptPeo.searchData_Json_role = function searchData_Json_role(data, callba
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -383,7 +383,7 @@ bsd_orgDeptPeo.getMyOrgDep =  function getMyOrgDep(userID, callback) {
 	var myOrgList = "";
 
 	var data = {};
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		if(err) return callback(err);
 		else {
 			async.eachSeries(docs, function(doc, callback) {    
@@ -418,7 +418,7 @@ bsd_orgDeptPeo.getMyOrgDep =  function getMyOrgDep(userID, callback) {
 
 		} //if end 
 			    
-	});	  // MySql.query  end
+	});	  // MySql.toSQL  end
 
 
 }
@@ -440,7 +440,7 @@ bsd_orgDeptPeo.getMyOrgDep_V2 = function getMyOrgDep_V2(userID, callback) {
 	var myOrgList = "";
 
 	var data = {};
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		if(err) return callback(err);
 		else {
 			async.eachSeries(docs, function(doc, callback) {    
@@ -473,7 +473,7 @@ bsd_orgDeptPeo.getMyOrgDep_V2 = function getMyOrgDep_V2(userID, callback) {
 
 		} //if end 
 			    
-	});	  // MySql.query  end
+	});	  // MySql.toSQL  end
 
 
 }
@@ -488,7 +488,7 @@ bsd_orgDeptPeo.getMyrole = function getMyrole(userID, callback) {
 
 	var data = {};
 
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		if(err) return callback(err);
 		else if(docs.length <= 0  )  return callback(err, null);
 		else if(docs.length >0)
@@ -507,7 +507,7 @@ bsd_orgDeptPeo.getMyrole = function getMyrole(userID, callback) {
 
 		} //if end 
 			    
-	});	  // MySql.query  end
+	});	  // MySql.toSQL  end
 
 
 }
@@ -538,7 +538,7 @@ bsd_orgDeptPeo.delOrg =  function delOrg(orgID ,  callback ) {
 bsd_orgDeptPeo.isOrgValid = function isOrgValid(orgID,  callback) {
 		//console.log('isOrgValid:' + orgID  );
    var sql ="SELECT * FROM `bsd_orgdeptpeo` WHERE `ISVALID` =1 AND `orgID` = '" + orgID + "'";
-   MySql.query(sql , function(err,docs) {
+   MySql.toSQL(sql , function(err,docs) {
 	   //console.log(err);
 	   //console.log(docs);
        // return  callback(err,results);
@@ -562,7 +562,7 @@ bsd_orgDeptPeo.isOrgValid = function isOrgValid(orgID,  callback) {
 	 else { //如果orgID不为空
          var sqlstr = "select  * from `bsd_orgdeptpeo` where `orgID` = '" + orgID + "'";
 		 console.log(sqlstr);
-		 MySql.query(sqlstr, function(err, docs) {
+		 MySql.toSQL(sqlstr, function(err, docs) {
 			 if(docs.length==0 )  return  callback('未查询到此ID数据');
 			 else if(docs.length > 1 )  return  callback('ID数据不正确，此ID存在多条记录');
 			 else {
@@ -580,7 +580,7 @@ bsd_orgDeptPeo.isOrgValid = function isOrgValid(orgID,  callback) {
 				});
 			 }  //if end
 				    
-	     });// MySql.query
+	     });// MySql.toSQL
 	
      } //if end
  }
@@ -594,7 +594,7 @@ bsd_orgDeptPeo.isOrgValid = function isOrgValid(orgID,  callback) {
 //ID是否存在
 bsd_orgDeptPeo.isIDexist =  function isIDexist(orgID,callback) {
 
-   MySql.query('SELECT * FROM `bsd_orgdeptpeo` WHERE  orgID = ?', [orgID]  , function(err,results) {
+   MySql.toSQL('SELECT * FROM `bsd_orgdeptpeo` WHERE  orgID = ?', [orgID]  , function(err,results) {
         return  callback(err,results);
     });
 
@@ -603,7 +603,7 @@ bsd_orgDeptPeo.isIDexist =  function isIDexist(orgID,callback) {
 //是否存在有效ID
 bsd_orgDeptPeo.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 
-   MySql.query('SELECT * FROM `bsd_orgdeptpeo` WHERE `ISVALID` =1 AND orgID = ?', [orgID]  , function(err,results) {
+   MySql.toSQL('SELECT * FROM `bsd_orgdeptpeo` WHERE `ISVALID` =1 AND orgID = ?', [orgID]  , function(err,results) {
         return  callback(err,results);
     });
 
@@ -612,7 +612,7 @@ bsd_orgDeptPeo.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 
 
 bsd_orgDeptPeo.seachForm =  function seachForm(data, callback){
-   MySql.query('SELECT ?? FROM `bsd_orgdeptpeo` WHERE ?? = ?', data  , function(err,results) {
+   MySql.toSQL('SELECT ?? FROM `bsd_orgdeptpeo` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
@@ -623,7 +623,7 @@ bsd_orgDeptPeo.seachForm =  function seachForm(data, callback){
 //查询数据
 bsd_orgDeptPeo.searchData =  function searchData(sql, callback){
     sqlstr=sql;
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -633,7 +633,7 @@ bsd_orgDeptPeo.searchData =  function searchData(sql, callback){
 //更新数据
 bsd_orgDeptPeo.updateData =  function updateData(sql, callback){
     sqlstr=sql;
-    MySql.query(sqlstr, function(err, doc) {
+    MySql.toSQL(sqlstr, function(err, doc) {
 		return   callback(err, doc);	    
 	 });	
 }
@@ -642,7 +642,7 @@ bsd_orgDeptPeo.updateData =  function updateData(sql, callback){
 bsd_orgDeptPeo.savePage = function savePage(orgID, callback){
 	 var sqlstr='UPDATE `bsd_orgdeptpeo`  SET  `ISVALID`  = 1 WHERE `orgID` = ' + orgID;
 	 //console.log(sqlstr);
-		MySql.query(sqlstr, function(err, doc) {
+		MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 
@@ -653,7 +653,7 @@ bsd_orgDeptPeo.savePage = function savePage(orgID, callback){
 bsd_orgDeptPeo.regainDefin = function regainDefin(data,callback) {   //and `orgID`  = '" + data.orgID + "'
 	var sqlstr = "UPDATE `bsd_orgdeptpeo`  SET  `isDefault`  = 0 WHERE `synid` = '" + data.synid + "'    ";
 	console.log(sqlstr);
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		return    callback(err, doc);	    
     });	
 

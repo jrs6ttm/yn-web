@@ -13,7 +13,7 @@ module.exports = user;
 
 //执行SQL
 user.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -23,7 +23,7 @@ user.toSQL =  function toSQL(sqlstr, callback){
 //获取用户信息
 user.getUserInfo =  function getUserInfo(username, callback){
 	var sqlstr= "select * from `oc_users`  where isvalid = '1' and uid = '" + username +"' ";
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -33,7 +33,7 @@ user.getUserInfo =  function getUserInfo(username, callback){
 //获取用户信息
 user.getUserInfo_ID =  function getUserInfo_ID(userID, callback){
 	var sqlstr= "select * from `oc_users`  where isvalid = '1' and synid = '" + userID +"' ";
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -44,7 +44,7 @@ user.getUserInfo_ID =  function getUserInfo_ID(userID, callback){
 //获取超管的功能数据
 user.getAdminNavAndPersonal = function getAdminNavAndPersonal(callback) {
 	var sqlstr = "CALL m_getAdminApp() ";
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		//console.log(doc);
 		if(err )  return callback(err,docs);
 
@@ -56,7 +56,7 @@ user.getAdminNavAndPersonal = function getAdminNavAndPersonal(callback) {
 			var appid = doc.appid;
 			var sqlstr2 = "CALL m_getAppFuns('" + appid + "')";
 			//console.log(sqlstr2);
-			MySql.query(sqlstr2, function(err, funs) {
+			MySql.toSQL(sqlstr2, function(err, funs) {
                 if(funs.length <=0) return callback();
 				appdocs[i].funs = funs[0];
 
@@ -67,7 +67,7 @@ user.getAdminNavAndPersonal = function getAdminNavAndPersonal(callback) {
 				}
 
 				
-			});  //MySql.query end
+			});  //MySql.toSQL end
 
 		}, function(err){
 			 //console.log('0000',resdatas);
@@ -87,7 +87,7 @@ user.getAdminNavAndPersonal = function getAdminNavAndPersonal(callback) {
 //获取超管的功能数据
 user.getCompanyNavAndPersonal = function getCompanyNavAndPersonal(callback) {
 	var sqlstr = "CALL m_getCompanyApp() ";
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		//console.log(doc);
 		if(err )  return callback(err,docs);
 
@@ -99,7 +99,7 @@ user.getCompanyNavAndPersonal = function getCompanyNavAndPersonal(callback) {
 			var appid = doc.appid;
 			var sqlstr2 = "CALL m_getAppFuns('" + appid + "')";
 			//console.log(sqlstr2);
-			MySql.query(sqlstr2, function(err, funs) {
+			MySql.toSQL(sqlstr2, function(err, funs) {
 				if(funs.length <=0) return callback();
 
 				appdocs[i].funs = funs[0];
@@ -111,7 +111,7 @@ user.getCompanyNavAndPersonal = function getCompanyNavAndPersonal(callback) {
 				}
 
 				
-			});  //MySql.query end
+			});  //MySql.toSQL end
 
 		}, function(err){
 			 //console.log('0000',resdatas);
@@ -136,7 +136,7 @@ user.getUserNavAndPersonal = function getUserNavAndPersonal(data, callback) {
 
 	console.log('sqlstr:' ,sqlstr );
 
-	MySql.query(sqlstr, function(err, docs) {
+	MySql.toSQL(sqlstr, function(err, docs) {
 		//console.log('docs:' , docs );
 		if(err ) {console.log(err ); return callback(err,docs);}  
 
@@ -148,7 +148,7 @@ user.getUserNavAndPersonal = function getUserNavAndPersonal(data, callback) {
 			var appid = doc.appid;
 			var sqlstr2 = "CALL m_getAppFuns('" + appid + "')";
 			console.log(sqlstr2);
-			MySql.query(sqlstr2, function(err, funs) {
+			MySql.toSQL(sqlstr2, function(err, funs) {
 				if(err) console.log(err);
 				if(!funs || funs.length <=0) return callback();
 				appdocs[i].funs = funs[0];
@@ -159,7 +159,7 @@ user.getUserNavAndPersonal = function getUserNavAndPersonal(data, callback) {
 					resdatas.personal[resdatas.personal.length] = appdocs[i]; callback();
 				}
 				
-			});  //MySql.query end
+			});  //MySql.toSQL end
 
 		}, function(err){
 			 //console.log('0000',resdatas);
@@ -180,7 +180,7 @@ user.getUserNavAndPersonal = function getUserNavAndPersonal(data, callback) {
 //插入数据
 user.insertData =  function insertData(data, callback){
 	//console.log(data);
-   MySql.query('INSERT INTO `oc_users`  SET ?', data  , function(err, doc) {
+   MySql.toSQL('INSERT INTO `oc_users`  SET ?', data  , function(err, doc) {
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -210,7 +210,7 @@ user.updateData_Json = function updateData_Json(data,ID , callback ) {
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -239,7 +239,7 @@ user.searchData_Json = function searchData_Json(data, callback ) {
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -255,7 +255,7 @@ user.searchData_Json = function searchData_Json(data, callback ) {
  function delOrg_V1(ID){
 	var sqlstr="DELETE FROM `oc_users`   WHERE `isadmin` = '0' and `synid` = '" + ID + "'     "; 
 	console.log(sqlstr);
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		if(err)  console.log(err); 
     });	
 }
@@ -268,7 +268,7 @@ user.isValid = function isValid(ID,  callback) {
 		//console.log('isOrgValid:' + orgID  );
    var sql ="SELECT * FROM `oc_users` WHERE isvalid = '1' and  `synid` = '" + ID + "' ";
    console.log(sql);
-   MySql.query(sql , function(err,docs) {
+   MySql.toSQL(sql , function(err,docs) {
 	   console.log(err);
 	   //console.log(docs);
        // return  callback(err,results);
@@ -292,7 +292,7 @@ user.isValid = function isValid(ID,  callback) {
 //ID是否存在
 user.isIDexist =  function isIDexist(ID,callback) {
 
-   MySql.query("SELECT * FROM `oc_users` WHERE isvalid = '1' and   synid = ?", [ID]  , function(err,results) {
+   MySql.toSQL("SELECT * FROM `oc_users` WHERE isvalid = '1' and   synid = ?", [ID]  , function(err,results) {
         return  callback(err,results);
     });
 }
@@ -302,7 +302,7 @@ user.isIDexist =  function isIDexist(ID,callback) {
 
 
 user.seachForm =  function seachForm(data, callback){
-   MySql.query('SELECT ?? FROM `oc_users` WHERE ?? = ?', data  , function(err,results) {
+   MySql.toSQL('SELECT ?? FROM `oc_users` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
@@ -313,7 +313,7 @@ user.seachForm =  function seachForm(data, callback){
 //查询数据
 user.searchData =  function searchData(sql, callback){
     sqlstr=sql;
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -323,7 +323,7 @@ user.searchData =  function searchData(sql, callback){
 //更新数据
 user.updateData =  function updateData(sql, callback){
     sqlstr=sql;
-    MySql.query(sqlstr, function(err, doc) {
+    MySql.toSQL(sqlstr, function(err, doc) {
 		return   callback(err, doc);	    
 	 });	
 }

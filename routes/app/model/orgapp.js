@@ -13,7 +13,7 @@ module.exports =  bsd_orgapp;
 
 //执行SQL
  bsd_orgapp.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -23,7 +23,7 @@ module.exports =  bsd_orgapp;
 //获取用户信息
  bsd_orgapp.getInfo =  function getInfo( bsd_orgappname, callback){
 	var sqlstr= "select * from `bsd_orgapp`  where isvalid = '1' and orgappid = '" +  bsd_orgappname +"' ";
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -34,7 +34,7 @@ module.exports =  bsd_orgapp;
 //插入数据
  bsd_orgapp.insertData =  function insertData(data, callback){
 	console.log(data);
-   MySql.query('INSERT INTO `bsd_orgapp`  SET ?', data  , function(err, doc) {
+   MySql.toSQL('INSERT INTO `bsd_orgapp`  SET ?', data  , function(err, doc) {
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -64,7 +64,7 @@ module.exports =  bsd_orgapp;
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -93,7 +93,7 @@ module.exports =  bsd_orgapp;
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -105,7 +105,7 @@ module.exports =  bsd_orgapp;
 
  bsd_orgapp.getOrgApp =  function getOrgApp( orgID, callback){
 	var sqlstr= "select a.orgappid , a.appid , b.name ,a.isassign  from `bsd_orgapp` as a, `bsd_app` as b where a.appid = b.appid and  a.isvalid = '1' and  b.isvalid = '1' and a.orgID = '" +  orgID +"' ";
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
