@@ -81,7 +81,7 @@
                     var courseCon    = createEle('a');courseCon.className = '_home_courseCon _block';courseCon.href = playerPort + '/situation#'+course.courseId;coursePlace.appendChild(courseCon);
                     var courseImg_a  = createEle('div');courseCon.appendChild(courseImg_a);$(courseImg_a).css({borderBottom:'1px solid #d8e1ea',width:'100%',height:189,overflow:'hidden',margin:0,padding:0});
                     if(course.fileIcon && course.fileIcon != 'undefined'&& course.fileIcon != 'null'){
-                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + 'fileManager/fileRead?userId=' +JSON.parse(course.fileIcon).ownerId +'&filePath='+JSON.parse(course.fileIcon).filePath;courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
+                        courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = filePort + JSON.parse(course.fileIcon).filePath;courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
                     }else{
                         courseImg    = createEle('img');courseImg.title = courseImg.alt = course.courseName;courseImg.src = '/home/img/home/course.png';courseImg.className = '_home_courseImg';courseImg_a.appendChild(courseImg);
                     }
@@ -437,101 +437,15 @@
         },
         init : function(){
             var me = this;
-            sendMessage('get',playerPort, '/getPopularCourses','',function(popularCourses){
-                me.popularCourses = popularCourses;
-                if(popularCourses.length >= 3){
-                    var headerCon = createEle('div');headerCon.className = '_home_headerCon';
-                    var header = createEle('div');header.className = 'container';headerCon.appendChild(header);
-                    $(header).append('<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">'+
-                    '<ol class="carousel-indicators" style="width: 100%">'+
-                    '<li class="_home_popularsLi active" data-target="#carousel-example-generic" data-slide-to="0">aaa</li>'+
-                    '<li class="_home_popularsLi" data-target="#carousel-example-generic" data-slide-to="1">1</li>'+
-                    '<li class="_home_popularsLi" data-target="#carousel-example-generic" data-slide-to="2"></li>'+
-                        // '<li class="_home_popularsLi" data-target="#carousel-example-generic" data-slide-to="3"></li>'+
-                        // '<li class="_home_popularsLi" data-target="#carousel-example-generic" data-slide-to="4"></li>'+
-                    '</ol>'+
-                    '<div class="carousel-inner" role="listbox">'+
-                    '<div class="item active">'+
-                    '<img class="_home_populars" style="height: 500px;width: 100%" data-holder-rendered="true">'+
-                    '</div>'+
-                    '<div class="item">'+
-                    '<img class="_home_populars" style="height: 500px;width: 100%" data-holder-rendered="true">'+
-                    '</div>'+
-                    '<div class="item">'+
-                    '<img class="_home_populars" style="height: 500px;width: 100%" data-holder-rendered="true">'+
-                    '</div>'+
-                        // '<div class="item">'+
-                        // '<img class="_home_populars" style="height: 500px;width: 100%" data-holder-rendered="true">'+
-                        // '</div>'+
-                        // '<div class="item">'+
-                        // '<img class="_home_populars" style="height: 500px;width: 100%" data-holder-rendered="true">'+
-                        // '</div>'+
-                    '</div>'+
-                    '<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">'+
-                    '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>'+
-                    '<span class="sr-only">Previous</span>'+
-                    '</a>'+
-                    '<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">'+
-                    '<span class="glyphicon glyphicon-chevron-right" aria-hidden;="true"></span>'+
-                    '<span class="sr-only">Next</span>'+
-                    '</a>'+
-                    '</div>');
+            var titleCon = createEle('div');titleCon.className = '_home_titleCon';
+            var titleMain = createEle('div');titleMain.className = '_home_titleMain';titleCon.appendChild(titleMain);
+            var titleMainH4 = createEle('h4');titleMainH4.innerHTML = '学做网简介';titleMain.appendChild(titleMainH4);
+            var titleMainP = createEle('p');titleMainP.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学做网是用学习设计的思想和技术开发的在线教育平台，全方位支持工学结合在线课程的设计、开发、实施、评估，和共享。特别支持职教学生在应用的情境中通过任务驱动，以工作过程为导向，学习相关知识和技能，同时能够运用所学的知识与技能解决问题、完成任务，并在应用中评估学习效果。';titleMain.appendChild(titleMainP);
+            var titleListCon = createEle('div');titleListCon.className = '_home_titleListCon';
+            var titleListC = createEle('div');titleListC.className = '_home_titleListC';titleListCon.appendChild(titleListC);
+            $('._page_view').append(titleCon).append(titleListCon);
 
-                    var titleCon = createEle('div');titleCon.className = '_home_titleCon';
-                    var titleMain = createEle('div');titleMain.className = '_home_titleMain';titleCon.appendChild(titleMain);
-                    var titleMainH4 = createEle('h4');titleMainH4.innerHTML = '学做网简介';titleMain.appendChild(titleMainH4);
-                    var titleMainP = createEle('p');titleMainP.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学做网是用学习设计的思想和技术开发的在线教育平台，全方位支持工学结合在线课程的设计、开发、实施、评估，和共享。特别支持职教学生在应用的情境中通过任务驱动，以工作过程为导向，学习相关知识和技能，同时能够运用所学的知识与技能解决问题、完成任务，并在应用中评估学习效果。';titleMain.appendChild(titleMainP);
-                   /* var titleLearnMore = createEle('div');titleLearnMore.innerHTML = '了解详情';titleMain.appendChild(titleLearnMore);*/
-                    var titleListCon = createEle('div');titleListCon.className = '_home_titleListCon';
-                    var titleListC = createEle('div');titleListC.className = '_home_titleListC';titleListCon.appendChild(titleListC);
-                    //var tjkc = createEle('div');tjkc.className = '_home_tjkc';titleListC.appendChild(tjkc);
-
-                    var fakeListData = [
-                        {
-                            name:'工作过程系统化开发与设计',
-                            det:'工作过程系统化课程是依据并围绕职业活动中，为完成一件工作任务并获得工作成果所进行的课程的计划。>',
-                            link:''
-                        },{
-                            name:'系统漏洞分析',
-                            det:'工作过程系统化课程是依据并围绕职业活动中，为完成一件工作任务并获得工作成果所进行的课程的计划。>',
-                            link:''
-                        },{
-                            name:'多媒体课件的设计与制作',
-                            det:'工作过程系统化课程是依据并围绕职业活动中，为完成一件工作任务并获得工作成果所进行的课程的计划。>',
-                            link:''
-                        }
-                    ];
-
-                    var titleCourseC,titleCourseT,titleCourseD;
-
-                   /* $(fakeListData).each(function(i,d){
-                        titleCourseC = createEle('div');titleCourseC.className = '_home_titleCourseC';
-                        titleCourseT = createEle('h4');titleCourseC.appendChild(titleCourseT);
-                        titleCourseD = createEle('p');titleCourseC.appendChild(titleCourseD);
-                        titleCourseT.innerHTML = d.name;
-                        titleCourseD.innerHTML = d.det;
-                        $(titleListC).append(titleCourseC);
-                    });*/
-                    $('._page_view').append(titleCon).append(titleListCon);
-
-                    //$('._page_view').append(headerCon);
-                    var homePopulars = document.getElementsByClassName('_home_populars');
-                    var homePopularsLi = document.getElementsByClassName('_home_popularsLi');
-                    $(homePopulars).each(function(i,p){
-                        $('.carousel-indicators').css({left:0,margin:0,bottom:0});
-                        p.src = me.popularCourses[i].imageUrl;
-                        p.title = me.popularCourses[i].name;
-                        homePopularsLi[i].innerHTML = me.popularCourses[i].name;
-                        $(homePopularsLi[i]).css({opacity:0.4,background:'#000',lineHeight:'40px',color:'#fff',textIndent:0,margin:0,position:'relative',width:'33.33%',border:0,borderRadius:0,display:'block',float:'left',height:40,outLine:'1px 0 1px #7f7f7f;'});
-                        $(p).css({cursor:'pointer'});
-                        p.onclick = function(){
-                            window.location = playerPort + '/situation#'+me.popularCourses[i].courseId;
-                        }
-                    });
-                    //$('#carousel-example-generic').carousel();
-                }
-                me.createClasses();
-            });
+            me.createClasses();
         }
     };
 

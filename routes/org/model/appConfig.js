@@ -17,7 +17,7 @@ module.exports = appConfig;
 
 //执行SQL
 appConfig.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -58,7 +58,7 @@ appConfig.searchData_Json = function searchData_Json(data, callback ) {
 			{
 			console.log(sqlstr);
 			connection.query(sqlstr, function(err,doc){
-			//MySql.query(sqlstr, function(err, doc) {
+			//MySql.toSQL(sqlstr, function(err, doc) {
 					return    callback(err, doc);	    
 			});	
 			}  //if end

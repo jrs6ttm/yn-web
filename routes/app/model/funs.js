@@ -13,7 +13,7 @@ module.exports =  bsd_funs;
 
 //执行SQL
  bsd_funs.toSQL =  function toSQL(sqlstr, callback){
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -23,7 +23,7 @@ module.exports =  bsd_funs;
 //获取用户信息
  bsd_funs.getInfo =  function getInfo( funid, callback){
 	var sqlstr= "select * from `bsd_funs`  where isvalid = '1' and funid = '" +  funid +"' ";
-	MySql.query(sqlstr, function(err, doc) {
+	MySql.toSQL(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -34,7 +34,7 @@ module.exports =  bsd_funs;
 //插入数据
  bsd_funs.insertData =  function insertData(data, callback){
 	console.log(data);
-   MySql.query('INSERT INTO `bsd_funs`  SET ?', data  , function(err, doc) {
+   MySql.toSQL('INSERT INTO `bsd_funs`  SET ?', data  , function(err, doc) {
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -64,7 +64,7 @@ module.exports =  bsd_funs;
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -93,7 +93,7 @@ module.exports =  bsd_funs;
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.query(sqlstr, function(err, doc) {
+	  MySql.toSQL(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
