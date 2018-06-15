@@ -259,17 +259,7 @@ View.prototype = {
                 me.startSelectedOne(type,index);
             });
         };
-        if(!me.database.courseData.isCooperation){
-            line++;
-            selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
-            selectMain = createEle('h1');selectCon.appendChild(selectMain);
-            selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
-            selectHead = createEle('h4');selectHead.innerHTML = '开始课程';selectCon.appendChild(selectHead);
-            selectDet = createEle('p');selectDet.innerHTML = '开始一次新的课程';selectCon.appendChild(selectDet);
-            $(selectMain).click(function(){
-                selectOneToStart(this,'startNew','');
-            });
-        }
+        
         if(instanceDatas.length){
             line++;
             selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
@@ -284,7 +274,31 @@ View.prototype = {
             $(selectMain).click(function(){
                 selectOneToStart(this,'continue',selectDet1.value);
             });
-        }
+        }else{
+			if(!me.database.courseData.isCooperation){
+				line++;
+				selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
+				selectMain = createEle('h1');selectCon.appendChild(selectMain);
+				selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
+				selectHead = createEle('h4');selectHead.innerHTML = '开始课程';selectCon.appendChild(selectHead);
+				selectDet = createEle('p');selectDet.innerHTML = '开始一次新的课程';selectCon.appendChild(selectDet);
+				$(selectMain).click(function(){
+					selectOneToStart(this,'startNew','');
+				});
+			}
+			
+			if(orgData){
+				line++;
+				selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
+				selectMain = createEle('h1');selectCon.appendChild(selectMain);
+				selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
+				selectHead = createEle('h4');selectHead.innerHTML = '开始组织课程学习';selectCon.appendChild(selectHead);
+				selectDet = createEle('p');selectDet.innerHTML = '学习已经组织好的课程';selectCon.appendChild(selectDet);
+				$(selectMain).click(function(){
+					selectOneToStart(this,'startOrg','');
+				});
+			}
+		}
         if(lastCourseArr.length){
             line++;
             selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
@@ -300,17 +314,7 @@ View.prototype = {
                 selectOneToStart(this,'viewCourse',selectDet2.value);
             });
         }
-        if(orgData){
-            line++;
-            selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
-            selectMain = createEle('h1');selectCon.appendChild(selectMain);
-            selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
-            selectHead = createEle('h4');selectHead.innerHTML = '开始组织课程学习';selectCon.appendChild(selectHead);
-            selectDet = createEle('p');selectDet.innerHTML = '学习已经组织好的课程';selectCon.appendChild(selectDet);
-            $(selectMain).click(function(){
-                selectOneToStart(this,'startOrg','');
-            });
-        }
+        
         if(me.isTeacher){
             line++;
             selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);

@@ -501,12 +501,12 @@ if(mySQL) {
             userId = req.session.userData.id,
             sqlStr;
         if(courseCompleteId){
-            sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_complete_id = "'+ courseCompleteId+'"';
+            sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_complete_id = "'+ courseCompleteId+'" order by selected_time desc';
         }else{
             if(orgId){
-                sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_id = "'+ courseId+'" AND lrn_scn_org_id = "'+ orgId+'" AND user_id = "'+ userId+'"';
+                sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_id = "'+ courseId+'" AND lrn_scn_org_id = "'+ orgId+'" AND user_id = "'+ userId+'" order by selected_time desc';
             }else{
-                sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_id = "'+ courseId+'" AND user_id = "'+ userId+'"';
+                sqlStr = 'SELECT * FROM oc_courseplayer_courses WHERE course_id = "'+ courseId+'" AND user_id = "'+ userId+'" order by selected_time desc';
             }
         }
         mySQL.toSQL(sqlStr, function(err, doc) {
