@@ -269,7 +269,7 @@ View.prototype = {
             selectDet1 = createEle('select');selectCon.appendChild(selectDet1);
             $(instanceDatas).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '选课时间：'+ new Date(data.selectedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
-                selectDet1.appendChild(sel);
+                selectDet1.prepend(sel);
             });
             $(selectMain).click(function(){
                 selectOneToStart(this,'continue',selectDet1.value);
@@ -308,7 +308,7 @@ View.prototype = {
             selectDet2 = createEle('select');selectCon.appendChild(selectDet2);
             $(lastCourseArr).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '完成时间：'+ new Date(data.completedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
-                selectDet2.appendChild(sel);
+                selectDet2.prepend(sel);
             });
             $(selectMain).click(function(){
                 selectOneToStart(this,'viewCourse',selectDet2.value);
