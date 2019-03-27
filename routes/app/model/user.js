@@ -180,7 +180,9 @@ user.getUserNavAndPersonal = function getUserNavAndPersonal(data, callback) {
 //插入数据
 user.insertData =  function insertData(data, callback){
 	//console.log(data);
-   MySql.toSQL('INSERT INTO `oc_users`  SET ?', data  , function(err, doc) {
+   var sqlStr ="insert into oc_users(uid, password, synid,isadmin,isvalid,email) values('"+data.uid+"', '"+data.password+"', '"+data.synid+ "', '" + data.isadmin + "' , '1' , '"  + data.email + "')";
+   MySql.toSQL(sqlStr , function(err, doc) {
+
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
