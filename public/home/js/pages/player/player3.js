@@ -1492,7 +1492,8 @@ View.prototype = {
     addDescription : function(data){
         var me = this;
         $(me.eles.basicInfoCon).append('<h4 style="overflow:hidden;white-space: nowrap;text-overflow:ellipsis;" title="'+me.database.courseData.courseName+'-'+data.taskInfo.taskName+'">'+me.database.courseData.courseName+'-'+data.taskInfo.taskName+'</h4>');
-        var descriptionTitle = createEle('h4');descriptionTitle.innerHTML = '任务介绍';me.eles.basicInfoCon.appendChild(descriptionTitle);
+        data.taskInfo.data.taskDescription = data.taskInfo.data.taskDescription.replace(/authoring.xuezuowang.com\//g, filePort.substr(7)).replace(/newengine3w.xuezuowang.com/g, newProcessEnginePort.substr(7, newProcessEnginePort.length - 18)); 
+	var descriptionTitle = createEle('h4');descriptionTitle.innerHTML = '任务介绍';me.eles.basicInfoCon.appendChild(descriptionTitle);
         var descriptionContent = createEle('p');descriptionContent.innerHTML = data.taskInfo.data.taskDescription;me.eles.basicInfoCon.appendChild(descriptionContent);
     },
     addSubMainContent : function(data){
