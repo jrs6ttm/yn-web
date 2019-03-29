@@ -13,7 +13,7 @@ module.exports =  bsd_app;
 
 //执行SQL
  bsd_app.toSQL =  function toSQL(sqlstr, callback){
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -23,7 +23,7 @@ module.exports =  bsd_app;
 //获取用户信息
  bsd_app.getInfo =  function getInfo( bsd_appname, callback){
 	var sqlstr= "select * from `bsd_app`  where isvalid = '1' and appid = '" +  bsd_appname +"' ";
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -34,7 +34,7 @@ module.exports =  bsd_app;
 //插入数据
  bsd_app.insertData =  function insertData(data, callback){
 	console.log(data);
-   MySql.toSQL('INSERT INTO `bsd_app`  SET ?', data  , function(err, doc) {
+   MySql.query('INSERT INTO `bsd_app`  SET ?', data  , function(err, doc) {
 		// console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -64,7 +64,7 @@ module.exports =  bsd_app;
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.toSQL(sqlstr, function(err, doc) {
+	  MySql.query(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -93,7 +93,7 @@ module.exports =  bsd_app;
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.toSQL(sqlstr, function(err, doc) {
+	  MySql.query(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -109,7 +109,7 @@ module.exports =  bsd_app;
  function delOrg_V1(ID){
 	var sqlstr="DELETE FROM `bsd_app`   WHERE `appid` = '" + ID + "'     "; 
 	console.log(sqlstr);
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		if(err)  console.log(err); 
     });	
 }
@@ -122,7 +122,7 @@ module.exports =  bsd_app;
 		//console.log('isOrgValid:' + orgID  );
    var sql ="SELECT * FROM `bsd_app` WHERE isvalid = '1' and  `appid` = '" + ID + "' ";
    console.log(sql);
-   MySql.toSQL(sql , function(err,docs) {
+   MySql.query(sql , function(err,docs) {
 	   console.log(err);
 	   console.log(docs);
        // return  callback(err,results);
@@ -146,7 +146,7 @@ module.exports =  bsd_app;
 //ID是否存在
  bsd_app.isIDexist =  function isIDexist(ID,callback) {
 
-   MySql.toSQL("SELECT * FROM `bsd_app` WHERE isvalid = '1' and   appid = ?", [ID]  , function(err,results) {
+   MySql.query("SELECT * FROM `bsd_app` WHERE isvalid = '1' and   appid = ?", [ID]  , function(err,results) {
         return  callback(err,results);
     });
 }
@@ -156,7 +156,7 @@ module.exports =  bsd_app;
 
 
  bsd_app.seachForm =  function seachForm(data, callback){
-   MySql.toSQL('SELECT ?? FROM `bsd_app` WHERE ?? = ?', data  , function(err,results) {
+   MySql.query('SELECT ?? FROM `bsd_app` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
@@ -167,7 +167,7 @@ module.exports =  bsd_app;
 //查询数据
  bsd_app.searchData =  function searchData(sql, callback){
     sqlstr=sql;
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -177,7 +177,7 @@ module.exports =  bsd_app;
 //更新数据
  bsd_app.updateData =  function updateData(sql, callback){
     sqlstr=sql;
-    MySql.toSQL(sqlstr, function(err, doc) {
+    MySql.query(sqlstr, function(err, doc) {
 		return   callback(err, doc);	    
 	 });	
 }
