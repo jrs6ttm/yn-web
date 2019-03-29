@@ -1095,6 +1095,17 @@ View.prototype = {
     initComment : function(workData,content){
         var me = this;
     },
+    initLinkOnly : function(workData,content){
+        var me = this;
+        var linkBtn;
+        linkBtn = createEle('a');
+        linkBtn.target='_blank';
+        console.log(3, workData.input)
+
+        linkBtn.href = decodeURIComponent(workData.input.remoteLabInfo.url);
+        linkBtn.innerHTML = workData.input.remoteLabInfo.name;
+        $(content).append(linkBtn);
+    },
     openVM : function(self) {
         var me = this;
         $(me.eles.VMRoomWindow).children('.p_VMCon').empty().append('<div><button id="ctrlAltDelete">Ctrl-Alt-Delete</button>&nbsp;<button id="share">分享</button>&nbsp;<button id="halt">重启</button></div>'+
@@ -1470,6 +1481,10 @@ View.prototype = {
             case 'dynamicForm':
                 me.initForm(data.taskInfo.data,workBench.bodys[0]);
                 break;
+            case 'remote':
+                console.log(1, data.taskInfo.data)
+                me.initLinkOnly(data.taskInfo.data,workBench.bodys[0]);
+                break;
             default:
                 me.initPageOffice(data.taskInfo.data,workBench.bodys[0],data.taskInfo.data.toolType);
         }
@@ -1477,8 +1492,7 @@ View.prototype = {
     addDescription : function(data){
         var me = this;
         $(me.eles.basicInfoCon).append('<h4 style="overflow:hidden;white-space: nowrap;text-overflow:ellipsis;" title="'+me.database.courseData.courseName+'-'+data.taskInfo.taskName+'">'+me.database.courseData.courseName+'-'+data.taskInfo.taskName+'</h4>');
-        data.taskInfo.data.taskDescription = data.taskInfo.data.taskDescription.replace(/authoring.xuezuowang.com\//g, filePort.substr(7)).replace(/newengine3w.xuezuowang.com/g, newProcessEnginePort.substr(7, newProcessEnginePort.length - 18)); 
-	var descriptionTitle = createEle('h4');descriptionTitle.innerHTML = '任务介绍';me.eles.basicInfoCon.appendChild(descriptionTitle);
+        var descriptionTitle = createEle('h4');descriptionTitle.innerHTML = '任务介绍';me.eles.basicInfoCon.appendChild(descriptionTitle);
         var descriptionContent = createEle('p');descriptionContent.innerHTML = data.taskInfo.data.taskDescription;me.eles.basicInfoCon.appendChild(descriptionContent);
     },
     addSubMainContent : function(data){
@@ -1945,7 +1959,7 @@ var ec_link = function(userId,filePath,me){
     }else{
         var type = filePath.split('.')[1];
 
-        var link = filePort + filePath;
+        var link = filePort + 'fileManager/fileRead?userId='+ userId + '&filePath='+ filePath;
         //tfz170630===
         if((type=='doc')||(type=='docx')||(type=='ppt')||(type=='pptx')||(type=='xls')||(type=='xlsx')){
             window.open($(me).attr('data-href'));
