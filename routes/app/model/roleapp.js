@@ -16,7 +16,7 @@ module.exports = roleApp;
 
 //执行SQL
 roleApp.toSQL =  function toSQL(sqlstr, callback){
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -27,7 +27,7 @@ roleApp.toSQL =  function toSQL(sqlstr, callback){
 
 roleApp.orgRoleApp_init = function (orgID ,callback){
 	var sqlstr = "CALL m_org_roleapp_init('" + orgID + "')";
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -45,7 +45,7 @@ roleApp.getorgRoleApp_ass = function  (orgID ,callback){
 
 	  console.log(sqlstr);
 
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -57,7 +57,7 @@ roleApp.getorgRoleApp_ass = function  (orgID ,callback){
 //插入数据
 roleApp.insertData =  function insertData(data, callback){
 	//console.log(data);
-   MySql.toSQL('INSERT INTO `bsd_roleapp`  SET ?', data  , function(err, doc) {
+   MySql.query('INSERT INTO `bsd_roleapp`  SET ?', data  , function(err, doc) {
 		 console.log(err);  console.log(doc);
 		return callback(err,doc);
    });
@@ -87,7 +87,7 @@ roleApp.updateData_Json = function updateData_Json(data,ID , callback ) {
 	{
 	  sqlstr = sql1 + sql2;
 	  console.log(sqlstr);
-	  MySql.toSQL(sqlstr, function(err, doc) {
+	  MySql.query(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -110,7 +110,7 @@ roleApp.getOrgRoleApp  = function getOrgRoleApp(orgID,callback) {
 		if(res == null ) {  return callback(err,res);}  
 		else  {
 
-				MySql.toSQL(sqlstr, function(err, docs) {
+				MySql.query(sqlstr, function(err, docs) {
 					console.log('bbb',docs);
                       
 					if(docs.length <= 0 ) return callback(err,res);
@@ -125,7 +125,7 @@ roleApp.getOrgRoleApp  = function getOrgRoleApp(orgID,callback) {
                             //console.log('fff',res);
 							return callback(err,res);
 						});  
-			   }); //MySql.toSQL end
+			   }); //MySql.query end
 
 	     } // else if end 
 	}); // this.getOrgRole end
@@ -147,7 +147,7 @@ roleApp.getOrgRoleApp_V2  = function getOrgRoleApp_V2(orgID,callback) {
 		if(res == null ) {  return callback(err,res);}  
 		else  {
 
-				MySql.toSQL(sqlstr, function(err, docs) {
+				MySql.query(sqlstr, function(err, docs) {
 					console.log('bbb',docs);
                       
 					if(docs.length <= 0 ) return callback(err,res);
@@ -162,7 +162,7 @@ roleApp.getOrgRoleApp_V2  = function getOrgRoleApp_V2(orgID,callback) {
                             //console.log('fff',res);
 							return callback(err,res);
 						});  
-			   }); //MySql.toSQL end
+			   }); //MySql.query end
 
 	     } // else if end 
 	}); // this.getOrgRole end
@@ -182,7 +182,7 @@ roleApp.getOrgRole  = function getOrgRole(orgID,callback) {
     console.log(sqlstr);
 	var res ={};
 	
-	MySql.toSQL(sqlstr, function(err, docs) {
+	MySql.query(sqlstr, function(err, docs) {
 		console.log('ccc',docs);
 
 		if(docs.length <= 0 ) return callback(err,null);
@@ -208,7 +208,7 @@ roleApp.getRoleApps  = function getRoleApps(orgRoleID,callback) {
     var sqlstr = "select appid ,hre , blank from `bsd_roleapp`  where `ISVALID` = '1' and  `status` = '1' and `orgRoleID` = '"+ orgRoleID+ "' ";
     console.log(sqlstr);
 
-	MySql.toSQL(sqlstr, function(err, docs) {
+	MySql.query(sqlstr, function(err, docs) {
 		//console.log(docs);
 		return callback(err,docs);     
    });
@@ -316,7 +316,7 @@ roleApp.searchData_Json = function searchData_Json(data, callback ) {
     else  //如果JSON中有数据
 	{
 	  console.log(sqlstr);
-	  MySql.toSQL(sqlstr, function(err, doc) {
+	  MySql.query(sqlstr, function(err, doc) {
 			return    callback(err, doc);	    
 	   });	
 	}  //if end
@@ -347,7 +347,7 @@ roleApp.searchData_Json = function searchData_Json(data, callback ) {
 roleApp.delRole =  function delRole(ID ,  callback ) {
 	var sqlstr="DELETE FROM `bsd_roleapp`   WHERE `roleAppID` = '" + ID + "'"; 
 	console.log(sqlstr);
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		return    callback(err, doc); 
     });	
 
@@ -373,7 +373,7 @@ roleApp.delRole_V2 =  function delRole_V2(ID ,  callback ) {
 	delRole =  function delRole(ID ,  callback ) {
 		var sqlstr="DELETE FROM `bsd_roleapp`   WHERE `roleAppID` = '" + ID + "'"; 
 		console.log(sqlstr);
-		MySql.toSQL(sqlstr, function(err, doc) {
+		MySql.query(sqlstr, function(err, doc) {
 			console.log(doc);
 			return    callback(err, doc); 
 		});	
@@ -435,7 +435,7 @@ roleApp.isLock = function isLock(ID,  callback) {
 		//console.log('isOrgValid:' + ID  );
    var sql ="SELECT * FROM `bsd_roleapp` WHERE `roleAppID` = '" + ID + "'";
    console.log(sql);
-   MySql.toSQL(sql , function(err,docs) {
+   MySql.query(sql , function(err,docs) {
 	   console.log(err);
 	   //console.log(docs);
        // return  callback(err,results);
@@ -458,7 +458,7 @@ roleApp.isLock = function isLock(ID,  callback) {
  function delRole_V3(ID){
 	var sqlstr="DELETE FROM `bsd_roleapp`   WHERE `roleAppID` = '" + ID + "'"; 
 	console.log(sqlstr);
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		if(err)  console.log(err); 
     });	
 }
@@ -473,7 +473,7 @@ roleApp.isLock = function isLock(ID,  callback) {
 roleApp.isRoleExist_ForName =  function isRoleExist_ForName(name , callback){
    var sqlstr = "SELECT * FROM `bsd_roleapp` WHERE  `name`= '" + name + "'  and `ISVALID` = '1'";
    console.log(sqlstr);
-   MySql.toSQL(sqlstr,  function(err,docs) {
+   MySql.query(sqlstr,  function(err,docs) {
 	   //console.log(err, docs.length);
       if( err || docs.length <= 0  ) return callback(false);
 	  else if(docs.length > 0 )   return callback(true);
@@ -485,7 +485,7 @@ roleApp.isRoleExist_ForName =  function isRoleExist_ForName(name , callback){
 roleApp.isRoleExist_ForID =  function isRoleExist_ForID(ID , callback){
    var sqlstr = "SELECT * FROM `bsd_roleapp` WHERE  `roleAppID`= '" + ID + "'  ";
    console.log(sqlstr);
-   MySql.toSQL(sqlstr,  function(err,docs) {
+   MySql.query(sqlstr,  function(err,docs) {
       if(docs.length <= 0  ) return callback(false);
 	  else if(docs.length > 0 )   return callback(true);
     });
@@ -501,7 +501,7 @@ roleApp.isRoleExist_ForID =  function isRoleExist_ForID(ID , callback){
 //查询数据
 roleApp.searchData =  function searchData(sql, callback){
     sqlstr=sql;
-	MySql.toSQL(sqlstr, function(err, doc) {
+	MySql.query(sqlstr, function(err, doc) {
 		//console.log(doc);
         return callback(err,doc);
    });
@@ -511,7 +511,7 @@ roleApp.searchData =  function searchData(sql, callback){
 //更新数据
 roleApp.updateData =  function updateData(sql, callback){
     sqlstr=sql;
-    MySql.toSQL(sqlstr, function(err, doc) {
+    MySql.query(sqlstr, function(err, doc) {
 		return   callback(err, doc);	    
 	 });	
 }
