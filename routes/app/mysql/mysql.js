@@ -31,3 +31,13 @@ connection.toSQL_noback =  function toSQL_noback(sqlstr){
 		if(err) console.log("MySql :toSQL_noback err:" + err);
    });
 }
+
+var pool = mysql.createPool({
+	host     :  config[env]['mysql']['url'],
+	user     :  config[env]['mysql']['user'],
+	password :  config[env]['mysql']['password'],
+	database :  config[env]['mysql']['database'],
+	port     : 3306
+});
+
+module.exports = pool;
