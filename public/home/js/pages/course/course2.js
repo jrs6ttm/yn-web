@@ -350,9 +350,13 @@ View.prototype = {
             });
             return;
         }
+	    
+        /* 当是学生时且有在学课程时。line==1不是开始新课程，而是继续学习
         if(!me.database.courseData.isCooperation && line == 1){
             selectOneToStart(this,'startNew','');
         }
+	*/
+
         $(startCourseCon).css({height:line*60+40,marginTop:'-'+(line*50+40)/2+'px'});
         $(startLeft).css({height:line*60});
         $(startRight).css({height:line*60,lineHeight:(line*60)+'px'});
