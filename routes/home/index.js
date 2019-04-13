@@ -16,11 +16,6 @@ var headers = function(res){
     res.header("Content-Type", "application/json;charset=utf-8");
 };
 
-
-
-
-
-
 if(mySQL) {
     var firstCharacterToUpper = function(srcStr){
         return srcStr.substring(0, 1).toUpperCase() + srcStr.substring(1);
@@ -445,6 +440,15 @@ if(mySQL) {
             optTime = new Date().getTime(),
             subtaskName = req.body.subtaskName,
             link = req.body.link;
+	if(courseName){
+	    courseName = courseName.replace(/"/g, '\"');
+	}
+	if(taskName){
+	    taskName = taskName.replace(/"/g, '\"');
+	}
+	if(subtaskName){
+	    subtaskName = subtaskName.replace(/"/g, '\"');
+	}
         var insertStr = 'insert into oc_courseplayer_options(user_id,user_name, opt_des, opt_result, opt_type, course_id,course_name,instance_id,org_id,task_id,task_name,subtask_id,subtask_name,opt_time,link) values ("'+userId+ '","'+userName+ '","' +optDes+ '","'+optResult+ '","'+optType+ '","'+courseId+ '","'+courseName+'","' +instanceId+ '","'+orgId+ '","'+taskId+ '","'+taskName+ '","'+subtaskId+ '","'+subtaskName+ '","'+optTime+'","'+link+'")';
         mySQL.toSQL(insertStr, function(err) {
             if(err){
@@ -459,7 +463,7 @@ if(mySQL) {
     router.post('/saveLastTasks',function(req,res){
         var courseId = req.body.courseId;
         var task = req.body.task;
-        fs.appendFile('./routes/home/lastTasks/'+courseId+'.txt',task+'^^','utf8',function (error){
+        fs.appendFile(path.join(__dirname, './lastTasks/'+courseId+'.txt'),task+'^^','utf8',function (error){
             if(error){
                 res.send('false');
             }else{
@@ -470,7 +474,7 @@ if(mySQL) {
 
     router.get('/getLastTasks',function(req,res){
         var courseId = req.query.courseId;
-        fs.readFile('./routes/home/lastTasks/'+courseId+'.txt','utf8',function (error,data){
+        fs.readFile(path.join(__dirname, './lastTasks/'+courseId+'.txt'),'utf8',function (error,data){
             if(error){
                 res.send(null);
             }else{
@@ -606,7 +610,9 @@ if(mySQL) {
             name = req.body.name,
             parentId = req.body.parentId,
             imageUrl = req.body.imageUrl;
-
+	if(name){
+	    name = name.replace(/"/g, '\"');
+	}
         var sqlStr = 'SELECT * FROM oc_courseplayer_courseClass WHERE course_id = "'+ courseId+'"';
         mySQL.toSQL(sqlStr, function(err, doc) {
             if(err){
