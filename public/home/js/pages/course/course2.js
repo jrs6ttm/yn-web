@@ -295,12 +295,12 @@ View.prototype = {
             
            $(instanceDatas).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '选课时间：'+ new Date(data.selectedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
-		if(i == instanceDatas.length - 1){
+		if(i == 0){
 			sel.selected = true;
 		}else{
 			sel.selected = false;
 		}
-		$(selectDet1).prepend(sel);
+		selectDet1.appendChild(sel);
             });
 	    
             $(selectMain).click(function(){
@@ -318,12 +318,12 @@ View.prototype = {
 	    
             $(lastCourseArr).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '完成时间：'+ new Date(data.completedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
-                if(i == lastCourseArr.length - 1){
+                if(i == 0){
 			sel.selected = true;
 		}else{
 			sel.selected = false;
 		}
-		$(selectDet2).prepend(sel);
+		selectDet2.appendChild(sel);
             });
 	    
             $(selectMain).click(function(){
