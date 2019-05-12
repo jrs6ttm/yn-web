@@ -139,14 +139,18 @@ Database.prototype = {
     getOrgData : function(next){
         var me = this;
         me.orgData = '';
-        $.getJSON(orgPort + '/CourseOrg/getMyOrgedCourses?userId='+userData.id+'&INSTANCE_ID ='+ me.courseId +'&jsonCallBack=?',function(data){
-            $(data).each(function(i,d){
-                if(d.STATUS == '1'){
-                    me.orgData = d;
-                }
-            });
+        if(!userData || !userData.id){
             next();
-        });
+        }else{
+            $.getJSON(orgPort + '/CourseOrg/getMyOrgedCourses?userId='+userData.id+'&INSTANCE_ID ='+ me.courseId +'&jsonCallBack=?',function(data){
+                $(data).each(function(i,d){
+                    if(d.STATUS == '1'){
+                        me.orgData = d;
+                    }
+                });
+                next();
+            });
+        }
     },
     getCourseInfo : function(next){
         var me = this;
@@ -259,32 +263,31 @@ View.prototype = {
                 me.startSelectedOne(type,index);
             });
         };
-       if(me.isTeacher || !instanceDatas.length){
-		 if(!me.database.courseData.isCooperation){
-                                line++;
-                                selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
-                                selectMain = createEle('h1');selectCon.appendChild(selectMain);
-                                selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
-                                selectHead = createEle('h4');selectHead.innerHTML = '开始课程';selectCon.appendChild(selectHead);
-                                selectDet = createEle('p');selectDet.innerHTML = '开始一次新的课程';selectCon.appendChild(selectDet);
-                                $(selectMain).click(function(){
-                                        selectOneToStart(this,'startNew','');
-                                });
-                        }
+        if(me.isTeacher || !instanceDatas.length){
+            if(!me.database.courseData.isCooperation){
+                line++;
+                selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
+                selectMain = createEle('h1');selectCon.appendChild(selectMain);
+                selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
+                selectHead = createEle('h4');selectHead.innerHTML = '开始课程';selectCon.appendChild(selectHead);
+                selectDet = createEle('p');selectDet.innerHTML = '开始一次新的课程';selectCon.appendChild(selectDet);
+                $(selectMain).click(function(){
+                        selectOneToStart(this,'startNew','');
+                });
+            }
 
-                        if(orgData){
-                                line++;
-                                selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
-                                selectMain = createEle('h1');selectCon.appendChild(selectMain);
-                                selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
-                                selectHead = createEle('h4');selectHead.innerHTML = '开始组织课程学习';selectCon.appendChild(selectHead);
-                                selectDet = createEle('p');selectDet.innerHTML = '学习已经组织好的课程';selectCon.appendChild(selectDet);
-                                $(selectMain).click(function(){
-                                        selectOneToStart(this,'startOrg','');
-                                });
-                        }
-
-	} 
+            if(orgData){
+                line++;
+                selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
+                selectMain = createEle('h1');selectCon.appendChild(selectMain);
+                selIcon = createEle('span');selIcon.className = 'imooc-icon';selIcon.innerHTML = '&#xea53';selectMain.appendChild(selIcon);
+                selectHead = createEle('h4');selectHead.innerHTML = '开始组织课程学习';selectCon.appendChild(selectHead);
+                selectDet = createEle('p');selectDet.innerHTML = '学习已经组织好的课程';selectCon.appendChild(selectDet);
+                $(selectMain).click(function(){
+                        selectOneToStart(this,'startOrg','');
+                });
+            }
+        }
         if(instanceDatas.length){
             line++;
             selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
@@ -295,12 +298,12 @@ View.prototype = {
             
            $(instanceDatas).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '选课时间：'+ new Date(data.selectedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
-		if(i == 0){
-			sel.selected = true;
-		}else{
-			sel.selected = false;
-		}
-		selectDet1.appendChild(sel);
+                if(i == 0){
+                    sel.selected = true;
+                }else{
+                    sel.selected = false;
+                }
+                selectDet1.appendChild(sel);
             });
 	    
             $(selectMain).click(function(){
@@ -319,11 +322,11 @@ View.prototype = {
             $(lastCourseArr).each(function(i,data){
                 sel = createEle('option');sel.innerHTML = '完成时间：'+ new Date(data.completedTime).format("yyyy-MM-dd hh:mm:ss");sel.value = i;
                 if(i == 0){
-			sel.selected = true;
-		}else{
-			sel.selected = false;
-		}
-		selectDet2.appendChild(sel);
+                    sel.selected = true;
+                }else{
+                    sel.selected = false;
+                }
+                selectDet2.appendChild(sel);
             });
 	    
             $(selectMain).click(function(){
@@ -369,7 +372,7 @@ View.prototype = {
     initManageBtn : function(){
         var me = this;
         var manageBtn = me.eles.manageBtn;
-        if(userData && userData.id || true){
+        if(userData && userData.id){
             /*if(me.orgId){
                 me.database.getOrgData(function(){
                     if(me.database.orgData){
@@ -485,7 +488,12 @@ View.prototype = {
             manageBtn.innerHTML = "开始课程";
             manageBtn.className = '_canNot _course_manageBtn';
             $(manageBtn).click(function(){
-                $.MsgBox.Alert('用户未登录','请登录之后再开始学习！');
+                $.MsgBox.Alert('用户未登录','请登录之后再开始学习！', function(){
+                    Bus.emit('sign_modal', {
+                        status: id,
+                        display: 1
+                    });
+                });
             });
         }
     },
