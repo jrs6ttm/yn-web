@@ -3,5 +3,10 @@ target
 .project
 .classpath
 .settings
-.idea
+.idea/
+yn-web.iml
+package-lock.json
 config.json
+node_modules/
+node_modules_ext/
+
