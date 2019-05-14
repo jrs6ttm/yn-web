@@ -1,5 +1,6 @@
 var MySql = require('../mysql/mysql.js');
 var uuid =  require('node-uuid');
+var moment = require("moment");
 //var mySelf = require('./orgDeptPeo');
 
 //var EventProxy = require('eventproxy');
@@ -27,9 +28,6 @@ bsd_orgDeptPeo.toSQL =  function toSQL(sqlstr, callback){
 bsd_orgDeptPeo.insertData_arry = function insertData_arry(datas,creatorID, callback) {
 
 	　var myself = require('./orgDeptPeo');
-	 var moment = require("moment");
-     
-	 //var err = null;
 
 	 async.eachSeries(datas, function(data, callback) {   
          data.DeptPeoID= uuid.v1();
@@ -90,10 +88,7 @@ bsd_orgDeptPeo.updateData_arry = function updateData_arry(datas , userID, callba
     //console.log('A',datas);
 	var myself = require('./orgDeptPeo');
 	
-    var sqlstr =''; 
-
-	 var moment = require("moment");
-	
+    var sqlstr ='';
 	async.eachSeries(datas, function(doc, callback) {    
       doc.LSTUPDID = userID;
 	  doc.LSTUPDDATE =  moment().format("YYYY-MM-DD HH:mm:ss");
@@ -252,10 +247,6 @@ bsd_orgDeptPeo.updateData_Json_kendoUI = function updateData_Json_kendoUI(data,D
   }); //async.forEachOf end 
 
 }
-
-
-
-
 
 //按Json格式，查询符合条件的数据
 bsd_orgDeptPeo.searchData_Json_V2 = function searchData_Json_V2(data, callback ) {
@@ -520,14 +511,6 @@ bsd_orgDeptPeo.getMyrole = function getMyrole(userID, callback) {
 }
 
 
-
-
-
-
-
-
-
-
 //删除组织
 bsd_orgDeptPeo.delOrg =  function delOrg(orgID ,  callback ) {
   
@@ -722,17 +705,171 @@ bsd_orgDeptPeo.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
 	  });  //examQuestion.getQuestionHeader end 
 
 	}); // examPage.getPagesHeader
-
-
 }  //bsd_orgDeptPeo.getHeaderData end
 
+/********************** 课程授权相关对外接口 ************************/
+bsd_orgDeptPeo.getDeptUserAuthorizedInfos = function getDeptUserAuthorizedInfos(data, callback ) {
+	var sqlStr = "select org.orgID, org.orgFullDes, parentDept.orgID parentDeptId, parentDept.orgFullDes parentDeptDes, "+
+				" 		 dept.deptID, dept.deptDes, deptUser.synid userID, deptUser.name userName, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
+				"from bsd_orginfodept dept, bsd_orginfo parentDept, bsd_orginfo org , bsd_orgdeptpeo deptUser " +
+				"left join oc_course_authorize cAuth on cAuth.user_id = deptUser.synid and cAuth.course_id = '" + data.courseId + "' "+
+				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
+				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				"		and dept.orgID = org.orgID and dept.parentId = parentDept.orgID  and dept.deptID = deptUser.deptID and org.orgID = deptUser.orgID and deptUser.ISVALID = '1' " +
+				"union	" +
+				"select org.orgID, org.orgFullDes, parentDept.deptID parentDeptId, parentDept.deptDes parentDeptDes, dept.deptID, "+
+				"		dept.deptDes, deptUser.synid userID, deptUser.name userName, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
+				"from bsd_orginfodept dept, bsd_orginfodept parentDept, bsd_orginfo org , bsd_orgdeptpeo deptUser " +
+				"left join oc_course_authorize cAuth on cAuth.user_id = deptUser.synid and cAuth.course_id = '" + data.courseId + "' "+
+				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
+				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				"		and dept.orgID = org.orgID and dept.parentId = parentDept.deptID and dept.deptID = deptUser.deptID and org.orgID = deptUser.orgID and deptUser.ISVALID = '1'";
+	console.log(sqlStr);
+	MySql.query(sqlStr, function(err, doc) {
+		return   callback(err, doc);
+	});
+}
 
+function contractAuthorizeTableHead(){
+	return "insert into oc_course_authorize (`id`, `course_id`, `course_type`, `course_name`, `dept_id`, `user_id`, `rights`, `isvalid`, `creator_id`, `create_date`, `lastupdator_id`, `lastupdate_date`) values ";
+}
 
+function contractAuthorizeTableValues(dataArr){
+	var tableValues = "";
+	dataArr.each(function(data){
+		var value = " ('" + data.id + "', '" + data.courseId + "', '" +
+					data.courseType + "', '" + data.courseName + "', '" +
+					data.deptId + "'";
+		if(data.userId){//授权人员
+			value += ", '" + data.userId + "', '";
+		}else{//授权机构，避免"null"字符串
+			value += ", null, '";
+		}
+		value += data.rights + "', '" + data.isvalid + "', '" +
+				 data.creatorId + "', '" + data.createDate + "', '" +
+				 data.lastUpdatorId + "' , '" + data.lastUpdateDate + "' ) ";
+		tableValues += value;
+	});
 
+	return tableValues;
+}
 
+bsd_orgDeptPeo.authorizeToUser = function authorize(data, callback) {
+	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
+		data.courseId + "' and user_id = '" + data.userId + "'";
+	MySql.query(getSqlStr, function(err, doc) {
+		if(doc && doc.length() > 0){//已经授过某种权利了
+			var authInfo = doc[0];
+			if(authInfo.rights.indexOf(data.rights) == -1){//尚不包含该权利，则添加
+				authInfo.rights = authInfo.rights + data.rights;
+				var updateSql = "update oc_course_authorize set rights = " + "'" +
+								data.rights + "' where course_id = '" + data.courseId +
+								"' and user_id = '" + data.userId + "'";
+				MySql.query(updateSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}else{
+				return callback(null, "授权成功！");
+			}
+		}else{//尚未授权过，则新增授权记录
+			var sqlStr = contractAuthorizeTableHead() + contractAuthorizeTableValues([data]);
+			console.log(sqlStr);
+			MySql.query(sqlStr, function (err, doc) {
+				return callback(err, doc);
+			});
+		}
+	});
+}
 
+bsd_orgDeptPeo.authorizeToDept = function authorize(data, callback) {
+	if(data.length() > 0) {
+		var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
+			data.courseId + "' and dept_id = '" + data.deptId + "' and user_id is null";
+		MySql.query(getSqlStr, function(err, doc) {
+			if(doc && doc.length() > 0){//已经授过某种权利了
+				var authInfo = doc[0];
+				if(authInfo.rights.indexOf(data[0].rights) == -1){//尚不包含该权利，则添加
+					authInfo.rights = authInfo.rights + data[0];
+				}
+				//不管包不包含要添加的权利，都要重新update，因为机构下可能有个别人员单独变更过权利
+				var updateSql = "update oc_course_authorize set rights = " + "'" +
+								authInfo.rights + "' where course_id = '" + data.courseId +
+								"' and dept_id = '" + data.deptId + "'";
+				MySql.query(updateSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}else{//尚未授权过，则新增授权记录
+				var sqlStr = contractAuthorizeTableHead() + contractAuthorizeTableValues(data);
+				console.log(sqlStr);
+				MySql.query(sqlStr, function (err, doc) {
+					return callback(err, doc);
+				});
+			}
+		});
+	}else{
+		return callback(null, "授权成功！");
+	}
+}
 
+bsd_orgDeptPeo.cancelAuthorizeOfUser = function cancelAuthorizeOfUser(data, callback){
+	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
+					data.courseId + "' and user_id = '" + data.userId + "'";
+	MySql.query(getSqlStr, function(err, doc) {
+		if(doc && doc.length() > 0){
+			var authInfo = doc[0];
+			if(data.right == authInfo.rights){//只有一种权利，则删除
+				var deleteSql = "delete from oc_course_authorize where course_id = " + "'" +
+								data.courseId + "' and user_id = '" + data.userId + "'";
+				MySql.query(deleteSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}else{//有两个权利，则更新
+				var right = data.right == "1" ? "2" : "1";
+				var updateSql = "update oc_course_authorize set rights = " + "'" + right +
+								"' where course_id = '" + data.courseId + "' and user_id = '" + data.userId + "'";
+				MySql.query(updateSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}
+		}
+	});
+}
 
+bsd_orgDeptPeo.cancelAuthorizeOfDept = function cancelAuthorizeOfDept(data, callback){
+	//查找授权机构的那条记录
+	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
+		data.courseId + "' and dept_id = '" + data.deptId + "' and user_id is null";
+	MySql.query(getSqlStr, function(err, doc) {
+		if(doc && doc.length() > 0){
+			var authInfo = doc[0];
+			if(data.right == authInfo.rights){//只有一种权利，则删除, 同时删除授权机构和人员的所有记录
+				var deleteSql = "delete from oc_course_authorize where course_id = " + "'" +
+					data.courseId + "' and dept_id = '" + data.deptId + "'";
+				MySql.query(deleteSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}else{//有两个权利，则更新，同时更新授权机构和人员的所有记录
+				var right = data.right == "1" ? "2" : "1";
+				var updateSql = "update oc_course_authorize set rights = " + "'" + right +
+					"' where course_id = '" + data.courseId + "' and dept_id = '" + data.deptId + "'";
+				MySql.query(updateSql, function(err, doc) {
+					return   callback(err, doc);
+				});
+			}
+		}
+	});
+}
+
+bsd_orgDeptPeo.getAuthorizedCoursesOfUser = function getAuthorizedCoursesOfUser(data, callback ) {
+	var sqlStr = "select * from oc_course_authorize where user_id = " + "'" + data.userId+ "'";
+	if(data.courseId){
+		sqlStr += 	" and course_id = '" + data.courseId + "'";
+	}
+	console.log(sqlStr);
+	MySql.query(sqlStr, function(err, doc) {
+		return   callback(err, doc);
+	});
+}
 
 
 

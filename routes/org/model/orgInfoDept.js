@@ -12,7 +12,6 @@ function orgInfoDept(resu) {
 	
 module.exports = orgInfoDept;
 
-
 //执行SQL
 orgInfoDept.toSQL =  function toSQL(sqlstr, callback){
 	MySql.query(sqlstr, function(err, doc) {
@@ -22,8 +21,6 @@ orgInfoDept.toSQL =  function toSQL(sqlstr, callback){
 
 }
 
-
-
 //插入数据
 orgInfoDept.insertData =  function insertData(data, callback){
 	console.log(data);
@@ -32,9 +29,6 @@ orgInfoDept.insertData =  function insertData(data, callback){
 		return callback(err,doc);
    });
 }
-
-
-
 
 //按数组格式更新数据
 orgInfoDept.updateData_arry = function updateData_arry(datas , userID, callback ) {
@@ -63,8 +57,6 @@ orgInfoDept.updateData_arry = function updateData_arry(datas , userID, callback 
 	}); //async.eachSeries END
 
  }
-
-
 
 //按Json格式更新数据
 orgInfoDept.updateData_Json = function updateData_Json(data,deptID , callback ) {
@@ -96,8 +88,6 @@ orgInfoDept.updateData_Json = function updateData_Json(data,deptID , callback ) 
 
 
 }
-
-
 
 orgInfoDept.getUserDept = function getUserDept(data, callback) {
 	var myself = require('./orgInfoDept');
@@ -393,10 +383,6 @@ orgInfoDept.getDepTree =  function getDepTree (deptID,haveSearch,callback) {
 }
 
 
-
-
-
-
 //获取机构信息
 orgInfoDept.getUserDept_V2  =  function getUserDept_V2(data , callback) {
   // var sqlstr = "select a.`orgID`  ,  b.`deptID` , a.orgFullDes, b.deptDes  from  `bsd_orginfo` as a , `bsd_orginfodept` as b  where  a.`orgID` = b.`orgID`  and a.`orgID` = b.`parentId`  " +
@@ -447,10 +433,6 @@ orgInfoDept.getUserDept_V2  =  function getUserDept_V2(data , callback) {
 }
 
 
-
-
-
-
  orgInfoDept.getSecondParent = function getSecondParent (deptID, callback) {
 	 var myself = require('./orgInfoDept');
      var sqlstr = " select  *   from   `bsd_orginfodept`  where  `deptID` ='" + deptID + "' ";
@@ -473,9 +455,6 @@ orgInfoDept.getUserDept_V2  =  function getUserDept_V2(data , callback) {
 	 });  // MySql.query end
 
  }
-
-
-
 
 //获取班级的机构树形结构:  系--》专业,  参数deptID：为专业的ID
 orgInfoDept.getUserTree = function  getUserTree(deptID, callback) {
@@ -519,9 +498,6 @@ orgInfoDept.getDepInfo  =  function getDepInfo(deptID, callback) {
 }
 
 
-
-
-
 //用户是否存在于班级这一机构中，班级机构的leve = 4
 orgInfoDept.isUserInClass =  function isUserInClass(synid,callback) {
    var sqlstr = "select b.`deptID` , a.`deptDes`  , a.`orgID` , c.`orgFullDes`, a.`parentId`  from `bsd_orginfodept`as a,  `bsd_orgdeptpeo` as b , `bsd_orginfo` as c  " + 
@@ -535,9 +511,6 @@ orgInfoDept.isUserInClass =  function isUserInClass(synid,callback) {
     });
 
 }
-
-
-
 
 
 //按Json格式，查询符合条件的数据
@@ -634,11 +607,6 @@ function delDept_F(deptID) {
 		if(err)  console.log(err); 
     });	
   }
-007008
-
-
-
-
 
 //ID是否存在
 orgInfoDept.isIDexist =  function isIDexist(deptID,callback) {
@@ -659,15 +627,12 @@ orgInfoDept.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 }
 
 
-
 orgInfoDept.seachForm =  function seachForm(data, callback){
    MySql.query('SELECT ?? FROM `bsd_orginfodept` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
 }
-
-
 
 //查询数据
 orgInfoDept.searchData =  function searchData(sql, callback){
@@ -724,9 +689,6 @@ orgInfoDept.getHeaderData = function getHeaderData(orgID, callback){
 }  //orgInfoDept.getHeaderData end
 
 
-
-
-
 //获取试卷头部信息
 orgInfoDept.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
     datas = {};  
@@ -757,12 +719,25 @@ orgInfoDept.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
 }  //orgInfoDept.getHeaderData end
 
 
-
-
-
-
-
-
-
-
-
+/********************** 课程授权相关对外接口 ************************/
+orgInfoDept.getDeptAuthorizedInfos = function getDeptAuthorizedInfos(data, callback ) {
+	var sqlStr = "select org.orgID, org.orgFullDes, parentDept.orgID parentDeptId, parentDept.orgFullDes parentDeptDes, " +
+				"        dept.deptID, dept.deptDes, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
+				"from bsd_orginfodept dept, bsd_orginfo parentDept, bsd_orginfo org " +
+				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
+				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
+				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				"       and dept.orgID = org.orgID and dept.parentId = parentDept.orgID " +
+				"union " +
+				"select org.orgID, org.orgFullDes, parentDept.deptID parentDeptId, parentDept.deptDes parentDeptDes, " +
+				"       dept.deptID, dept.deptDes, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
+				"from bsd_orginfodept dept, bsd_orginfodept parentDept, bsd_orginfo org  " +
+				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
+				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
+				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				"		and dept.orgID = org.orgID and dept.parentId = parentDept.deptID";
+	console.log(sqlStr);
+	MySql.query(sqlStr, function(err, doc) {
+		return    callback(err, doc);
+	});
+}

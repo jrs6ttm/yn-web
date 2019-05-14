@@ -186,14 +186,6 @@ orgInfo.isOrgValid = function isOrgValid(orgID,  callback) {
      } //if end
  }
 
-
-
-
-
-
-
-
-
 //ID是否存在
 orgInfo.isIDexist =  function isIDexist(orgID,callback) {
 
@@ -230,16 +222,12 @@ orgInfo.isIDexist_V2 =  function isIDexist_V2(orgID,callback) {
 
 }
 
-
-
 orgInfo.seachForm =  function seachForm(data, callback){
    MySql.query('SELECT ?? FROM `bsd_orginfo` WHERE ?? = ?', data  , function(err,results) {
 		// console.log(err);  
 		return callback(err,results);
    });
 }
-
-
 
 //查询数据
 orgInfo.searchData =  function searchData(sql, callback){
@@ -294,10 +282,6 @@ orgInfo.getHeaderData = function getHeaderData(orgID, callback){
 
 
 }  //orgInfo.getHeaderData end
-
-
-
-
 
 //获取试卷头部信息
 orgInfo.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
@@ -358,7 +342,16 @@ orgInfo.getOrg_option = function getOrg_option(callback) {
 
 }
 
-
+/********************** 课程授权相关对外接口 ************************/
+orgInfo.getSysOrgList = function getOrg_option(callback) {
+	var sqlStr = "select * from  bsd_orginfo where ISVALID = '1'  ";
+	MySql.query(sqlStr, function(err, docs) {
+		if(err) return callback(err);
+		else {
+			return callback(err, docs);
+		} //if end
+	});	  // MySql.query  end
+}
 
 
 

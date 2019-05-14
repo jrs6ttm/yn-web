@@ -77,9 +77,14 @@ router.get('/Ajax_getUserOrg', Ajax_getUserOrg);
 router.get('/Ajax_getUserDepAndChild', Ajax_getUserDepAndChild);
 router.get('/Ajax_depUserRead_V3', Ajax_depUserRead_V3);
 router.use('/Ajax_proxy_test', Ajax_proxy_test);
-
-
-
+//*********************课程授权相关接口******************
+router.get('/getSysOrgList', getSysOrgList);
+router.get('/getAuthorizedInfos', getAuthorizedInfos);
+router.get('/authorizeToDept', authorizeToDept);
+router.get('/authorizeToUser', authorizeToUser);
+router.get('/cancelAuthorizeOfDept', cancelAuthorizeOfDept);
+router.get('/cancelAuthorizeOfUser', cancelAuthorizeOfUser);
+router.get('/getAuthorizedCoursesOfUser', getAuthorizedCoursesOfUser);
 
  function org_edit(req,res, next) {
      headers(res);
@@ -933,9 +938,6 @@ function   myOrg(req,res, next) {
 
 }
 
-
-
-
 function   Ajax_addRole(req,res, next) {
     var orgID = req.session.userData.orgID;
     if(req.body['name'] == '' || req.body['name'] ==undefined ) res.send({err:"角色名数据错误" ,  status : '404'});
@@ -1510,8 +1512,6 @@ function Ajax_getUserDepAndChild(req,res, next) {
 }
 
 
-
-
 function Ajax_depUserRead_V3(req,res, next) {
     headers(res);
 
@@ -1554,7 +1554,266 @@ function Ajax_proxy_test(req,res, next) {
 
 }
 
+/********************** 课程授权相关对外接口 ************************/
+/**
+ * 获取系统组织单位列表
+ * @param req
+ * @param res
+ * @param next
+ */
+function  getSysOrgList(req,res, next) {
+    headers(res);
+    var data={};
+    orgInfo.getSysOrgList(function(err,optData){
+        if(err){
+            console.log(err);
+        }else{
+            data.orgList = optData;
+            data.status = '200';
+            res.send(data);
+        }
 
+    });
+}
 
+/**
+ * 获取组织的对多级部门关联目标授权课程的列表信息,或对人员关联目标授权课程的列表信息
+ * @param req
+ * @param res
+ */
+function getAuthorizedInfos(req,res) {
+    headers(res);
+    var data = {};
+    var orgID =  req.body.orgID;
+    var deptName = req.body.deptName;
+    var courseId = req.body.courseId;
+    var getType = req.body.getType;
+    if(!orgID || !deptName || !courseId) res.send({ status: '404', err: '组织或机构或课程不能为空！'});
+    else {
+        data.orgID =  orgID;
+        data.deptName = deptName;
+        data.courseId = courseId;
+        console.log(data);
+        if(getType == 'dept'){
+            orgInfoDept.getDeptAuthorizedInfos(data, function(err,docs){
+                if(err) { console.log(err); res.send({ status: '404', err: err});  }
+                else   res.send({ status: '200', err: err, datas: docs });
+            });
+        }else if(getType == 'user'){
+            orgDeptPeo.getDeptUserAuthorizedInfos(data, function(err,docs){
+                if(err) { console.log(err); res.send({ status: '404', err: err});  }
+                else   res.send({ status: '200', err: err, datas: docs });
+            });
+        }
+    }
+}
+
+/**
+ * 校验授权参数数据
+ * @param req
+ */
+function checkAuthorizeReqParams(req){
+    var data = {};
+    data.deptId =  req.body.deptID;
+    data.rights = req.body.rights;
+    data.courseId = req.body.courseId;
+    data.courseName = req.body.courseName;
+    data.courseType = req.body.courseType;
+    if(!data.deptId) {
+        data.err = '缺少待授权机构deptId，不能授权！';
+        return data;
+    }
+    if(!data.rights) {
+        data.err =  '缺少待授权利，不能授权！';
+        return data;
+    }
+    if(!data.courseId) {
+        data.err =  '缺少课程courseId，不能授权！';
+        return data;
+    }
+    if(!data.courseName) {
+        data.err =  '缺少课程名称courseId，不能授权！';
+        return data;
+    }
+    if(!data.courseType) {
+        data.err =  '缺少课程类型courseType，不能授权！';
+        return data;
+    }
+
+    data.id = uuid.v1();
+    data.isvalid = "1";
+    data.lastUpdatorId = data.creatorId;
+    data.createDate = moment().format("YYYY-MM-DD HH:mm:ss");
+    data.lastUpdateDate = data.createDate;
+    return data;
+}
+
+/**
+ *获取部门授权参数数据
+ * @param req
+ * @returns {{}}
+ */
+function getAuthorizeToDeptParams(req){
+    var data = checkAuthorizeReqParams(req);
+    if(data.err){
+        return data;
+    }else{
+        orgDeptPeo.searchData_Json_V2({deptID : data.deptId}, function(err,docs){
+            if(err) {
+                console.log(err);
+                data.err = "查找机构下人员时出现错误！";
+                return data;
+            }else{
+                data.creatorId = req.session.userData.id;
+                data.userId = null;
+                var dataArr = [data]; //机构授权信息要存一条记录进去
+                if(docs && docs.length()){
+                    docs.each(function(doc){
+                        //依次填充待授权机构下的人员信息
+                        dataArr.push({
+                            deptId: data.deptId,
+                            userId: doc.userID,
+                            rights:data.rights,
+                            courseId: data.courseId,
+                            courseName: data.courseName,
+                            courseType: data.courseType,
+                            creatorId: data.creatorId
+                        });
+                    });
+                }
+                return dataArr;
+            }
+        });
+    }
+}
+
+/**
+ * 给部门授权课程学习，课程组织
+ * @param req
+ * @param res
+ */
+function authorizeToDept(req, res){
+    headers(res);
+    var data = getAuthorizeToDeptParams(req);
+    if(data.err){
+        res.send({ status: '404', err : data.err});
+    }else {
+        console.log(data);
+        orgDeptPeo.authorizeToDept(data, function(err,docs){
+            if(err) { console.log(err); res.send({ status: '404', err: err});  }
+            else   res.send({ status: '200',  datas: "给机构授权成功！" });
+        });
+    }
+}
+
+/**
+ * 获取人员授权参数数据
+ * @param req
+ * @returns {{}}
+ */
+function getAuthorizeToUserParams(req){
+    var data = checkAuthorizeReqParams(req);
+    if(data.err){
+        return data;
+    }
+    data.userId = req.body.userID;
+    if(!data.userId) {
+        data.err = '缺少待授权用户userId，不能授权！';
+        return data;
+    }
+    return data;
+}
+
+/**
+ * 给人员授权课程学习，课程组织
+ * @param req
+ * @param res
+ */
+function authorizeToUser(req, res){
+    headers(res);
+    var data = getAuthorizeToUserParams(req);
+    if(data.err){
+        res.send({ status: '404', err : data.err});
+    }else {
+        data.creatorId = req.session.userData.id;
+        console.log(data);
+        orgDeptPeo.authorizeToUser(data, function(err,docs){
+            if(err) { console.log(err); res.send({ status: '404', err: err});  }
+            else   res.send({ status: '200',  datas: "给用户授权成功！" });
+        });
+    }
+}
+
+/**
+ * 解除对部门的课程学习，课程组织的授权
+ * @param req
+ * @param res
+ */
+function cancelAuthorizeOfDept(req, res){
+    headers(res);
+    var deptId = req.body.deptID;
+    var right = req.body.right;
+    var courseId = req.body.courseId;
+    if(!deptId || !right || !courseId){
+        res.send({ status: '404', err : "缺少解除授权参数数据，不能操作！"});
+    }else {
+        data.lastUpdatorId = req.session.userData.id;
+        console.log(data);
+        orgDeptPeo.cancelAuthorizeOfDept({courseId: courseId, deptId: deptId, right: right}, function(err,docs){
+            if(err) {
+                console.log(err); res.send({ status: '404', err: err});
+            }else{
+                res.send({ status: '200',  datas: "给机构解除授权成功！" });
+            }
+        });
+    }
+}
+
+/**
+ * 解除对人员的课程学习，课程组织的授权
+ * @param req
+ * @param res
+ */
+function cancelAuthorizeOfUser(req, res){
+    headers(res);
+    var userId = req.body.userID;
+    var right = req.body.right;
+    var courseId = req.body.courseId;
+    if(!userId || !right || !courseId){
+        res.send({ status: '404', err : "缺少解除授权参数数据，不能操作！"});
+    }else {
+        data.lastUpdatorId = req.session.userData.id;
+        console.log(data);
+        orgDeptPeo.cancelAuthorizeOfUser({courseId: courseId, userId: userId, right: right}, function(err,docs){
+            if(err) {
+                console.log(err); res.send({ status: '404', err: err});
+            }else{
+                res.send({ status: '200',  datas: "给用户解除授权成功！" });
+            }
+        });
+    }
+}
+
+/**
+ * 获取人员被授权的课程列表
+ * @param req
+ * @param res
+ */
+function getAuthorizedCoursesOfUser(req, res){
+    headers(res);
+    var userId = req.body.userID;
+    var courseId = req.body.courseId;//可能不存在
+    if(!userId){
+        res.send({ status: '404', err : "缺少人员id！"});
+    }else {
+        orgDeptPeo.getAuthorizedCoursesOfUser({userId: userId, courseId: courseId}, function(err, docs){
+            if(err) {
+                console.log(err); res.send({ status: '404', err: err});
+            }else{
+                res.send({ status: '200',  datas: docs });
+            }
+        });
+    }
+}
 
 module.exports = router;
