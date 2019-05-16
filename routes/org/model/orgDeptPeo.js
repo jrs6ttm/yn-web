@@ -760,10 +760,10 @@ bsd_orgDeptPeo.authorizeToUser = function authorize(data, callback) {
 	MySql.query(getSqlStr, function(err, doc) {
 		if(doc && doc.length() > 0){//已经授过某种权利了
 			var authInfo = doc[0];
-			if(authInfo.rights.indexOf(data.rights) == -1){//尚不包含该权利，则添加
-				authInfo.rights = authInfo.rights + data.rights;
+			if(authInfo.rights.indexOf(data.right) == -1){//尚不包含该权利，则添加
+				authInfo.rights = authInfo.rights + data.right;
 				var updateSql = "update oc_course_authorize set rights = " + "'" +
-								data.rights + "' where course_id = '" + data.courseId +
+								authInfo.rights + "' where course_id = '" + data.courseId +
 								"' and user_id = '" + data.userId + "'";
 				MySql.query(updateSql, function(err, doc) {
 					return   callback(err, doc);
@@ -788,8 +788,8 @@ bsd_orgDeptPeo.authorizeToDept = function authorize(data, callback) {
 		MySql.query(getSqlStr, function(err, doc) {
 			if(doc && doc.length() > 0){//已经授过某种权利了
 				var authInfo = doc[0];
-				if(authInfo.rights.indexOf(data[0].rights) == -1){//尚不包含该权利，则添加
-					authInfo.rights = authInfo.rights + data[0];
+				if(authInfo.rights.indexOf(data[0].right) == -1){//尚不包含该权利，则添加
+					authInfo.rights = authInfo.rights + data[0].right;
 				}
 				//不管包不包含要添加的权利，都要重新update，因为机构下可能有个别人员单独变更过权利
 				var updateSql = "update oc_course_authorize set rights = " + "'" +

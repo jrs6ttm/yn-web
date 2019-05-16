@@ -1,32 +1,35 @@
 {
-  "runMode":"prod_aliyun",
+  "runMode":"joint",
 
   "dev":{
-    "port": 9188,
-    "domain": ".learn.com",
+    "port": 7500,
+    "domain": "localhost",
     "mysql":{
-      "url": "localhost",
+      "url": "47.94.230.26",
       "user": "root",
-      "password": "python",
-      "database": "orgapp"
+      "password": "password",
+      "database": "orgapp_aliyun"
     },
 
     "mysql_engine":{
-      "url": "localhost",
+      "url": "47.94.230.26",
       "user": "root",
-      "password": "python",
-      "database": "yn_engine"
+      "password": "password",
+      "database": "yn_engine_aliyun"
     },
 
     "redis" : {
-      "url" :  "localhost",
+      "url" :  "47.94.230.26",
       "port": 6379 ,
-      "password" : "python",
-      "secret" : "you_guess"
+      "user" : "ecgeditor",
+      "password" : "ec123456",
+      "secret" : "you_guess",
+      "prefix" : "PHPREDIS_SESSION:",
+      "client": "client"
     },
 
-    "engineHost": "localhost:8022/yn-engine",
-    "ecgeditorHost":"authoring.xuezuowang.com"
+    "engineHost": "47.94.230.26:8501",
+    "ecgeditorHost":"localhost:7502"
   },
 
   "joint":{

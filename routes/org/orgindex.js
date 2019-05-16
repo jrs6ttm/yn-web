@@ -78,13 +78,13 @@ router.get('/Ajax_getUserDepAndChild', Ajax_getUserDepAndChild);
 router.get('/Ajax_depUserRead_V3', Ajax_depUserRead_V3);
 router.use('/Ajax_proxy_test', Ajax_proxy_test);
 //*********************课程授权相关接口******************
-router.get('/getSysOrgList', getSysOrgList);
-router.get('/getAuthorizedInfos', getAuthorizedInfos);
-router.get('/authorizeToDept', authorizeToDept);
-router.get('/authorizeToUser', authorizeToUser);
-router.get('/cancelAuthorizeOfDept', cancelAuthorizeOfDept);
-router.get('/cancelAuthorizeOfUser', cancelAuthorizeOfUser);
-router.get('/getAuthorizedCoursesOfUser', getAuthorizedCoursesOfUser);
+router.post('/getSysOrgList', getSysOrgList);
+router.post('/getAuthorizedInfos', getAuthorizedInfos);
+router.post('/authorizeToDept', authorizeToDept);
+router.post('/authorizeToUser', authorizeToUser);
+router.post('/cancelAuthorizeOfDept', cancelAuthorizeOfDept);
+router.post('/cancelAuthorizeOfUser', cancelAuthorizeOfUser);
+router.post('/getAuthorizedCoursesOfUser', getAuthorizedCoursesOfUser);
 
  function org_edit(req,res, next) {
      headers(res);
@@ -1615,7 +1615,7 @@ function getAuthorizedInfos(req,res) {
 function checkAuthorizeReqParams(req){
     var data = {};
     data.deptId =  req.body.deptID;
-    data.rights = req.body.rights;
+    data.right = req.body.right;
     data.courseId = req.body.courseId;
     data.courseName = req.body.courseName;
     data.courseType = req.body.courseType;
