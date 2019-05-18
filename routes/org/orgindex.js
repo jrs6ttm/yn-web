@@ -8,7 +8,7 @@ var uuid =  require('node-uuid');
 var crypto = require('crypto');
 var EventProxy = require('eventproxy');
 var async = require('async');
-
+var moment = require("moment");
 
 var env = global.orgENV;
 var querystring = require('querystring');
@@ -168,9 +168,7 @@ function Ajax_insertOrj(req,res, next) {
     //获取session user
     var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
-    var data = {};
-    var moment = require("moment");
-
+    var data = {}
     data.orgID = uuid.v1();
     data.orgCode = req.body['orgCode'];
     data.legalPerson = req.body['legalPerson'];
@@ -215,8 +213,6 @@ function   Ajax_updateOrj(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
     //if(req.body['orgCode'] )
     //if(req.body['legalPerson'] )
     //if(req.body['orgFullDes'] )
@@ -270,7 +266,6 @@ function  Ajax_searchOrg (req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     data.orgCode = req.body['orgCode'];
     data.orgFullDes = req.body['orgFullDes'];
@@ -297,7 +292,6 @@ function  Ajax_getOrgTree (req,res, next) {
     //var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
     var orgID = req.body['orgID'];
 
     //console.log(orgID);
@@ -319,7 +313,6 @@ function  Ajax_getOrgTree_read (req,res, next) {
     //var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
     //var orgID = req.body['id'];
     var orgID = req.query.id;
     var call = req.query.callback;
@@ -358,8 +351,6 @@ function  Ajax_addDept (req,res, next) {
     var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
     data.deptID = uuid.v1();
     if(req.body['deptDes'])  data.deptDes = req.body['deptDes'];
     if(req.body['orgID'])  data.orgID = req.body['orgID'];
@@ -398,7 +389,6 @@ function   Ajax_updateDept_arry(req,res, next) {
     //获取session user
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
-    var moment = require("moment");
 
     var models = req.body.models;
     var datas = JSON.parse(req.body.models);
@@ -473,7 +463,6 @@ function   Ajax_searchUsers(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     data.uid = req.body['uid'];
     data.displayname = req.body['displayname'];
@@ -530,8 +519,6 @@ function   Ajax_delOrg(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
 
     var orgID = req.body['id'];
     data.orgID = orgID;
@@ -552,7 +539,6 @@ function   Ajax_delDept(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     var deptID = req.body['id'];
     data.deptID = deptID;
@@ -595,7 +581,6 @@ function   Ajax_updateDeptPeo_json(req,res, next) {
     //获取session user
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
-    var moment = require("moment");
 
     var models = req.body.models;
     var datas = JSON.parse(req.body.models);
@@ -617,7 +602,6 @@ function  Ajax_depUserRead_V2 (req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     var deptid =  req.query.deptid;
     data.deptID =  deptid;
@@ -657,9 +641,6 @@ function  Ajax_depUserRead(req,res, next) {
     var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
-
     var deptid =  req.query.deptid;
     var null_arr = [];
     data.deptID =  deptid;
@@ -691,8 +672,6 @@ function   Ajax_depUserUpdate(req,res, next) {
     //获取session user
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
-    var moment = require("moment");
-
     var models = req.body.models;
     var datas = JSON.parse(req.body.models);
 //console.log(datas);
@@ -712,7 +691,6 @@ function   Ajax_depUserDestroy(req,res, next) {
         //获取session user
         var userID = req.session.userData.id;
         console.log('USERid:' + userID );
-        var moment = require("moment");
 
         var models = req.body.models;
         var datas = JSON.parse(req.body.models);
@@ -732,8 +710,6 @@ function  Ajax_depUserDestroy_myOrg(req,res, next) {
     //获取session user
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
-    var moment = require("moment");
-
     var models = req.body.models;
     var datas = JSON.parse(req.body.models);
     var result ={};
@@ -756,7 +732,6 @@ function  Ajax_orgSearchDep (req,res, next) {
     //var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     //var userID = req.query.userID;
     var userID = req.body.userID;
@@ -783,8 +758,6 @@ function   Ajax_orgSearchDepUsers(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
 // var deptid =  req.query.deptID;
     var deptid =  req.body.deptID;
     var null_arr = [];
@@ -814,7 +787,6 @@ function   Ajax_userDep_V2(req,res, next) {
     //var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     var userID = req.query.userId;
     //var userID = req.body.userID;
@@ -951,7 +923,6 @@ function   Ajax_addRole(req,res, next) {
                 var userID = req.session.userData.id;
                 //console.log('USERid:' + userID );
                 var data = {};
-                var moment = require("moment");
 
                 data.name = req.body['name'];
                 data.orgID =  req.session.userData.orgID;
@@ -978,7 +949,6 @@ function   Ajax_delRole(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     var ID = req.body['id'];
 
@@ -998,8 +968,6 @@ function   Ajax_updateRole(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
 
     //console.log(req.body);
     var ID = req.body['id'];
@@ -1093,7 +1061,6 @@ function  Ajax_updateRoleApp (req,res, next) {
     var userID = req.session.userData.id;
     console.log('USER ID:' + userID );
     var data = {};
-    var moment = require("moment");
 
     if(req.body['rid'] == '' || req.body['flag'] == '' || req.body['rid'] == undefined   || req.body['flag'] == undefined ) res.send({err:"ID数据错误",  status : '404'});
     else {
@@ -1117,7 +1084,6 @@ function   Ajax_updateDefine(req,res, next) {
     var userID = req.session.userData.id;
     //console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
 
     var DeptPeoID = req.body['id'];
     var orgID =  req.body['orgid'];
@@ -1263,7 +1229,6 @@ function   Ajax_addRole_top(req,res, next) {
                 var userID = req.session.userData.id;
                 //console.log('USERid:' + userID );
                 var data = {};
-                var moment = require("moment");
 
                 data.name = req.body['name'];
                 data.orgID = orgID;
@@ -1290,8 +1255,6 @@ function   Ajax_setRoleType(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
-
     var ID = req.body['id'];
     var val =  req.body['val'];
 
@@ -1425,8 +1388,6 @@ function Ajax_insertUser(req,res, next) {
     console.log('USERid:' + creatorID );
     var data = req.body.data; console.log(data);
     console.log(req.body);
-    var moment = require("moment");
-
 
     data.DeptPeoID = uuid.v1();
     if(req.body['synid'])   data.orgID = req.body['synid'];
@@ -1460,8 +1421,6 @@ function Ajax_getUserOrg(req,res, next) {
     //获取session user
 
     var data = {};
-    var moment = require("moment");
-
     var userID = req.query.userId;
     var orgID = req.session.userData.orgID;
     //var userID = req.body.userID;
@@ -1489,7 +1448,6 @@ function Ajax_getUserDepAndChild(req,res, next) {
     //获取session user
 
     var data = {};
-    var moment = require("moment");
     var userID = req.query.userId;
     var orgID = req.query.orgID;
     //var userID = req.body.userID;
@@ -1519,7 +1477,6 @@ function Ajax_depUserRead_V3(req,res, next) {
     var userID = req.session.userData.id;
     console.log('USERid:' + userID );
     var data = {};
-    var moment = require("moment");
     var roleType = '';
     if(req.query.roleType != '' &&  req.query.roleType != undefined ) {
         var roletype = req.query.roleType;
