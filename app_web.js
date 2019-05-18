@@ -144,7 +144,11 @@ var val =JSON.stringify(req.cookies);
         console.log('Session验证通过');
         // req.session.userData.orgID = "5468af60-b540-11e6-bfb6-c9a79e6f810d";
         next();
-　   }  else {  //重定向登录界面
+　   }else if(req.body[userData]){
+        req.session = req.body[userData];
+        console.log('Session同步成功');
+        next();
+    }else{  //重定向登录界面
         res.send({status:'500', err: 'Session验证未通过'});
 　   }
 
@@ -181,7 +185,7 @@ var course_org = require('./routes/course_org/route.js');
 var checkuser = require('./routes/app/checkuser');
 var adduser = require('./routes/app/adduser');
 
-console.log("--------------------------app_net.js--------------------------------");
+console.log("--------------------------app_web.js--------------------------------");
 
 // var getsessioninfo = require('./routes/app/getsessioninfo');
 // var checkreguser = require('./routes/app/checkreguser');  
