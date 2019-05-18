@@ -1597,12 +1597,12 @@ function checkAuthorizeReqParams(req){
         return data;
     }
 
-    data.id = uuid.v1();
     data.isvalid = "1";
     data.creatorId = req.session.userData.id;
     data.lastUpdatorId = data.creatorId;
     data.createDate = moment().format("YYYY-MM-DD HH:mm:ss");
     data.lastUpdateDate = data.createDate;
+
     return data;
 }
 
@@ -1622,19 +1622,23 @@ function getAuthorizeToDeptParams(req, callback){
                 data.err = "查找机构下人员时出现错误！";
                 callback(data);
             }else{
-                data.userId = null;
                 var dataArr = [data]; //机构授权信息要存一条记录进去
                 if(docs && docs.length){
                     for(var doc in docs){
                         //依次填充待授权机构下的人员信息
                         dataArr.push({
                             deptId: data.deptId,
-                            userId: doc.userID,
                             right: data.right,
                             courseId: data.courseId,
                             courseName: data.courseName,
                             courseType: data.courseType,
-                            creatorId: data.creatorId
+                            isvalid: '1',
+                            creatorId: data.creator,
+                            createDate: data.createDate,
+                            lastUpdatorId: data.creatorId,
+                            lastUpdateDate: data.createDate,
+                            userId: doc.userID,
+                            id: uuid.v1()
                         });
                     };
                 }
@@ -1679,6 +1683,8 @@ function getAuthorizeToUserParams(req){
         data.err = '缺少待授权用户userId，不能授权！';
         return data;
     }
+    data.id = uuid.v1();
+
     return data;
 }
 

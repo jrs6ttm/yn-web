@@ -736,19 +736,22 @@ function contractAuthorizeTableHead(){
 
 function contractAuthorizeTableValues(dataArr){
 	var tableValues = "";
-	for(var data in dataArr){
-		var value = " ('" + data.id + "', '" + data.courseId + "', '" +
-					data.courseType + "', '" + data.courseName + "', '" +
-					data.deptId + "'";
-		if(data.userId){//授权人员
-			value += ", '" + data.userId + "', '";
+	for(var i = 0; i < dataArr.length; i++){
+		var value = " ('" + dataArr[i].id + "', '" + dataArr[i].courseId + "', '" +
+					dataArr[i].courseType + "', '" + dataArr[i].courseName + "', '" +
+					dataArr[i].deptId + "'";
+		if(dataArr[i].userId){//授权人员
+			value += ", '" + dataArr[i].userId + "', '";
 		}else{//授权机构，避免"null"字符串
 			value += ", null, '";
 		}
-		value += data.rights + "', '" + data.isvalid + "', '" +
-				 data.creatorId + "', '" + data.createDate + "', '" +
-				 data.lastUpdatorId + "' , '" + data.lastUpdateDate + "' ) ";
+		value += dataArr[i].right + "', '" + dataArr[i].isvalid + "', '" +
+				dataArr[i].creatorId + "', '" + dataArr[i].createDate + "', '" +
+				dataArr[i].lastUpdatorId + "' , '" + dataArr[i].lastUpdateDate + "' ) ";
 		tableValues += value;
+		if(i < dataArr.length - 1){
+			tableValues += ',';
+		}
 	};
 
 	return tableValues;
