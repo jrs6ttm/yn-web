@@ -1602,6 +1602,7 @@ function checkAuthorizeReqParams(req){
     data.lastUpdatorId = data.creatorId;
     data.createDate = moment().format("YYYY-MM-DD HH:mm:ss");
     data.lastUpdateDate = data.createDate;
+    data.id = uuid.v1();
 
     return data;
 }
@@ -1633,7 +1634,7 @@ function getAuthorizeToDeptParams(req, callback){
                             courseName: data.courseName,
                             courseType: data.courseType,
                             isvalid: '1',
-                            creatorId: data.creator,
+                            creatorId: data.creatorId,
                             createDate: data.createDate,
                             lastUpdatorId: data.creatorId,
                             lastUpdateDate: data.createDate,
@@ -1683,7 +1684,6 @@ function getAuthorizeToUserParams(req){
         data.err = '缺少待授权用户userId，不能授权！';
         return data;
     }
-    data.id = uuid.v1();
 
     return data;
 }
