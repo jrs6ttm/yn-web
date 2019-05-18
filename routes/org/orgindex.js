@@ -1623,7 +1623,7 @@ function checkAuthorizeReqParams(req){
         data.err = '缺少待授权机构deptId，不能授权！';
         return data;
     }
-    if(!data.rights) {
+    if(!data.right) {
         data.err =  '缺少待授权利，不能授权！';
         return data;
     }
