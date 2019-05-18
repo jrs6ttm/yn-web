@@ -723,7 +723,7 @@ orgInfoDept.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
 orgInfoDept.getDeptAuthorizedInfos = function getDeptAuthorizedInfos(data, callback ) {
 	var sqlStr = "select org.orgID, org.orgFullDes, parentDept.orgID parentDeptId, parentDept.orgFullDes parentDeptDes, " +
 				"        dept.deptID, dept.deptDes, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
-				"from bsd_orginfodept dept, bsd_orginfo parentDept, bsd_orginfo org " +
+				"from bsd_orginfo parentDept, bsd_orginfo org, bsd_orginfodept dept " +
 				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
 				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
@@ -731,7 +731,7 @@ orgInfoDept.getDeptAuthorizedInfos = function getDeptAuthorizedInfos(data, callb
 				"union " +
 				"select org.orgID, org.orgFullDes, parentDept.deptID parentDeptId, parentDept.deptDes parentDeptDes, " +
 				"       dept.deptID, dept.deptDes, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
-				"from bsd_orginfodept dept, bsd_orginfodept parentDept, bsd_orginfo org  " +
+				"from bsd_orginfodept parentDept, bsd_orginfo org, bsd_orginfodept dept  " +
 				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
 				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +

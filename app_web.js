@@ -144,8 +144,8 @@ var val =JSON.stringify(req.cookies);
         console.log('Session验证通过');
         // req.session.userData.orgID = "5468af60-b540-11e6-bfb6-c9a79e6f810d";
         next();
-　   }else if(req.body[userData]){
-        req.session = req.body[userData];
+　   }else if(req.body.userData){
+        req.session.userData = req.body.userData;
         console.log('Session同步成功');
         next();
     }else{  //重定向登录界面
