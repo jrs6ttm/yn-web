@@ -736,7 +736,7 @@ function contractAuthorizeTableHead(){
 
 function contractAuthorizeTableValues(dataArr){
 	var tableValues = "";
-	dataArr.each(function(data){
+	for(var data in dataArr){
 		var value = " ('" + data.id + "', '" + data.courseId + "', '" +
 					data.courseType + "', '" + data.courseName + "', '" +
 					data.deptId + "'";
@@ -749,7 +749,7 @@ function contractAuthorizeTableValues(dataArr){
 				 data.creatorId + "', '" + data.createDate + "', '" +
 				 data.lastUpdatorId + "' , '" + data.lastUpdateDate + "' ) ";
 		tableValues += value;
-	});
+	};
 
 	return tableValues;
 }

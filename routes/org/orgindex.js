@@ -1599,6 +1599,7 @@ function checkAuthorizeReqParams(req){
 
     data.id = uuid.v1();
     data.isvalid = "1";
+    data.creatorId = req.session.userData.id;
     data.lastUpdatorId = data.creatorId;
     data.createDate = moment().format("YYYY-MM-DD HH:mm:ss");
     data.lastUpdateDate = data.createDate;
@@ -1621,7 +1622,6 @@ function getAuthorizeToDeptParams(req, callback){
                 data.err = "查找机构下人员时出现错误！";
                 callback(data);
             }else{
-                data.creatorId = req.session.userData.id;
                 data.userId = null;
                 var dataArr = [data]; //机构授权信息要存一条记录进去
                 if(docs && docs.length){
@@ -1630,7 +1630,7 @@ function getAuthorizeToDeptParams(req, callback){
                         dataArr.push({
                             deptId: data.deptId,
                             userId: doc.userID,
-                            rights:data.rights,
+                            right: data.right,
                             courseId: data.courseId,
                             courseName: data.courseName,
                             courseType: data.courseType,
@@ -1690,11 +1690,10 @@ function getAuthorizeToUserParams(req){
 function authorizeToUser(req, res){
     headers(res);
     var data = getAuthorizeToUserParams(req);
+    console.log(data);
     if(data.err){
         res.send({ status: '404', err : data.err});
     }else {
-        data.creatorId = req.session.userData.id;
-        console.log(data);
         orgDeptPeo.authorizeToUser(data, function(err,docs){
             if(err) { console.log(err); res.send({ status: '404', err: err});  }
             else   res.send({ status: '200',  datas: "给用户授权成功！" });
