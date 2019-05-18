@@ -1625,7 +1625,7 @@ function getAuthorizeToDeptParams(req){
                 data.userId = null;
                 var dataArr = [data]; //机构授权信息要存一条记录进去
                 if(docs && docs.length){
-                    docs.each(function(doc){
+                    for(var doc in docs){
                         //依次填充待授权机构下的人员信息
                         dataArr.push({
                             deptId: data.deptId,
@@ -1636,7 +1636,7 @@ function getAuthorizeToDeptParams(req){
                             courseType: data.courseType,
                             creatorId: data.creatorId
                         });
-                    });
+                    };
                 }
                 return dataArr;
             }
