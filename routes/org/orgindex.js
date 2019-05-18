@@ -1624,8 +1624,9 @@ function getAuthorizeToDeptParams(req, callback){
                 callback(data);
             }else{
                 var dataArr = [data]; //机构授权信息要存一条记录进去
+                console.log(docs);
                 if(docs && docs.length){
-                    for(var doc in docs){
+                    for(var i= 0; i < docs.length; i++){
                         //依次填充待授权机构下的人员信息
                         dataArr.push({
                             deptId: data.deptId,
@@ -1638,7 +1639,7 @@ function getAuthorizeToDeptParams(req, callback){
                             createDate: data.createDate,
                             lastUpdatorId: data.creatorId,
                             lastUpdateDate: data.createDate,
-                            userId: doc.userID,
+                            userId: docs[i].userID,
                             id: uuid.v1()
                         });
                     };
