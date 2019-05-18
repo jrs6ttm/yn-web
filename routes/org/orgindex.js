@@ -1610,16 +1610,16 @@ function checkAuthorizeReqParams(req){
  * @param req
  * @returns {{}}
  */
-function getAuthorizeToDeptParams(req){
+function getAuthorizeToDeptParams(req, callback){
     var data = checkAuthorizeReqParams(req);
     if(data.err){
-        return data;
+        callback(data);
     }else{
         orgDeptPeo.searchData_Json_V2({deptID : data.deptId}, function(err,docs){
             if(err) {
                 console.log(err);
                 data.err = "查找机构下人员时出现错误！";
-                return data;
+                callback(data);
             }else{
                 data.creatorId = req.session.userData.id;
                 data.userId = null;
@@ -1638,7 +1638,7 @@ function getAuthorizeToDeptParams(req){
                         });
                     };
                 }
-                return dataArr;
+                callback(dataArr);
             }
         });
     }
@@ -1651,16 +1651,17 @@ function getAuthorizeToDeptParams(req){
  */
 function authorizeToDept(req, res){
     headers(res);
-    var data = getAuthorizeToDeptParams(req);
-    if(data.err){
-        res.send({ status: '404', err : data.err});
-    }else {
+    getAuthorizeToDeptParams(req, function(data){
         console.log(data);
-        orgDeptPeo.authorizeToDept(data, function(err,docs){
-            if(err) { console.log(err); res.send({ status: '404', err: err});  }
-            else   res.send({ status: '200',  datas: "给机构授权成功！" });
-        });
-    }
+        if(data.err){
+            res.send({ status: '404', err : data.err});
+        }else {
+            orgDeptPeo.authorizeToDept(data, function(err,docs){
+                if(err) { console.log(err); res.send({ status: '404', err: err});  }
+                else   res.send({ status: '200',  datas: "给机构授权成功！" });
+            });
+        }
+    });
 }
 
 /**
