@@ -115,6 +115,24 @@ CREATE TABLE `course_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+//创建课程授权表
+CREATE TABLE `oc_course_authorize` (
+  `id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '课程授权ID',
+  `course_id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '课程id',
+  `course_type` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '课程类型，1:情景，2:实例',
+  `course_name` varchar(512) COLLATE utf8_bin NOT NULL COMMENT '课程名称',
+  `dept_id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '部门id' ,
+  `user_id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '人员id' ,
+  `rights` varchar(16) COLLATE utf8_bin DEFAULT NULL COMMENT '所授权利，1:组织课程，2:学习课程',
+  `remark` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '备注',
+  `isvalid` varchar(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '是否有效,1:有效,0或NULL无效',
+  `creator_id` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '录入人员',
+  `create_date` datetime DEFAULT NULL COMMENT '录入日期',
+  `lastupdator_id` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '最近更新人',
+  `lastupdate_date` datetime DEFAULT NULL COMMENT '最近更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='课程授权表';
+
 INSERT INTO `base_course_type` VALUES ('46c46f9c-fcc8-11e6-a340-080027477d92', '财经文化教育', 'CJWHJY', '财经文化教育', 'R0010', '1', '0', null, '', '1');
 INSERT INTO `base_course_type` VALUES ('46c47c23-fcc8-11e6-a340-080027477d92', '经济类', 'CJWHJY_JJL', '经济类', 'R00100010', '2', '0', '46c46f9c-fcc8-11e6-a340-080027477d92', '', '1');
 INSERT INTO `base_course_type` VALUES ('46c482e1-fcc8-11e6-a340-080027477d92', '电子商务1', 'CJWHJY_JJL_dzsw', '电子商务1', 'R001000100010', '3', '1', '46c47c23-fcc8-11e6-a340-080027477d92', '', '1');
