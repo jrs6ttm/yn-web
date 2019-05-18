@@ -1720,8 +1720,6 @@ function cancelAuthorizeOfDept(req, res){
     if(!deptId || !right || !courseId){
         res.send({ status: '404', err : "缺少解除授权参数数据，不能操作！"});
     }else {
-        data.lastUpdatorId = req.session.userData.id;
-        console.log(data);
         orgDeptPeo.cancelAuthorizeOfDept({courseId: courseId, deptId: deptId, right: right}, function(err,docs){
             if(err) {
                 console.log(err); res.send({ status: '404', err: err});
@@ -1745,8 +1743,6 @@ function cancelAuthorizeOfUser(req, res){
     if(!userId || !right || !courseId){
         res.send({ status: '404', err : "缺少解除授权参数数据，不能操作！"});
     }else {
-        data.lastUpdatorId = req.session.userData.id;
-        console.log(data);
         orgDeptPeo.cancelAuthorizeOfUser({courseId: courseId, userId: userId, right: right}, function(err,docs){
             if(err) {
                 console.log(err); res.send({ status: '404', err: err});
