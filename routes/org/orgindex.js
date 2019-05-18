@@ -1624,7 +1624,7 @@ function getAuthorizeToDeptParams(req){
                 data.creatorId = req.session.userData.id;
                 data.userId = null;
                 var dataArr = [data]; //机构授权信息要存一条记录进去
-                if(docs && docs.length()){
+                if(docs && docs.length){
                     docs.each(function(doc){
                         //依次填充待授权机构下的人员信息
                         dataArr.push({

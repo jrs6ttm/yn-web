@@ -758,7 +758,7 @@ bsd_orgDeptPeo.authorizeToUser = function authorize(data, callback) {
 	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
 		data.courseId + "' and user_id = '" + data.userId + "'";
 	MySql.query(getSqlStr, function(err, doc) {
-		if(doc && doc.length() > 0){//已经授过某种权利了
+		if(doc && doc.length > 0){//已经授过某种权利了
 			var authInfo = doc[0];
 			if(authInfo.rights.indexOf(data.right) == -1){//尚不包含该权利，则添加
 				authInfo.rights = authInfo.rights + data.right;
@@ -782,11 +782,11 @@ bsd_orgDeptPeo.authorizeToUser = function authorize(data, callback) {
 }
 
 bsd_orgDeptPeo.authorizeToDept = function authorize(data, callback) {
-	if(data.length() > 0) {
+	if(data.length > 0) {
 		var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
 			data.courseId + "' and dept_id = '" + data.deptId + "' and user_id is null";
 		MySql.query(getSqlStr, function(err, doc) {
-			if(doc && doc.length() > 0){//已经授过某种权利了
+			if(doc && doc.length > 0){//已经授过某种权利了
 				var authInfo = doc[0];
 				if(authInfo.rights.indexOf(data[0].right) == -1){//尚不包含该权利，则添加
 					authInfo.rights = authInfo.rights + data[0].right;
@@ -815,7 +815,7 @@ bsd_orgDeptPeo.cancelAuthorizeOfUser = function cancelAuthorizeOfUser(data, call
 	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
 					data.courseId + "' and user_id = '" + data.userId + "'";
 	MySql.query(getSqlStr, function(err, doc) {
-		if(doc && doc.length() > 0){
+		if(doc && doc.length > 0){
 			var authInfo = doc[0];
 			if(data.right == authInfo.rights){//只有一种权利，则删除
 				var deleteSql = "delete from oc_course_authorize where course_id = " + "'" +
@@ -840,7 +840,7 @@ bsd_orgDeptPeo.cancelAuthorizeOfDept = function cancelAuthorizeOfDept(data, call
 	var getSqlStr = "select * from oc_course_authorize where course_id = " + "'" +
 		data.courseId + "' and dept_id = '" + data.deptId + "' and user_id is null";
 	MySql.query(getSqlStr, function(err, doc) {
-		if(doc && doc.length() > 0){
+		if(doc && doc.length > 0){
 			var authInfo = doc[0];
 			if(data.right == authInfo.rights){//只有一种权利，则删除, 同时删除授权机构和人员的所有记录
 				var deleteSql = "delete from oc_course_authorize where course_id = " + "'" +
