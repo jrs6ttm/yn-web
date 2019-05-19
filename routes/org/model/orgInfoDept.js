@@ -721,12 +721,16 @@ orgInfoDept.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
 
 /********************** 课程授权相关对外接口 ************************/
 orgInfoDept.getDeptAuthorizedInfos = function getDeptAuthorizedInfos(data, callback ) {
+	var deptNameSqlStr = "";
+	if(data.deptName){
+		deptNameSqlStr = " and dept.deptDes like '%" + data.deptName + "%' ";
+	}
 	var sqlStr = "select org.orgID, org.orgFullDes, parentDept.orgID parentDeptId, parentDept.orgFullDes parentDeptDes, " +
 				"        dept.deptID, dept.deptDes, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
 				"from bsd_orginfo parentDept, bsd_orginfo org, bsd_orginfodept dept " +
 				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
-				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				deptNameSqlStr + "and dept.ISVALID = '1' " +
 				"       and dept.orgID = org.orgID and dept.parentId = parentDept.orgID " +
 				"union " +
 				"select org.orgID, org.orgFullDes, parentDept.deptID parentDeptId, parentDept.deptDes parentDeptDes, " +
@@ -734,7 +738,7 @@ orgInfoDept.getDeptAuthorizedInfos = function getDeptAuthorizedInfos(data, callb
 				"from bsd_orginfodept parentDept, bsd_orginfo org, bsd_orginfodept dept  " +
 				"left join oc_course_authorize cAuth on cAuth.dept_id = dept.deptID and cAuth.course_id = '" + data.courseId + "' and cAuth.user_id is null "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
-				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				deptNameSqlStr + " and dept.ISVALID = '1' " +
 				"		and dept.orgID = org.orgID and dept.parentId = parentDept.deptID";
 	console.log(sqlStr);
 	MySql.query(sqlStr, function(err, doc) {

@@ -1545,7 +1545,7 @@ function getAuthorizedInfos(req,res) {
     var deptName = req.body.deptName;
     var courseId = req.body.courseId;
     var getType = req.body.getType;
-    if(!orgID || !deptName || !courseId) res.send({ status: '404', err: '组织或机构或课程不能为空！'});
+    if(!orgID || !courseId) res.send({ status: '404', err: '组织或课程不能为空！'});
     else {
         data.orgID =  orgID;
         data.deptName = deptName;

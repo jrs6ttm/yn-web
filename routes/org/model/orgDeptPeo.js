@@ -709,12 +709,16 @@ bsd_orgDeptPeo.getHeaderData_V2 = function getHeaderData_V2(orgID, callback){
 
 /********************** 课程授权相关对外接口 ************************/
 bsd_orgDeptPeo.getDeptUserAuthorizedInfos = function getDeptUserAuthorizedInfos(data, callback ) {
+	var deptNameSqlStr = "";
+	if(data.deptName){
+		deptNameSqlStr = " and dept.deptDes like '%" + data.deptName + "%' ";
+	}
 	var sqlStr = "select org.orgID, org.orgFullDes, parentDept.orgID parentDeptId, parentDept.orgFullDes parentDeptDes, "+
 				" 		 dept.deptID, dept.deptDes, deptUser.synid userID, deptUser.name userName, cAuth.course_id courseId, cAuth.course_name courseName, cAuth.rights, cAuth.create_date authDate  " +
 				"from bsd_orginfodept dept, bsd_orginfo parentDept, bsd_orginfo org , bsd_orgdeptpeo deptUser " +
 				"left join oc_course_authorize cAuth on cAuth.user_id = deptUser.synid and cAuth.course_id = '" + data.courseId + "' "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
-				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				deptNameSqlStr + " and dept.ISVALID = '1' " +
 				"		and dept.orgID = org.orgID and dept.parentId = parentDept.orgID  and dept.deptID = deptUser.deptID and org.orgID = deptUser.orgID and deptUser.ISVALID = '1' " +
 				"union	" +
 				"select org.orgID, org.orgFullDes, parentDept.deptID parentDeptId, parentDept.deptDes parentDeptDes, dept.deptID, "+
@@ -722,7 +726,7 @@ bsd_orgDeptPeo.getDeptUserAuthorizedInfos = function getDeptUserAuthorizedInfos(
 				"from bsd_orginfodept dept, bsd_orginfodept parentDept, bsd_orginfo org , bsd_orgdeptpeo deptUser " +
 				"left join oc_course_authorize cAuth on cAuth.user_id = deptUser.synid and cAuth.course_id = '" + data.courseId + "' "+
 				"where  org.orgID = '" + data.orgID + "' and org.ISVALID = '1' " +
-				"		and dept.deptDes like '%" + data.deptName + "%' and dept.ISVALID = '1' " +
+				deptNameSqlStr + " and dept.ISVALID = '1' " +
 				"		and dept.orgID = org.orgID and dept.parentId = parentDept.deptID and dept.deptID = deptUser.deptID and org.orgID = deptUser.orgID and deptUser.ISVALID = '1'";
 	console.log(sqlStr);
 	MySql.query(sqlStr, function(err, doc) {
@@ -764,7 +768,7 @@ bsd_orgDeptPeo.authorizeToUser = function authorize(data, callback) {
 		if(doc && doc.length > 0){//已经授过某种权利了
 			var authInfo = doc[0];
 			if(authInfo.rights.indexOf(data.right) == -1){//尚不包含该权利，则添加
-				authInfo.rights = authInfo.rights + data.right;
+				authInfo.rights = authInfo.rights + ',' + data.right;
 				var updateSql = "update oc_course_authorize set rights = " + "'" +
 								authInfo.rights + "' where course_id = '" + data.courseId +
 								"' and user_id = '" + data.userId + "'";
@@ -792,7 +796,7 @@ bsd_orgDeptPeo.authorizeToDept = function authorize(data, callback) {
 			if(doc && doc.length > 0){//已经授过某种权利了
 				var authInfo = doc[0];
 				if(authInfo.rights.indexOf(data[0].right) == -1){//尚不包含该权利，则添加
-					authInfo.rights = authInfo.rights + data[0].right;
+					authInfo.rights = authInfo.rights + ',' + data[0].right;
 				}
 				//不管包不包含要添加的权利，都要重新update，因为机构下可能有个别人员单独变更过权利
 				var updateSql = "update oc_course_authorize set rights = " + "'" +
