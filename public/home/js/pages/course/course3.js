@@ -166,6 +166,8 @@ Database.prototype = {
             $.post('/org/getAuthorizedCoursesOfUser', {userId: userData.id, courseId: me.courseId}, function(resp){
                 if(resp && resp.status == '200'){
                     me.authInfo = resp.datas[0];
+                }else{
+                    console.log(resp.err);
                 }
                 next();
             });
@@ -522,7 +524,7 @@ View.prototype = {
             $(manageBtn).click(function(){
                 $.MsgBox.Alert('用户未登录','请登录之后再开始学习！', function(){
                     Bus.emit('sign_modal', {
-                        status: id,
+                        status: 'login',
                         display: 1
                     });
                 });

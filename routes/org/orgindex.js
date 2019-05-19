@@ -1761,7 +1761,7 @@ function cancelAuthorizeOfUser(req, res){
  */
 function getAuthorizedCoursesOfUser(req, res){
     headers(res);
-    var userId = req.body.userID;
+    var userId = req.body.userId;
     var courseId = req.body.courseId;//可能不存在
     if(!userId){
         res.send({ status: '404', err : "缺少人员id！"});
