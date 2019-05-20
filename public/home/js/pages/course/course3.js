@@ -286,10 +286,10 @@ View.prototype = {
             });
         };
 
-        //没有在学课程时
-        if(!instanceDatas.length){
+        //是课程开发者，或者是老师，或者没有在学课程时，进一步判断权限
+        if(userData.id == me.database.courseData.courseCreator.id || me.isTeacher || !instanceDatas.length){
             //如果有学习课程的权利，则开放"开始学习"按钮，可以新开始课程
-            if(authInfo.rights.indexOf('2') != -1){
+            if(userData.id == me.database.courseData.courseCreator.id || authInfo.rights.indexOf('2') != -1){
                 if(!me.database.courseData.isCooperation){
                     line++;
                     selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
@@ -365,7 +365,7 @@ View.prototype = {
         }
 
         //如果有权利组织课程时，放开"组织课程"按钮，可以开始组织课程
-        if(authInfo.rights.indexOf("1") != -1){
+        if(userData.id == me.database.courseData.courseCreator.id || authInfo.rights.indexOf("1") != -1){
             line++;
             selectCon = createEle('div');selectCon.className = '_course_selectCon';startLeft.appendChild(selectCon);
             selectMain = createEle('h1');selectCon.appendChild(selectMain);
@@ -505,7 +505,7 @@ View.prototype = {
                     });
                 });
             }*/
-            if(!me.database.orgData && !me.database.authInfo){//没有此课程的组织学习权限，也没有被授权学习或组织该课程
+            if(userData.id != me.database.courseData.courseCreator.id && !me.database.orgData && !me.database.authInfo){//既不是课程开发者，又没有此课程的组织学习权限，也没有被授权学习或组织该课程
                 manageBtn.innerHTML = "开始课程";
                 manageBtn.className = '_canNot _course_manageBtn';
                 $(manageBtn).click(function(){
