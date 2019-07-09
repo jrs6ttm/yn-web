@@ -116,11 +116,12 @@ if(mySQL) {
                     thisCourse = changeToUpper(doc)[0];
                     console.log('-------getCourseTree------');
                     console.log(thisCourse);
+                    console.log(doc[0]);
                     //resData.id = thisCourse.courseId;
-                    resData.id = courseId;
-                    resData.name = thisCourse.name;
+                    resData.id = doc[0].course_id;
+                    resData.name = doc[0].name;
                     //resData.children = findChildByParentId(thisCourse.courseId);
-                    resData.children = findChildByParentId(courseId);
+                    resData.children = findChildByParentId(doc[0].courseId);
                     next(resData);
                 }
             });
