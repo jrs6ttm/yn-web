@@ -89,7 +89,7 @@ if(mySQL) {
         };
         var findChildByParentId = function(id){
             var categoryTrees = [], child = {},childArr;
-            sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '" order by ';
+            sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '"';
             mySQL.toSQL(sqlStr, function(err, doc) {
                 if(err){
                     console.log(err);
@@ -136,7 +136,7 @@ if(mySQL) {
                                     resData.id = courseInfo.course_id;
                                     resData.name = courseInfo.name || courseInfo.course_name;
                                     //resData.children = findChildByParentId(thisCourse.courseId);
-                                    resData.children = findChildByParentId(courseInfo.courseId);
+                                    resData.children = findChildByParentId(courseInfo.course_id);
                                 }
                                 next(resData);
                             }
@@ -151,7 +151,7 @@ if(mySQL) {
                         resData.id = courseInfo.course_id;
                         resData.name = courseInfo.name || courseInfo.course_name;
                         //resData.children = findChildByParentId(thisCourse.courseId);
-                        resData.children = findChildByParentId(courseInfo.courseId);
+                        resData.children = findChildByParentId(courseInfo.course_id);
                         next(resData);
                     }
                 }
