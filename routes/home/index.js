@@ -88,21 +88,25 @@ if(mySQL) {
             });
         };
         var findChildByParentId = function(id){
-            var categoryTrees = [], i,child = {},childArr;
-            for(i=0;i<allCourse.length;i++){
-                if(allCourse[i].parentId == id){
+            var categoryTrees = [], child = {},childArr;
+            sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '"';
+            mySQL.toSQL(sqlStr, function(err, doc) {
+                if(err){
+                    console.log(err);
+                }else{
                     child  = {};
-                    child.id = allCourse[i].courseId;
-                    child.name = allCourse[i].name;
-                    if(allCourse[i].nodeType !== 'learnAct'){
-                        childArr = findChildByParentId(allCourse[i].courseId);
+                    child.id = doc[0].course_id;
+                    child.name = doc[0].name;
+                    if(doc[0].node_type !== 'learnAct'){
+                        childArr = findChildByParentId(doc[0].course_id);
                         if(childArr.length){
                             child.children = childArr;
                         }
                     }
                     categoryTrees.push(child);
                 }
-            }
+            });
+
             return categoryTrees;
         };
         var getCourseTree = function(courseId,next){
@@ -136,11 +140,16 @@ if(mySQL) {
                 next();
             }
         };
+        /*
         getAllCourse(function(data){
             allCourse = data;
             getOne(0,function(){
                 res.send(courseTree);
             });
+        });
+*/
+        getOne(0,function(){
+            res.send(courseTree);
         });
     });
 
