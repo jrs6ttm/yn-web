@@ -112,28 +112,40 @@ if(mySQL) {
             return categoryTrees;
         };
         var getCourseTree = function(courseId,next){
-            var thisCourse,resData = {};
+            var thisCourse, resData = {}, courseInfo = null;
             sqlStr = 'SELECT * FROM oc_courseplayer_courseClass WHERE course_id = "'+ courseId+'"';
-            mySQL.toSQL(sqlStr, function(err, doc) {
-                if(err){
+            mySQL.toSQL(sqlStr, function(err, doc1) {
+                if (err) {
                     console.log(err);
-                    res.send(err);
-                }else{
-                    if(doc && doc.length > 0) {
-                        thisCourse = changeToUpper(doc)[0];
-                        console.log('-------getCourseTree------');
-                        console.log(thisCourse);
-                        console.log(doc[0]);
-                        //resData.id = thisCourse.courseId;
-                        resData.id = doc[0].course_id;
-                        resData.name = doc[0].name;
-                        //resData.children = findChildByParentId(thisCourse.courseId);
-                        resData.children = findChildByParentId(doc[0].courseId);
-                        next(resData);
-                    }else{
+                } else {
+                    if (!doc1 || doc1.length == 0) {
+                        sqlStr = 'SELECT * FROM oc_courseplayer_courses where course_id = "' + courseId + '"';
+                        mySQL.toSQL(sqlStr, function (err, doc) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                if (doc && doc.length > 0) {
+                                    courseInfo = doc[0];
+                                }
+                            }
+                        });
                         next(null);
+                    } else {
+                        courseInfo = doc1[0];
                     }
                 }
+                if (courseInfo) {
+                    thisCourse = changeToUpper(courseInfo)[0];
+                    console.log('-------getCourseTree------');
+                    console.log(courseInfo);
+                    console.log(courseInfo);
+                    //resData.id = thisCourse.courseId;
+                    resData.id = courseInfo.course_id;
+                    resData.name = courseInfo.name || courseInfo.course_name;
+                    //resData.children = findChildByParentId(thisCourse.courseId);
+                    resData.children = findChildByParentId(courseInfo.courseId);
+                }
+                next(resData);
             });
         };
         var getOne = function(index,next){
