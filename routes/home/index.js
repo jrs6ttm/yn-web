@@ -89,7 +89,7 @@ if(mySQL) {
         };
         var findChildByParentId = function(id){
             var categoryTrees = [], child = {},childArr;
-            sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '"';
+            sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '" order by ';
             mySQL.toSQL(sqlStr, function(err, doc) {
                 if(err){
                     console.log(err);
@@ -172,38 +172,38 @@ if(mySQL) {
         if(courseId){
             if(userId){
                 if(taskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'" AND task_id = "'+taskId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'" AND task_id = "'+taskId+'" ORDER BY opt_time desc';
                 }else if(subtaskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'" AND subtask_id = "'+subtaskId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'" AND subtask_id = "'+subtaskId+'" ORDER BY opt_time desc';
                 }else{
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND course_id = "'+courseId+'" ORDER BY opt_time desc';
                 }
             }else{
                 if(taskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE task_id = "'+ taskId+'" AND course_id = "'+courseId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE task_id = "'+ taskId+'" AND course_id = "'+courseId+'" ORDER BY opt_time desc';
                 }else if(subtaskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE subtask_id = "'+ subtaskId+'" AND course_id = "'+courseId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE subtask_id = "'+ subtaskId+'" AND course_id = "'+courseId+'" ORDER BY opt_time desc';
                 }else{
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE course_id = "'+ courseId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE course_id = "'+ courseId+'" ORDER BY opt_time desc';
                 }
             }
         }
         if(orgId){
             if(userId){
                 if(taskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'" AND task_id = "'+taskId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'" AND task_id = "'+taskId+'" ORDER BY opt_time desc';
                 }else if(subtaskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'" AND subtask_id = "'+subtaskId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'" AND subtask_id = "'+subtaskId+'" ORDER BY opt_time desc';
                 }else{
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE user_id = "'+ userId+'" AND org_id = "'+orgId+'" ORDER BY opt_time desc';
                 }
             }else{
                 if(taskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE task_id = "'+ taskId+'" AND org_id = "'+orgId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE task_id = "'+ taskId+'" AND org_id = "'+orgId+'" ORDER BY opt_time desc';
                 }else if(subtaskId){
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE subtask_id = "'+ subtaskId+'" AND org_id = "'+orgId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE subtask_id = "'+ subtaskId+'" AND org_id = "'+orgId+'" ORDER BY opt_time desc';
                 }else{
-                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE org_id = "'+ orgId+'"';
+                    sqlStr = 'SELECT * FROM oc_courseplayer_options WHERE org_id = "'+ orgId+'" ORDER BY opt_time desc';
                 }
             }
         }
