@@ -89,6 +89,7 @@ if(mySQL) {
         };
         var findChildByParentId = function(id){
             var categoryTrees = [], child = {},childArr;
+            /*
             sqlStr = 'SELECT * FROM oc_courseplayer_courseclass where parent_id = "' + id + '"';
             mySQL.toSQL(sqlStr, function(err, doc) {
                 if(err){
@@ -108,7 +109,7 @@ if(mySQL) {
                     }
                 }
             });
-
+*/
             return categoryTrees;
         };
         var getCourseTree = function(courseId,next){
@@ -119,7 +120,7 @@ if(mySQL) {
                     console.log(err);
                     next(null);
                 } else {
-                    if (!doc1 || doc1.length == 0) {
+                    if (!(doc1 && doc1.length > 0)) {
                         sqlStr = 'SELECT * FROM oc_courseplayer_courses where course_id = "' + courseId + '"';
                         mySQL.toSQL(sqlStr, function (err, doc) {
                             if (err) {
@@ -128,13 +129,12 @@ if(mySQL) {
                             } else {
                                 if (doc && doc.length > 0) {
                                     courseInfo = doc[0];
-                                    thisCourse = changeToUpper(courseInfo)[0];
+                                    //thisCourse = changeToUpper(courseInfo)[0];
                                     console.log('-------getCourseTree------');
-                                    console.log(courseInfo);
                                     console.log(courseInfo);
                                     //resData.id = thisCourse.courseId;
                                     resData.id = courseInfo.course_id;
-                                    resData.name = courseInfo.name || courseInfo.course_name;
+                                    resData.name = courseInfo.course_name;
                                     //resData.children = findChildByParentId(thisCourse.courseId);
                                     resData.children = findChildByParentId(courseInfo.course_id);
                                 }
@@ -143,13 +143,12 @@ if(mySQL) {
                         });
                     } else {
                         courseInfo = doc1[0];
-                        thisCourse = changeToUpper(courseInfo)[0];
+                        //thisCourse = changeToUpper(courseInfo)[0];
                         console.log('-------getCourseTree------');
-                        console.log(courseInfo);
                         console.log(courseInfo);
                         //resData.id = thisCourse.courseId;
                         resData.id = courseInfo.course_id;
-                        resData.name = courseInfo.name || courseInfo.course_name;
+                        resData.name = courseInfo.name;
                         //resData.children = findChildByParentId(thisCourse.courseId);
                         resData.children = findChildByParentId(courseInfo.course_id);
                         next(resData);
