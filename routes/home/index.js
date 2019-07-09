@@ -114,9 +114,11 @@ if(mySQL) {
                     res.send(err);
                 }else{
                     thisCourse = changeToUpper(doc)[0];
-                    resData.id = thisCourse.courseId;
+                    //resData.id = thisCourse.courseId;
+                    resData.id = courseId;
                     resData.name = thisCourse.name;
-                    resData.children = findChildByParentId(thisCourse.courseId);
+                    //resData.children = findChildByParentId(thisCourse.courseId);
+                    resData.children = findChildByParentId(courseId);
                     next(resData);
                 }
             });
