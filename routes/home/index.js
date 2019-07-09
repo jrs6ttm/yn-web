@@ -95,15 +95,17 @@ if(mySQL) {
                     console.log(err);
                 }else{
                     child  = {};
-                    child.id = doc[0].course_id;
-                    child.name = doc[0].name;
-                    if(doc[0].node_type !== 'learnAct'){
-                        childArr = findChildByParentId(doc[0].course_id);
-                        if(childArr.length){
-                            child.children = childArr;
+                    if(doc && doc.length > 0) {
+                        child.id = doc[0].course_id;
+                        child.name = doc[0].name;
+                        if (doc[0].node_type !== 'learnAct') {
+                            childArr = findChildByParentId(doc[0].course_id);
+                            if (childArr.length) {
+                                child.children = childArr;
+                            }
                         }
+                        categoryTrees.push(child);
                     }
-                    categoryTrees.push(child);
                 }
             });
 
@@ -117,23 +119,29 @@ if(mySQL) {
                     console.log(err);
                     res.send(err);
                 }else{
-                    thisCourse = changeToUpper(doc)[0];
-                    console.log('-------getCourseTree------');
-                    console.log(thisCourse);
-                    console.log(doc[0]);
-                    //resData.id = thisCourse.courseId;
-                    resData.id = doc[0].course_id;
-                    resData.name = doc[0].name;
-                    //resData.children = findChildByParentId(thisCourse.courseId);
-                    resData.children = findChildByParentId(doc[0].courseId);
-                    next(resData);
+                    if(doc && doc.length > 0) {
+                        thisCourse = changeToUpper(doc)[0];
+                        console.log('-------getCourseTree------');
+                        console.log(thisCourse);
+                        console.log(doc[0]);
+                        //resData.id = thisCourse.courseId;
+                        resData.id = doc[0].course_id;
+                        resData.name = doc[0].name;
+                        //resData.children = findChildByParentId(thisCourse.courseId);
+                        resData.children = findChildByParentId(doc[0].courseId);
+                        next(resData);
+                    }else{
+                        next(null);
+                    }
                 }
             });
         };
         var getOne = function(index,next){
             if(index < courseIds.length){
                 getCourseTree(courseIds[index],function(data){
-                    courseTree.push(data);
+                    if(data) {
+                        courseTree.push(data);
+                    }
                     getOne(index+1,next);
                 });
             }else{
