@@ -117,35 +117,44 @@ if(mySQL) {
             mySQL.toSQL(sqlStr, function(err, doc1) {
                 if (err) {
                     console.log(err);
+                    next(null);
                 } else {
                     if (!doc1 || doc1.length == 0) {
                         sqlStr = 'SELECT * FROM oc_courseplayer_courses where course_id = "' + courseId + '"';
                         mySQL.toSQL(sqlStr, function (err, doc) {
                             if (err) {
                                 console.log(err);
+                                next(null);
                             } else {
                                 if (doc && doc.length > 0) {
                                     courseInfo = doc[0];
+                                    thisCourse = changeToUpper(courseInfo)[0];
+                                    console.log('-------getCourseTree------');
+                                    console.log(courseInfo);
+                                    console.log(courseInfo);
+                                    //resData.id = thisCourse.courseId;
+                                    resData.id = courseInfo.course_id;
+                                    resData.name = courseInfo.name || courseInfo.course_name;
+                                    //resData.children = findChildByParentId(thisCourse.courseId);
+                                    resData.children = findChildByParentId(courseInfo.courseId);
                                 }
+                                next(resData);
                             }
                         });
-                        next(null);
                     } else {
                         courseInfo = doc1[0];
+                        thisCourse = changeToUpper(courseInfo)[0];
+                        console.log('-------getCourseTree------');
+                        console.log(courseInfo);
+                        console.log(courseInfo);
+                        //resData.id = thisCourse.courseId;
+                        resData.id = courseInfo.course_id;
+                        resData.name = courseInfo.name || courseInfo.course_name;
+                        //resData.children = findChildByParentId(thisCourse.courseId);
+                        resData.children = findChildByParentId(courseInfo.courseId);
+                        next(resData);
                     }
                 }
-                if (courseInfo) {
-                    thisCourse = changeToUpper(courseInfo)[0];
-                    console.log('-------getCourseTree------');
-                    console.log(courseInfo);
-                    console.log(courseInfo);
-                    //resData.id = thisCourse.courseId;
-                    resData.id = courseInfo.course_id;
-                    resData.name = courseInfo.name || courseInfo.course_name;
-                    //resData.children = findChildByParentId(thisCourse.courseId);
-                    resData.children = findChildByParentId(courseInfo.courseId);
-                }
-                next(resData);
             });
         };
         var getOne = function(index,next){
