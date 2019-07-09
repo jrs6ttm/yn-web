@@ -114,6 +114,8 @@ if(mySQL) {
                     res.send(err);
                 }else{
                     thisCourse = changeToUpper(doc)[0];
+                    console.log('-------getCourseTree------');
+                    console.log(thisCourse);
                     //resData.id = thisCourse.courseId;
                     resData.id = courseId;
                     resData.name = thisCourse.name;
